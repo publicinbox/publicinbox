@@ -48,6 +48,6 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:recipient, :subject, :body)
+    params.require(:message).permit(:recipient_email, :subject, :body)
   end
 end
