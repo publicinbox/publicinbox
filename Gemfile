@@ -30,6 +30,9 @@ gem 'sdoc', :group => :doc, :require => false
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/jonleighton/spring
 gem 'spring', :group => :development
 
+# Use rails_12factor gem for production
+gem 'rails_12factor', :group => :production
+
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.2'
 
