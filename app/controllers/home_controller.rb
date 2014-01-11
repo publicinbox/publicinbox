@@ -51,6 +51,12 @@ class HomeController < ApplicationController
     end
   end
 
+  def logout
+    logout_user
+    alert('You have successfully logged out.')
+    redirect_to(root_path)
+  end
+
   private
 
   def user_params
