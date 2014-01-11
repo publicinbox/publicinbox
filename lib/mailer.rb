@@ -4,7 +4,7 @@ API_KEY = ENV['MAILGUN_API_KEY']
 API_URL = "https://api:#{API_KEY}@api.mailgun.net/v2/publicinbox.net"
 
 class Mailer
-  def send(message)
+  def deliver_message(message)
     RestClient.post("#{API_URL}/messages", {
       :from => message.sender_email,
       :to => message.recipient_email,

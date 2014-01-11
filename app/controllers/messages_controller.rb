@@ -18,7 +18,7 @@ class MessagesController < ApplicationController
       message.recipient = User.find_by_email(message.recipient_email)
       message.save
     else
-      Mailer.send(message)
+      Mailer.deliver_message(message)
     end
 
     redirect_to(root_path)
