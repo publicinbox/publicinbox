@@ -11,4 +11,5 @@
 // about supported directives.
 //
 //= require jquery
-//= require pi
+//= require ui
+//= require app

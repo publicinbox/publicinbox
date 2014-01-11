@@ -1,6 +1,29 @@
 class MessagesController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
+  def inbox
+    messages = current_user.incoming_messages.order(:id => :desc).limit(20)
+    render(:json => messages)
+  end
+
+  def outbox
+    messages = current_user.outgoing_messages.order(:id => :desc).limit(20)
+    render(:json => messages)
+  end
+
+  def create
+    message = current_user.outgoing_messages.create!(message_params)
+
+    if message.recipient_email.ends_with?('@publicinbox.net')
+      message.recipient = User.find_by_email(message.recipient_email)
+      message.save
+    else
+      Mailer.send(message)
+    end
+
+    redirect_to(root_path)
+  end
+
   def incoming
     from    = params['sender']
     to      = params['recipient']
@@ -20,5 +43,11 @@ class MessagesController < ApplicationController
     })
 
     render :text => "OK"
+  end
+
+  private
+
+  def message_params
+    params.require(:message).permit(:recipient, :subject, :body)
   end
 end

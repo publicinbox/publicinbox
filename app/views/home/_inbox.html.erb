@@ -1,0 +1,21 @@
+<section id="inbox" ng-controller="InboxCtrl">
+  <h2>Inbox</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>Subject</th>
+        <th>Received</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="message in messages">
+        <td><a href="mailto:{{message.sender_email}}">{{message.sender_email}}</a></td>
+        <td>{{message.subject}}</td>
+        <td>{{message.created_at}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

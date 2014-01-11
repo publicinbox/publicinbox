@@ -1,0 +1,21 @@
+<section id="outbox" ng-controller="OutboxCtrl">
+  <h2>Outbox</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>To</th>
+        <th>Subject</th>
+        <th>Sent</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="message in messages">
+        <td><a href="mailto:{{message.recipient_email}}">{{message.recipient_email}}</a></td>
+        <td>{{message.subject}}</td>
+        <td>{{message.created_at}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
