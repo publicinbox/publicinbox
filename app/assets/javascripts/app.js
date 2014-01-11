@@ -1,10 +1,4 @@
-var mainApp = angular.module('publicInboxApp', ['ngSanitize']);
-
-var mainController = mainApp.controller('MainCtrl', ['$scope', function($scope) {
-
-  $scope.heading = 'Public<wbr /><em>Inbox</em>';
-
-}]);
+var mainApp = angular.module('publicInboxApp', []);
 
 var inboxController = mainApp.controller('InboxCtrl', ['$scope', '$http', function($scope, $http) {
 
