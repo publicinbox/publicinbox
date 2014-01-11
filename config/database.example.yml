@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: public_inbox_development
+  username: public_inbox
+  password: passw0rd
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: public_inbox_test
+  username: public_inbox
+  password: passw0rd
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: public_inbox_production
+  username: public_inbox
+  password: passw0rd

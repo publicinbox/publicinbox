@@ -1,0 +1,189 @@
+@import "readable";
+
+@mixin transition($property, $duration: 1s) {
+  transition: $property $duration;
+  -moz-transition: $property $duration;
+  -o-transition: $property $duration;
+  -webkit-transition: $property $duration;
+}
+
+@mixin calc($property, $value) {
+  #{$property}: calc(#{$value});
+  #{$property}: -moz-calc(#{$value});
+  #{$property}: -webkit-calc(#{$value});
+}
+
+$desktop-width: 750px + 252px;
+$widescreen-width: 1170px + (252px * 2);
+
+@mixin mobile {
+  @media all and (max-width: $desktop-width - 1) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media all and (min-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin widescreen {
+  @media all and (min-width: $widescreen-width) {
+    @content;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body > nav {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 200px;
+
+  ul {
+    @extend .nav, .nav-stacked;
+
+    li {
+      @extend h4;
+    }
+  }
+
+  @include desktop {
+    display: block;
+  }
+}
+
+main {
+  @extend .container;
+
+  min-height: 100%;
+
+  @include desktop {
+    border-left: 12px solid black;
+    margin-left: 240px;
+
+    @include calc(max-width, "100% - 252px");
+  }
+
+  @include widescreen {
+    width: auto;
+    margin-right: 252px;
+  }
+
+  & > header {
+    @extend .page-header;
+
+    h1 em {
+      @extend .text-muted;
+      font-style: normal;
+    }
+
+    h1 small {
+      white-space: nowrap;
+    }
+
+    p {
+      @extend .lead;
+    }
+
+    img {
+      vertical-align: bottom;
+    }
+  }
+
+  & > section {
+    display: none;
+  }
+
+  & > footer {
+    @extend .small, .text-muted;
+
+    display: none;
+    position: fixed;
+
+    p {
+      margin-bottom: 1ex;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    @include desktop {
+      display: block;
+      bottom: 20px;
+      left: 20px;
+      width: 200px;
+    }
+  }
+}
+
+nav {
+  a[href="/login"] {
+    color: #5cb85c;
+  }
+
+  a[href="/logout"] {
+    color: #d9534f;
+  }
+}
+
+table {
+  @extend .table;
+
+  th:last-child, td:last-child {
+    text-align: right;
+  }
+}
+
+form .field {
+  @extend .form-group;
+}
+
+input[type="text"], input[type="password"], textarea {
+  @extend .form-control;
+}
+
+input[type="submit"] {
+  @extend .btn, .btn-sm, .btn-primary;
+}
+
+#notice {
+  @extend .alert, h5;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  // Undo Bootstrap's margin and padding from .alert
+  margin-bottom: 0;
+  padding: 0;
+
+  // Explicitly set the height for animation purposes
+  height: 50px;
+  line-height: 50px;
+
+  // Ensure notice is placed over CodeMirror editors
+  z-index: 10;
+
+  &.info { @extend .alert-info; }
+  &.success { @extend .alert-success; }
+  &.warning { @extend .alert-warning; }
+  &.error { @extend .alert-danger; }
+
+  &.exiting {
+    bottom: -50px;
+  }
+
+  @include transition(bottom, 1s);
+}
