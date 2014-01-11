@@ -2,12 +2,22 @@ class MessagesController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def incoming
-    sender  = params['from']
+    from    = params['sender']
+    to      = params['recipient']
     subject = params['subject']
+    body    = params['body-plain']
 
-    puts "\n\n\nE-mail received from Mailgun:\n\n\n"
-    puts "Sender: #{sender}, subject: #{subject}"
-    puts "params: #{params.inspect}\n\n\n"
+    sender = User.find_by_email(from)
+    recipient = User.find_by_email(to)
+
+    Message.create!({
+      :sender => sender,
+      :sender_email => from,
+      :recipient => recipient,
+      :recipient_email => to,
+      :subject => subject,
+      :body => body
+    })
 
     render :text => "OK"
   end
