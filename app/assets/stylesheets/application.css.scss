@@ -81,8 +81,12 @@ main {
   & > header {
     @extend .page-header;
 
-    h1 em {
+    h1 {
       @extend .text-muted;
+    }
+
+    h1 em {
+      color: black;
       font-style: normal;
     }
 
