@@ -47,7 +47,15 @@ class MessagesController < ApplicationController
       Mailer.deliver_message(message)
     end
 
-    redirect_to(root_path)
+    render(:json => {
+      :id => message.id,
+      :recipient_email => message.recipient_email,
+      :reply_to => message.recipient_email,
+      :profile_image => profile_image(message.recipient_email),
+      :subject => message.subject,
+      :body => markdown(message.body),
+      :created_at => time_ago_in_words(message.created_at)
+    })
   end
 
   def incoming

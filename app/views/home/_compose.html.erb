@@ -1,22 +1,22 @@
 <section id="compose" data-title="Compose" ng-show="isActiveSection('compose')">
-  <%= form_for(Message.new) do |f| %>
+  <form ng-submit="sendMessage(draft)">
     <div class="field">
-      <%= f.label(:recipient_email) %>
-      <%= f.text_field(:recipient_email, 'ng-model' => 'draft.email') %>
+      <%= label_tag(:recipient_email) %>
+      <%= text_field_tag(:recipient_email, nil, 'ng-model' => 'draft.recipient_email') %>
     </div>
 
     <div class="field">
-      <%= f.label(:subject) %>
-      <%= f.text_field(:subject, 'ng-model' => 'draft.subject') %>
+      <%= label_tag(:subject) %>
+      <%= text_field(:subject, nil, 'ng-model' => 'draft.subject') %>
     </div>
 
     <div class="field">
-      <%= f.label(:body) %>
-      <%= f.text_area(:body, 'ng-model' => 'draft.body') %>
+      <%= label_tag(:body) %>
+      <%= text_area_tag(:body, nil, 'ng-model' => 'draft.body') %>
     </div>
 
     <div class="field">
-      <%= f.submit('Send') %>
+      <%= submit_tag('Send') %>
     </div>
-  <% end %>
+  </form>
 </section>

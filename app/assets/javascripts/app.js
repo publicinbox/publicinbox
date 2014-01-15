@@ -93,9 +93,16 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
   };
 
   $scope.replyToMessage = function reply(message) {
-    $scope.draft.email = message.reply_to;
+    $scope.draft.recipient_email = message.reply_to;
     $scope.draft.subject = prepend('Re: ', message.subject);
     $scope.showSection('compose');
+  };
+
+  $scope.sendMessage = function(message) {
+    $http.post('/messages', { message: message }).success(function(message) {
+      $scope.outbox.unshift(message);
+      $scope.showSection('outbox');
+    });
   };
 
   $scope.draft = {};
