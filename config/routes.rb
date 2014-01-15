@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   post '/messages/incoming' => 'messages#incoming'
 
+  resources :users
   resources :messages
 end
