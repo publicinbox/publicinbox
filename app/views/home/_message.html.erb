@@ -1,0 +1,16 @@
+<div id="message" class="modal" style="display: {{message ? 'block' : 'none'}}">
+  <h2>
+    {{message.subject}}
+    <small>
+      {{message.preposition}}
+      <img ng-src="{{message.profile_image}}" />
+      <a href="mailto:{{message.display_email}}">{{message.display_email}}</a>
+    </small>
+  </h2>
+
+  <p>
+    {{message.body}}
+  </p>
+
+  <button ng-click="closeMessage()">Close</button>
+</div>

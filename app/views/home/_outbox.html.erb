@@ -16,7 +16,7 @@
           <img ng-src="{{message.recipient_image}}" />
           <a href="mailto:{{message.recipient_email}}">{{message.recipient_email}}</a>
         </td>
-        <td><a href="/messages/{{message.id}}">{{message.subject}}</a></td>
+        <td><a href="/messages/{{message.id}}" ng-click="showMessage(message, $event)">{{message.subject}}</a></td>
         <td>{{message.created_at}} ago</td>
       </tr>
     </tbody>

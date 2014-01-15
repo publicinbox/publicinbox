@@ -164,6 +164,19 @@ input[type="submit"] {
   @extend .btn, .btn-sm, .btn-primary;
 }
 
+.modal {
+  position: fixed;
+  top: 10%;
+  bottom: 10%;
+  left: 10%;
+  right: 10%;
+  padding: 1ex 1em;
+
+  border: 3px solid black;
+  background-color: #fff;
+  z-index: 10;
+}
+
 #notice {
   @extend .alert, h5;
 
