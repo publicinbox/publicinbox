@@ -88,12 +88,12 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
     $scope.showSection('message', [
       'Message',
       message.sender_email ? 'from' : 'to',
-      message.sender_email || message.recipient_email
+      message.reply_to
     ].join(' '));
   };
 
   $scope.replyToMessage = function reply(message) {
-    $scope.draft.email = message.display_email;
+    $scope.draft.email = message.reply_to;
     $scope.draft.subject = prepend('Re: ', message.subject);
     $scope.showSection('compose');
   };
