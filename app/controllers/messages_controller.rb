@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
         :sender_email => message.sender_email,
         :profile_image => profile_image(message.sender_email),
         :subject => message.subject,
-        :body => message.body,
+        :body => markdown(message.body),
         :created_at => time_ago_in_words(message.created_at)
       }
     end
@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
         :recipient_email => message.recipient_email,
         :profile_image => profile_image(message.recipient_email),
         :subject => message.subject,
-        :body => message.body,
+        :body => markdown(message.body),
         :created_at => time_ago_in_words(message.created_at)
       }
     end

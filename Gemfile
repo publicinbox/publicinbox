@@ -14,6 +14,9 @@ gem 'sass-rails', '~> 4.0.0.rc1'
 # Use HAML for (some) layouts
 gem 'haml-rails'
 
+# Allow e-mails to be formatted using Markdown
+gem 'redcarpet'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

@@ -84,6 +84,7 @@ GEM
     rake (10.1.1)
     rdoc (4.1.1)
       json (~> 1.4)
+    redcarpet (3.0.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-collection_matchers (0.0.2)
@@ -153,6 +154,7 @@ DEPENDENCIES
   pg
   rails (= 4.1.0.beta1)
   rails_12factor
+  redcarpet
   rest-client
   rspec-rails
   sass-rails (~> 4.0.0.rc1)
