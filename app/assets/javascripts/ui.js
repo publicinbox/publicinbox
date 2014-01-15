@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var navLinks = $('body > nav ul li a'),
-      sections = $('body > main > section');
+      sections = $('body > main section');
 
   navLinks.on('click', function(e) {
     var target  = $(this).attr('href');
