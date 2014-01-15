@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="publicInboxApp">
+  <head>
+    <title>PublicInbox</title>
+    <%= stylesheet_link_tag("application") %>
+    <%= favicon_link_tag %>
+    <%= javascript_include_tag("//code.jquery.com/jquery-1.10.2.min.js") %>
+    <%= javascript_include_tag("//code.angularjs.org/1.2.8/angular.min.js") %>
+    <%= javascript_include_tag("//code.angularjs.org/1.2.8/angular-sanitize.min.js") %>
+    <%= javascript_include_tag("application") %>
+  </head>
+
+  <body data-page="#{params[:controller]}-#{params[:action]}" ng-controller="MainCtrl">
+    <%= nav_menu %>
+
+    <main>
+      <header>
+        <h1 ng-bind-html="title"></h1>
+      </header>
+
+      <%= yield %>
+      <%= site_footer %>
+    </main>
+
+    <div
+      id="notice"
+      class="<%= flash[:style] || 'info' %>"
+      ng-bind="notice.message"
+      ng-init="notice.message = '<%= flash[:notice] %>'"
+      data-state="{{notice.state}}"
+    ></div>
+  </body>
+</html>
