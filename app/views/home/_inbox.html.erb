@@ -1,4 +1,4 @@
-<section id="inbox" data-title="Inbox">
+<section id="inbox" data-title="Inbox" ng-show="isActiveSection('inbox')">
   <ul class="message-list">
     <li ng-repeat="message in inbox">
       <a href="/messages/{{message.id}}" ng-click="showMessage(message, $event)">

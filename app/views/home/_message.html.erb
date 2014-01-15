@@ -1,16 +1,7 @@
-<div id="message" class="modal" style="display: {{message ? 'block' : 'none'}}">
-  <h2>
-    {{message.subject}}
-    <small>
-      {{message.preposition}}
-      <img ng-src="{{message.profile_image}}" />
-      <a href="mailto:{{message.display_email}}">{{message.display_email}}</a>
-    </small>
-  </h2>
+<section id="message" data-title="Message from {{message.display_email}}" ng-show="isActiveSection('message')">
+  <h2>{{message.subject}}</h2>
 
   <p>
     {{message.body}}
   </p>
-
-  <button ng-click="closeMessage()">Close</button>
-</div>
+</section>

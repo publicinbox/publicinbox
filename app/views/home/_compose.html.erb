@@ -1,4 +1,4 @@
-<section id="compose" data-title="Compose">
+<section id="compose" data-title="Compose" ng-show="isActiveSection('compose')">
   <%= form_for(Message.new) do |f| %>
     <div class="field">
       <%= f.label(:recipient_email) %>

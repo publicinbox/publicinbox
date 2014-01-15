@@ -103,10 +103,6 @@ main {
     }
   }
 
-  & section {
-    display: none;
-  }
-
   & > footer {
     @extend .small, .text-muted;
 
