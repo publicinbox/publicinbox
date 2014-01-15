@@ -4,6 +4,8 @@ class Message < ActiveRecord::Base
 
   before_create :populate_ids, :populate_emails
 
+  private
+
   def populate_ids
     if self.recipient_id.nil? && self.recipient_email =~ /@publicinbox\.net$/
       recipient_name = self.recipient_email.chomp('@publicinbox.net')
