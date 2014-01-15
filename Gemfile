@@ -17,9 +17,6 @@ gem 'haml-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-
 # Use RestClient for sending e-mail via Mailgun's HTTP API
 gem 'rest-client'
 
