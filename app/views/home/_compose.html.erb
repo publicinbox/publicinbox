@@ -2,17 +2,17 @@
   <%= form_for(Message.new) do |f| %>
     <div class="field">
       <%= f.label(:recipient_email) %>
-      <%= f.text_field(:recipient_email) %>
+      <%= f.text_field(:recipient_email, 'ng-model' => 'draft.email') %>
     </div>
 
     <div class="field">
       <%= f.label(:subject) %>
-      <%= f.text_field(:subject) %>
+      <%= f.text_field(:subject, 'ng-model' => 'draft.subject') %>
     </div>
 
     <div class="field">
       <%= f.label(:body) %>
-      <%= f.text_area(:body) %>
+      <%= f.text_area(:body, 'ng-model' => 'draft.body') %>
     </div>
 
     <div class="field">

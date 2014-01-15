@@ -160,6 +160,10 @@ input[type="submit"] {
   @extend .btn, .btn-sm, .btn-primary;
 }
 
+button {
+  @extend .btn, .btm-sm, .btn-default;
+}
+
 ul.message-list {
   @extend .list-group;
 

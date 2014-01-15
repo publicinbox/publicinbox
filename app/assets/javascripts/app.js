@@ -26,12 +26,10 @@ publicInboxApp.directive('piNav', function() {
         };
       });
 
+      // This is a hack and tells me there's a fundamental problem
+      // with what I'm doing here. I will think on this.
       scope.sections = angular.extend(sections, {
-        message: {
-          title: function() {
-            return 'Message from ' + scope.message.display_email;
-          }
-        }
+        message: { title: 'Message' }
       });
 
       navLinks.on('click', function(e) {
@@ -63,8 +61,7 @@ var mainController = publicInboxApp.controller('MainCtrl', ['$scope', function($
       sectionName = sectionName.substring(1);
     }
 
-    var title = $scope.sections[sectionName].title;
-    $scope.title = typeof title === 'function' ? title() : title;
+    $scope.title = $scope.sections[sectionName].title;
     $scope.activeSection = sectionName;
   };
 
@@ -94,4 +91,27 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
     $scope.showSection('message');
   };
 
+  $scope.replyToMessage = function reply(message) {
+    $scope.draft.email = message.display_email;
+    $scope.draft.subject = prepend('Re: ', message.subject);
+    $scope.showSection('compose');
+  };
+
+  $scope.draft = {};
+
 }]);
+
+/**
+ * Prepends `prefix` to `string`, *if* not the string does not already begin
+ * with that prefix.
+ *
+ * @param {string} prefix
+ * @param {string} string
+ * @returns {string}
+ */
+function prepend(prefix, string) {
+  if (string.substring(0, prefix.length) !== prefix) {
+    string = prefix + string;
+  }
+  return string;
+}
