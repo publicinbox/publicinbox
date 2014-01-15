@@ -35,4 +35,23 @@ describe Message do
       message.recipient_email.should == 'bob@publicinbox.net'
     end
   end
+
+  describe 'trims surrounding whitespace...' do
+    before :each do
+      joe = create_user('joe')
+      @message = joe.outgoing_messages.create!({
+        :recipient_email => 'roy@hotmail.com',
+        :subject => " \t\nHello again!\n\t ",
+        :body => " \t\n How've you been? \n\t "
+      })
+    end
+
+    it 'from the subject' do
+      @message.subject.should == 'Hello again!'
+    end
+
+    it 'from the body' do
+      @message.body.should == "How've you been?"
+    end
+  end
 end
