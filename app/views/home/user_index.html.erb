@@ -1,6 +1,8 @@
-<%= render(:partial => 'inbox') %>
-<%= render(:partial => 'compose') %>
-<%= render(:partial => 'outbox') %>
+<div ng-controller="MessagesCtrl">
+  <%= render(:partial => 'inbox') %>
+  <%= render(:partial => 'compose') %>
+  <%= render(:partial => 'outbox') %>
+</div>
 
 <section id="profile">
   <p>This is your profile.</p>

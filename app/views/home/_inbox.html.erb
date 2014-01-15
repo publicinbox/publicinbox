@@ -1,4 +1,4 @@
-<section id="inbox" ng-controller="InboxCtrl">
+<section id="inbox">
   <h2>Inbox</h2>
 
   <table>
@@ -11,9 +11,9 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="message in messages">
+      <tr ng-repeat="message in inbox">
         <td>
-          <img src="{{message.profile_image}}" />
+          <img ng-src="{{message.sender_image}}" />
           <a href="mailto:{{message.sender_email}}">{{message.sender_email}}</a>
         </td>
         <td><a href="/messages/{{message.id}}">{{message.subject}}</a></td>

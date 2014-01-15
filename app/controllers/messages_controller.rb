@@ -3,9 +3,11 @@ class MessagesController < ApplicationController
 
   include ApiHelper
 
-  def inbox
-    messages = current_user.incoming_messages.order(:id => :desc).limit(20)
-    render(:json => messages.map { |message|
+  def index
+    inbox  = current_user.incoming_messages.order(:id => :desc).limit(20)
+    outbox = current_user.outgoing_messages.order(:id => :desc).limit(20)
+
+    incoming_messages = inbox.map do |message|
       {
         :id => message.id,
         :sender_email => message.sender_email,
@@ -14,12 +16,9 @@ class MessagesController < ApplicationController
         :body => message.body,
         :created_at => time_ago_in_words(message.created_at)
       }
-    })
-  end
+    end
 
-  def outbox
-    messages = current_user.outgoing_messages.order(:id => :desc).limit(20)
-    render(:json => messages.map { |message|
+    outgoing_messages = outbox.map do |message|
       {
         :id => message.id,
         :recipient_email => message.recipient_email,
@@ -28,6 +27,11 @@ class MessagesController < ApplicationController
         :body => message.body,
         :created_at => time_ago_in_words(message.created_at)
       }
+    end
+
+    render(:json => {
+      :inbox => incoming_messages,
+      :outbox => outgoing_messages
     })
   end
 
