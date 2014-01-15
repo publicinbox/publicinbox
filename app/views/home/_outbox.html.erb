@@ -12,9 +12,12 @@
 
     <tbody>
       <tr ng-repeat="message in messages">
-        <td><a href="mailto:{{message.recipient_email}}">{{message.recipient_email}}</a></td>
-        <td>{{message.subject}}</td>
-        <td>{{message.created_at}}</td>
+        <td>
+          <img src="{{message.profile_image}}" />
+          <a href="mailto:{{message.recipient_email}}">{{message.recipient_email}}</a>
+        </td>
+        <td><a href="/messages/{{message.id}}">{{message.subject}}</a></td>
+        <td>{{message.created_at}} ago</td>
       </tr>
     </tbody>
   </table>

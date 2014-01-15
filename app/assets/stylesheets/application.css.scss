@@ -143,6 +143,10 @@ nav {
 table {
   @extend .table;
 
+  th, td {
+    vertical-align: middle !important;
+  }
+
   th:last-child, td:last-child {
     text-align: right;
   }

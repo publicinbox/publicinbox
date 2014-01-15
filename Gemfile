@@ -29,6 +29,9 @@ gem 'jbuilder', '~> 1.2'
 # Whitespace is teh sux
 gem 'strip_attributes'
 
+# All aboard the Gravatar bandwagon!
+gem 'gravatar_image_tag'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', :group => :doc, :require => false
 

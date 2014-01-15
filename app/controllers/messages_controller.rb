@@ -1,14 +1,34 @@
 class MessagesController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
+  include ApiHelper
+
   def inbox
     messages = current_user.incoming_messages.order(:id => :desc).limit(20)
-    render(:json => messages)
+    render(:json => messages.map { |message|
+      {
+        :id => message.id,
+        :sender_email => message.sender_email,
+        :profile_image => profile_image(message.sender_email),
+        :subject => message.subject,
+        :body => message.body,
+        :created_at => time_ago_in_words(message.created_at)
+      }
+    })
   end
 
   def outbox
     messages = current_user.outgoing_messages.order(:id => :desc).limit(20)
-    render(:json => messages)
+    render(:json => messages.map { |message|
+      {
+        :id => message.id,
+        :recipient_email => message.recipient_email,
+        :profile_image => profile_image(message.recipient_email),
+        :subject => message.subject,
+        :body => message.body,
+        :created_at => time_ago_in_words(message.created_at)
+      }
+    })
   end
 
   def create
