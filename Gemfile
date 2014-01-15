@@ -32,6 +32,9 @@ gem 'sdoc', :group => :doc, :require => false
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/jonleighton/spring
 gem 'spring', :group => :development
 
+# Good ol' rspec
+gem 'rspec-rails', :group => [:development, :test]
+
 # Use rails_12factor gem for production
 gem 'rails_12factor', :group => :production
 
