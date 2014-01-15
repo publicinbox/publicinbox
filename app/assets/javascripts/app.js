@@ -56,12 +56,12 @@ publicInboxApp.directive('piNav', function() {
 
 var mainController = publicInboxApp.controller('MainCtrl', ['$scope', function($scope) {
 
-  $scope.showSection = function showSection(sectionName) {
+  $scope.showSection = function showSection(sectionName, title) {
     if (sectionName.charAt(0) === '#') {
       sectionName = sectionName.substring(1);
     }
 
-    $scope.title = $scope.sections[sectionName].title;
+    $scope.title = title || $scope.sections[sectionName].title;
     $scope.activeSection = sectionName;
   };
 
@@ -83,12 +83,13 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
   $scope.showMessage = function showMessage(message, e) {
     e.preventDefault();
 
-    $scope.message = angular.extend({}, message, {
-      preposition: message.sender_email ? 'from' : 'to',
-      display_email: message.sender_email || message.recipient_email
-    });
+    $scope.message = message;
 
-    $scope.showSection('message');
+    $scope.showSection('message', [
+      'Message',
+      message.sender_email ? 'from' : 'to',
+      message.sender_email || message.recipient_email
+    ].join(' '));
   };
 
   $scope.replyToMessage = function reply(message) {
