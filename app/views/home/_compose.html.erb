@@ -1,25 +1,22 @@
-<section id="compose">
+<section id="compose" data-title="Compose">
   <%= form_for(Message.new) do |f| %>
-    <fieldset>
-      <legend>Compose an e-mail</legend>
-      <div class="field">
-        <%= f.label(:recipient_email) %>
-        <%= f.text_field(:recipient_email) %>
-      </div>
+    <div class="field">
+      <%= f.label(:recipient_email) %>
+      <%= f.text_field(:recipient_email) %>
+    </div>
 
-      <div class="field">
-        <%= f.label(:subject) %>
-        <%= f.text_field(:subject) %>
-      </div>
+    <div class="field">
+      <%= f.label(:subject) %>
+      <%= f.text_field(:subject) %>
+    </div>
 
-      <div class="field">
-        <%= f.label(:body) %>
-        <%= f.text_area(:body) %>
-      </div>
+    <div class="field">
+      <%= f.label(:body) %>
+      <%= f.text_area(:body) %>
+    </div>
 
-      <div class="field">
-        <%= f.submit %>
-      </div>
-    </fieldset>
+    <div class="field">
+      <%= f.submit %>
+    </div>
   <% end %>
 </section>

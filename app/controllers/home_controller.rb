@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     if logged_in?
       @user = current_user
-      render(:action => 'user_index')
+      render(:action => 'app')
     else
       render(:action => 'guest_index')
     end

@@ -5,14 +5,15 @@
     = stylesheet_link_tag("application")
     = javascript_include_tag("//code.jquery.com/jquery-1.10.2.min.js")
     = javascript_include_tag("//code.angularjs.org/1.2.8/angular.min.js")
+    = javascript_include_tag("//code.angularjs.org/1.2.8/angular-sanitize.min.js")
     = javascript_include_tag("application")
 
-  %body(data-page="#{params[:controller]}-#{params[:action]}")
+  %body(data-page="#{params[:controller]}-#{params[:action]}" ng-controller="MainCtrl")
     = nav_menu
 
     %main
       %header
-        %h1 Public<wbr /><em>Inbox</em>
+        %h1(ng-bind-html="title")
 
       = yield
       = site_footer

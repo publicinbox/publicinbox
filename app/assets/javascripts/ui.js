@@ -1,19 +1,4 @@
 $(document).ready(function() {
-  var navLinks = $('body > nav ul li a'),
-      sections = $('body > main section');
-
-  navLinks.on('click', function(e) {
-    var target  = $(this).attr('href');
-
-    if (target.charAt(0) !== '#') {
-      return;
-    }
-
-    e.preventDefault();
-    sections.hide();
-    $(target).show();
-  });
-
   function afterDelay(delay, callback) {
     return setTimeout(callback, delay);
   }
@@ -29,8 +14,6 @@ $(document).ready(function() {
 
     element.one(possibleEvents.join(' '), callback);
   }
-
-  sections.first().show();
 
   // Slide away any alert(s) after 3 seconds
   afterDelay(3000, function() {
