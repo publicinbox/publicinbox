@@ -22,4 +22,20 @@ describe User do
       create_user('dan', :real_name => " \t\nDaniel Tao\n\t ").real_name.should == 'Daniel Tao'
     end
   end
+
+  describe 'validations' do
+    context 'user_name' do
+      it 'disallows special characters' do
+        should_fail { create_user('mike*!@') }
+      end
+
+      it 'allows underscores' do
+        create_user('mike_tyson')
+      end
+
+      it 'allows numbers' do
+        create_user('superman2000')
+      end
+    end
+  end
 end

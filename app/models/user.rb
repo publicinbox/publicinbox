@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
     self.real_name || self.user_name
   end
 
+  validates :user_name, :format => { :with => /\A\w+\Z/ }
+
   before_create :populate_email
 
   private

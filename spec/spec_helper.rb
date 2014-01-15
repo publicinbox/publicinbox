@@ -54,3 +54,7 @@ def create_user(name, attributes={})
     :password_confirmation => 'passw0rd'
   }.merge(attributes))
 end
+
+def should_fail(&block)
+  block.should raise_error
+end
