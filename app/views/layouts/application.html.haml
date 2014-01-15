@@ -19,5 +19,4 @@
       = yield
       = site_footer
 
-    - if flash[:notice]
-      #notice(class="#{flash[:style] || 'info'}")= flash[:notice]
+    #notice(class="#{flash[:style] || 'info'}" ng-bind="notice.message" ng-init="notice.message = '#{flash[:notice]}'" data-state="{{notice.state}}")

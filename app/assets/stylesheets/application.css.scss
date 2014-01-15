@@ -239,15 +239,16 @@ ul.message-list {
   height: 50px;
   line-height: 50px;
 
-  // Ensure notice is placed over CodeMirror editors
-  z-index: 10;
+  &:empty {
+    display: none;
+  }
 
   &.info { @extend .alert-info; }
   &.success { @extend .alert-success; }
   &.warning { @extend .alert-warning; }
   &.error { @extend .alert-danger; }
 
-  &.exiting {
+  &[data-state="hiding"] {
     bottom: -50px;
   }
 

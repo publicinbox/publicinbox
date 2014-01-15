@@ -10,5 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require ui
 //= require app
+//= require directives/pi_nav
+//= require controllers/main_controller
+//= require controllers/messages_controller
