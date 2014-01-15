@@ -46,11 +46,11 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
-def create_user(name)
+def create_user(name, attributes={})
   User.create!({
     :user_name => name,
     :real_name => name,
     :password => 'passw0rd',
     :password_confirmation => 'passw0rd'
-  })
+  }.merge(attributes))
 end

@@ -12,4 +12,12 @@ class User < ActiveRecord::Base
   def name
     self.real_name || self.user_name
   end
+
+  before_create :populate_email
+
+  private
+
+  def populate_email
+    self.email = "#{self.user_name}@publicinbox.net"
+  end
 end

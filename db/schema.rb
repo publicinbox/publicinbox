@@ -34,12 +34,14 @@ ActiveRecord::Schema.define(version: 20140111012807) do
 
   create_table "users", force: true do |t|
     t.string   "user_name"
+    t.string   "email"
     t.string   "real_name"
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "users", ["user_name"], name: "index_users_on_user_name", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
 end
