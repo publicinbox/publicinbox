@@ -55,6 +55,14 @@ def create_user(name, attributes={})
   }.merge(attributes))
 end
 
+def create_message(user, attributes={})
+  user.outgoing_messages.create!({
+    :recipient_email => 'user@example.com',
+    :subject => 'Hello',
+    :body => 'Want to get lunch?'
+  }.merge(attributes))
+end
+
 def should_fail(&block)
   block.should raise_error
 end

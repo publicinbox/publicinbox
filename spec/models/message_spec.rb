@@ -54,4 +54,31 @@ describe Message do
       @message.body.should == "How've you been?"
     end
   end
+
+  describe 'validations' do
+    context 'recipient_email' do
+      before :each do
+        @pete = create_user('pete')
+      end
+
+      def bad_email(email)
+        should_fail do
+          create_message(@pete, :recipient_email => email)
+        end
+      end
+
+      def good_email(email)
+        create_message(@pete, :recipient_email => email)
+      end
+
+      it 'must look reasonably like an actual e-mail address' do
+        bad_email('foo')
+        bad_email('foo.com')
+        bad_email('foo@bar@baz')
+        good_email('foo@example')
+        good_email('foo@example.com')
+        good_email('foo.bar@baz.example.com')
+      end
+    end
+  end
 end

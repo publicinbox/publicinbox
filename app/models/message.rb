@@ -4,6 +4,8 @@ class Message < ActiveRecord::Base
 
   strip_attributes
 
+  validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
+
   before_create :populate_ids, :populate_emails
 
   private
