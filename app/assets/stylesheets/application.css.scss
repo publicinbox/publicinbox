@@ -164,6 +164,51 @@ input[type="submit"] {
   @extend .btn, .btn-sm, .btn-primary;
 }
 
+ul.message-list {
+  @extend .list-group;
+
+  list-style: none;
+
+  li > a {
+    @extend .list-group-item, .media;
+
+    .picture {
+      @extend .pull-left;
+
+      img { @extend .media-object; }
+    }
+
+    .info {
+      @extend .media-body;
+
+      h3.subject {
+        @extend .list-group-item-heading;
+      }
+
+      .sender_email, .recipient_email {
+        @extend .pull-right;
+
+        &:before {
+          @extend .text-muted;
+          font-size: 80%;
+        }
+      }
+
+      .sender_email:before {
+        content: "From: ";
+      }
+
+      .recipient_email:before {
+        content: "To: ";
+      }
+
+      .created {
+        @extend .list-group-item-text;
+      }
+    }
+  }
+}
+
 .modal {
   position: fixed;
   top: 10%;

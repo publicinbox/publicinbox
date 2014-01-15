@@ -1,22 +1,16 @@
 <section id="outbox" data-title="Outbox">
-  <table>
-    <thead>
-      <tr>
-        <th>To</th>
-        <th>Subject</th>
-        <th>Sent</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr ng-repeat="message in outbox">
-        <td>
-          <img ng-src="{{message.recipient_image}}" />
-          <a href="mailto:{{message.recipient_email}}">{{message.recipient_email}}</a>
-        </td>
-        <td><a href="/messages/{{message.id}}" ng-click="showMessage(message, $event)">{{message.subject}}</a></td>
-        <td>{{message.created_at}} ago</td>
-      </tr>
-    </tbody>
-  </table>
+  <ul class="message-list">
+    <li ng-repeat="message in outbox">
+      <a href="/messages/{{message.id}}" ng-click="showMessage(message, $event)">
+        <div class="picture">
+          <img ng-src="{{message.profile_image}}" />
+        </div>
+        <div class="info">
+          <div class="recipient_email">{{message.recipient_email}}</div>
+          <h3 class="subject">{{message.subject}}</h3>
+          <div class="created">{{message.created_at}} ago</div>
+        </div>
+      </a>
+    </li>
+  </ul>
 </section>
