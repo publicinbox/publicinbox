@@ -26,6 +26,9 @@ gem 'rest-client'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# Whitespace is teh sux
+gem 'strip_attributes'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', :group => :doc, :require => false
 
