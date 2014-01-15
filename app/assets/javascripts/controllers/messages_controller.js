@@ -23,12 +23,26 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
     $scope.showSection('compose');
   };
 
-  $scope.sendMessage = function(message) {
+  $scope.sendMessage = function sendMessage(message) {
     $http.post('/messages', { message: message }).success(function(message) {
       $scope.displayNotice('Message successfully sent.');
       $scope.outbox.unshift(message);
       $scope.showSection('outbox');
     });
+  };
+
+  $scope.deleteMessage = function deleteMessage(message) {
+    if (confirm('Are you sure you want to delete this message?')) {
+      $http.delete('/messages/' + message.id)
+        .success(function(response) {
+          $scope.displayNotice(response);
+          removeFromArray($scope.inbox, message);
+          $scope.showSection('inbox');
+        })
+        .error(function(response) {
+          $scope.displayNotice(response, 'error');
+        });
+    }
   };
 
   $scope.draft = {};
@@ -48,4 +62,19 @@ function prepend(prefix, string) {
     string = prefix + string;
   }
   return string;
+}
+
+/**
+ * Removes an element from an array.
+ *
+ * @param {Array.<*>} array
+ * @param {*} element
+ */
+function removeFromArray(array, element) {
+  for (var len = array.length, i = len - 1; i >= 0; --i) {
+    if (array[i] === element) {
+      array.splice(i, 1);
+      return;
+    }
+  }
 }

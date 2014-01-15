@@ -15,8 +15,9 @@ var mainController = publicInboxApp.controller('MainCtrl', ['$scope', '$timeout'
 
   $scope.activeSection = 'inbox';
 
-  $scope.displayNotice = function displayNotice(notice) {
-    $scope.notice.message = notice;
+  $scope.displayNotice = function displayNotice(message, style) {
+    $scope.notice.message = message;
+    $scope.notice.style = style || 'info';
     $scope.notice.state = 'displayed';
     $scope.hideNoticeAfter(3000);
   };

@@ -5,5 +5,6 @@
 
   <p>
     <button ng-click="replyToMessage(message)">Reply</button>
+    <button class="delete" ng-click="deleteMessage(message)" ng-show="!!message.sender_email">Delete</button>
   </p>
 </section>

@@ -24,9 +24,9 @@
 
     <div
       id="notice"
-      class="<%= flash[:style] || 'info' %>"
+      class="{{notice.style}}"
       ng-bind="notice.message"
-      ng-init="notice.message = '<%= flash[:notice] %>'"
+      ng-init="notice.message = '<%= flash[:notice] %>'; notice.style = '<%= flash[:style] || 'info' %>'"
       data-state="{{notice.state}}"
     ></div>
   </body>

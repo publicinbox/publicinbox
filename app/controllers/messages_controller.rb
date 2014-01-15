@@ -58,6 +58,18 @@ class MessagesController < ApplicationController
     })
   end
 
+  def destroy
+    message = Message.find(params[:id])
+
+    if current_user != message.recipient
+      return render(:text => "You can't delete someone else's e-mail!", :status => 403)
+    end
+
+    message.destroy!
+
+    render(:text => 'Message successfully deleted.')
+  end
+
   def incoming
     from    = params['sender']
     to      = params['recipient']
@@ -76,7 +88,7 @@ class MessagesController < ApplicationController
       :body => body
     })
 
-    render :text => "OK"
+    render(:text => 'OK')
   end
 
   private

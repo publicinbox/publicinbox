@@ -162,6 +162,10 @@ input[type="submit"] {
 
 button {
   @extend .btn, .btm-sm, .btn-default;
+
+  &.delete {
+    @extend .btn-danger;
+  }
 }
 
 ul.message-list {
