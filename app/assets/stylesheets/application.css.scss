@@ -52,7 +52,7 @@ body[data-state="loading"] {
     left: 0;
     right: 0;
 
-    background: #fff url("/assets/loading.gif") no-repeat center;
+    background: #fff image-url("loading.gif") no-repeat center;
     opacity: 0.5;
     z-index: 100;
   }
