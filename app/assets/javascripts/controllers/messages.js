@@ -41,11 +41,13 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     if (confirm(confirmationPrompt)) {
       $scope.app.state = 'loading';
 
+      var section = message.sender_email ? 'inbox' : 'outbox';
+
       var request = $http.delete('/messages/' + message.id)
         .success(function(response) {
           $scope.displayNotice(response);
           $scope.removeMessage(message);
-          $scope.showSection('inbox');
+          $scope.showSection(section);
         })
         .error(function(response) {
           $scope.displayNotice(response, 'error');
