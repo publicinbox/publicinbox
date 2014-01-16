@@ -34,7 +34,11 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
   };
 
   $scope.deleteMessage = function deleteMessage(message) {
-    if (confirm('Are you sure you want to delete this message?')) {
+    var confirmationPrompt = message.sender_email ?
+      'Are you sure you want to delete this message?' :
+      'Really delete your copy of this message (you cannot unsend it)?';
+
+    if (confirm(confirmationPrompt)) {
       $scope.app.state = 'loading';
 
       var request = $http.delete('/messages/' + message.id)

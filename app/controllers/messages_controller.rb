@@ -61,11 +61,24 @@ class MessagesController < ApplicationController
   def destroy
     message = Message.find(params[:id])
 
-    if current_user != message.recipient
+    if current_user == message.recipient
+      message.recipient_id = nil
+    elsif current_user == message.sender
+      message.sender_id = nil
+    else
       return render(:text => "You can't delete someone else's e-mail!", :status => 403)
     end
 
-    message.destroy!
+    # Since a message is sorta owned by two parties (sender + recipient),
+    # "deleting" a message will really only unlink it from the current user (so
+    # the other user can still see it). However, if both users have deleted it,
+    # or only one user is a PublicInbox user and the other is external, then we
+    # can delete it for real.
+    if message.sender_id.nil? && message.recipient_id.nil?
+      message.destroy!
+    else
+      message.save!
+    end
 
     render(:text => 'Message successfully deleted.')
   end
