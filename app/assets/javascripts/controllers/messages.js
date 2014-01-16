@@ -44,7 +44,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
       var request = $http.delete('/messages/' + message.id)
         .success(function(response) {
           $scope.displayNotice(response);
-          removeFromArray($scope.inbox, message);
+          $scope.removeMessage(message);
           $scope.showSection('inbox');
         })
         .error(function(response) {
@@ -55,6 +55,17 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
         $scope.app.state = 'ready';
       });
     }
+  };
+
+  $scope.removeMessage = function removeMessage(message) {
+    var isSameMessage = function(m) {
+      return m.id === message.id;
+    };
+
+    // Remove from both inbox and outbox, to account for scenario where the user
+    // sent him-/herself a message.
+    removeFromArray($scope.inbox, isSameMessage);
+    removeFromArray($scope.outbox, isSameMessage);
   };
 
   $scope.draft = {};
@@ -90,11 +101,30 @@ function prepend(prefix, string) {
  * @param {Array.<*>} array
  * @param {*} element
  */
-function removeFromArray(array, element) {
+function removeFromArray(array, predicate) {
+  predicate = createPredicate(predicate);
   for (var len = array.length, i = len - 1; i >= 0; --i) {
-    if (array[i] === element) {
+    if (predicate(array[i])) {
       array.splice(i, 1);
-      return;
     }
   }
+}
+
+/**
+ * Takes a value and returns a predicate (function) that checks whether its
+ * argument is equal to that value. Or, if passed a function, simply returns it.
+ *
+ * @param {*} predicate
+ * @returns {function(*):boolean}
+ */
+function createPredicate(predicate) {
+  if (typeof predicate === 'function') {
+    return function(x) { return !!predicate(x); };
+  }
+
+  if (isNaN(predicate)) {
+    return function(x) { return isNaN(x); };
+  }
+
+  return function(x) { return x === predicate; };
 }
