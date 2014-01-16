@@ -42,6 +42,7 @@ publicInboxApp.directive('piNav', function() {
         e.preventDefault();
 
         scope.showSection(target);
+        scope.hideNav();
         scope.$apply();
       });
 

@@ -13,6 +13,14 @@ publicInboxApp.controller('MainCtrl', ['$scope', '$timeout', function($scope, $t
     return $scope.activeSection === sectionName;
   };
 
+  $scope.revealNav = function revealNav() {
+    $scope.nav.state = 'revealed';
+  };
+
+  $scope.hideNav = function hideNav() {
+    $scope.nav.state = 'ready';
+  };
+
   $scope.activeSection = 'inbox';
 
   $scope.displayNotice = function displayNotice(message, style) {
@@ -38,6 +46,7 @@ publicInboxApp.controller('MainCtrl', ['$scope', '$timeout', function($scope, $t
 
   $scope.hideNoticeAfter(3000);
 
+  $scope.nav = { state: 'ready' };
   $scope.app = { state: 'ready' };
 
 }]);

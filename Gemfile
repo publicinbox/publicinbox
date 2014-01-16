@@ -11,6 +11,9 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0.rc1'
 
+# Use Font Awesome for icons
+gem 'font-awesome-sass'
+
 # Use HAML for (some) layouts
 gem 'haml-rails'
 
