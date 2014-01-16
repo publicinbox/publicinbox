@@ -95,18 +95,19 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   $scope.app.state = 'loading';
 
   $http.get('/messages').success(function(data) {
-    $scope.inbox  = data.inbox;
-    $scope.outbox = data.outbox;
+    $scope.user_id   = data.user_id;
+    $scope.inbox     = data.inbox;
+    $scope.outbox    = data.outbox;
     $scope.app.state = 'ready';
-  });
 
-  // This isn't really very Angular-y, but it seems logically to belong here
-  // (in the messages controller) at least.
-  var realtimeListener = new Faye.Client('/realtime');
-  realtimeListener.subscribe('/messages', function(message) {
-    $scope.addMessage(message);
-    $scope.displayNotice('New message received from ' + message.sender_email + '!');
-    $scope.$apply();
+    // This isn't really very Angular-y, but it seems logically to belong here
+    // (in the messages controller) at least.
+    var realtimeListener = new Faye.Client('/realtime');
+    realtimeListener.subscribe('/messages/' + $scope.user_id, function(message) {
+      $scope.addMessage(message);
+      $scope.displayNotice('New message received from ' + message.sender_email + '!');
+      $scope.$apply();
+    });
   });
 
 }]);

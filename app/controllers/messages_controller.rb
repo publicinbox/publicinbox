@@ -11,6 +11,7 @@ class MessagesController < ApplicationController
     outgoing_messages = outbox.map(&method(:render_outgoing_message))
 
     render(:json => {
+      :user_id => current_user.id,
       :inbox => incoming_messages,
       :outbox => outgoing_messages
     })
@@ -56,7 +57,11 @@ class MessagesController < ApplicationController
       :body => body
     })
 
-    RealtimeMessagesController.publish('/messages', render_incoming_message(message))
+    if recipient.nil?
+      return render(:text => 'No such user', :status => 404)
+    end
+
+    RealtimeMessagesController.publish('/messages/#{recipient.id}', render_incoming_message(message))
 
     render(:text => 'OK')
   end

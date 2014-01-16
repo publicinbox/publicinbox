@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   resources :messages
 
   faye_server '/realtime', :timeout => 25 do
-    map '/messages' => RealtimeMessagesController
+    map '/messages/**' => RealtimeMessagesController
   end
 end
