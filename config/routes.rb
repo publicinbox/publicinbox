@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  match '/login'    => 'home#login',    :via => [:get, :post]
-  match '/register' => 'home#register', :via => [:get, :post]
-  match '/logout'   => 'home#logout',   :via => [:get, :post]
+  post '/login'    => 'home#login'
+  post '/register' => 'home#register'
+  get '/logout'    => 'home#logout'
 
   post '/messages/incoming' => 'messages#incoming'
 

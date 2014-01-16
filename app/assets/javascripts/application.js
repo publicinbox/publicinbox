@@ -14,6 +14,6 @@
 //= require codemirror/markdown
 //= require ui-codemirror
 //= require app
-//= require directives/pi-nav
+//= require directives/pi-navigable-sections
 //= require controllers/main
 //= require controllers/messages

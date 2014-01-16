@@ -1,9 +1,17 @@
 module ApplicationHelper
+  def partial(name)
+    render(:partial => "partials/#{name}")
+  end
+
   def nav_menu
-    render(:partial => 'partials/navigation')
+    partial('navigation')
   end
 
   def site_footer
-    render(:partial => 'partials/site_footer')
+    partial('site_footer')
+  end
+
+  def site_about
+    partial('about')
   end
 end

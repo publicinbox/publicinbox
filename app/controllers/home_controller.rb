@@ -1,54 +1,41 @@
 class HomeController < ApplicationController
   def index
-    if logged_in?
-      @user = current_user
-      render(:action => 'app')
-    else
-      render(:action => 'guest_index')
-    end
+    @user = current_user || User.new
+    render(:action => logged_in? && 'app' || 'guest')
   end
 
   def login
-    if request.post?
-      @user = User.new(user_params)
+    @user = User.new(user_params)
 
-      existing_user = User.find_by(:user_name => @user.user_name)
+    existing_user = User.find_by(:user_name => @user.user_name)
 
-      if existing_user.nil?
-        alert('No user by that name exists. Did you make a typo?')
-        return
-      end
-
-      if !existing_user.authenticate(@user.password)
-        alert("That isn't the right password! Are you sure you're #{@user.user_name}?")
-        return
-      end
-
-      login_user(existing_user)
-      alert("Welcome back, #{existing_user.name}!")
-
-      redirect_to(root_path)
-
-    else
-      @user = User.new
+    if existing_user.nil?
+      alert('No user by that name exists. Did you make a typo?')
+      return render(:action => 'guest')
     end
+
+    if !existing_user.authenticate(@user.password)
+      alert("That isn't the right password! Are you sure you're #{@user.user_name}?")
+      return render(:action => 'guest')
+    end
+
+    login_user(existing_user)
+    alert("Welcome back, #{existing_user.name}!")
+
+    redirect_to(root_path)
   end
 
   def register
-    if request.post?
-      @user = User.new(user_params)
+    @user = User.new(user_params)
 
-      if @user.save
-        login_user(@user)
-        alert('Thank you for registering!')
-        redirect_to(root_path)
-      else
-        alert('There was a problem creating your account.')
-      end
-
-    else
-      @user = User.new
+    if @user.save
+      login_user(@user)
+      alert('Thank you for registering!')
+      return redirect_to(root_path)
     end
+
+    alert('There was a problem creating your account.')
+    render(:action => 'guest')
   end
 
   def logout

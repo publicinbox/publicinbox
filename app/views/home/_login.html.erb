@@ -1,0 +1,17 @@
+<section id="login" data-title="Log In" ng-show="isActiveSection('login')">
+  <%= form_for(@user, :url => login_path) do |f| -%>
+    <div class="field">
+      <%= f.label(:user_name) %>
+      <%= f.text_field(:user_name) %>
+    </div>
+
+    <div class="field">
+      <%= f.label(:password) %>
+      <%= f.password_field(:password) %>
+    </div>
+
+    <div class="field">
+      <%= f.submit('Log in') %> or <%= link_to('Register', '#register') %>
+    </div>
+  <% end -%>
+</section>
