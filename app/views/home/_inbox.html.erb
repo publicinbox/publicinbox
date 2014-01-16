@@ -1,4 +1,8 @@
 <section id="inbox" data-title="Inbox" ng-show="isActiveSection('inbox')">
+  <p ng-hide="inbox.length">
+    You don't have any messages!
+  </p>
+
   <ul class="message-list">
     <li ng-repeat="message in inbox">
       <a href="/messages/{{message.id}}" ng-click="showMessage(message, $event)">
