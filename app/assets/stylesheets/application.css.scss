@@ -48,6 +48,9 @@ body > nav {
   left: 20px;
   width: 200px;
 
+  background-color: #fff;
+  z-index: 1;
+
   ul {
     @extend .nav, .nav-stacked;
 
@@ -102,27 +105,27 @@ main {
       vertical-align: bottom;
     }
   }
+}
 
-  & > footer {
-    @extend .small, .text-muted;
+body > footer {
+  @extend .small, .text-muted;
 
-    display: none;
-    position: fixed;
+  display: none;
+  position: fixed;
 
-    p {
-      margin-bottom: 1ex;
-    }
+  p {
+    margin-bottom: 1ex;
+  }
 
-    p:last-child {
-      margin-bottom: 0;
-    }
+  p:last-child {
+    margin-bottom: 0;
+  }
 
-    @include desktop {
-      display: block;
-      bottom: 20px;
-      left: 20px;
-      width: 200px;
-    }
+  @include desktop {
+    display: block;
+    bottom: 20px;
+    left: 20px;
+    width: 200px;
   }
 }
 
