@@ -12,5 +12,5 @@
 //
 //= require app
 //= require directives/pi_nav
-//= require controllers/main_controller
-//= require controllers/messages_controller
+//= require controllers/main
+//= require controllers/messages

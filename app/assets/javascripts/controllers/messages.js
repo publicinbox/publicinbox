@@ -1,4 +1,4 @@
-var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $http) {
+publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $http) {
 
   $scope.showMessage = function showMessage(message, e) {
     e.preventDefault();

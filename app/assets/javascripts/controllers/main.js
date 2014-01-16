@@ -1,4 +1,4 @@
-var mainController = publicInboxApp.controller('MainCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+publicInboxApp.controller('MainCtrl', ['$scope', '$timeout', function($scope, $timeout) {
 
   $scope.showSection = function showSection(sectionName, title) {
     if (sectionName.charAt(0) === '#') {
