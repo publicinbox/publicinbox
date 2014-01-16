@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :current_user
 
+  before_filter :inject_delay if Rails.env.development?
+
   def login_user(user)
     session[:user_id] = user.id
   end
@@ -23,5 +25,9 @@ class ApplicationController < ActionController::Base
 
   def alert(message)
     flash[:notice] = message
+  end
+
+  def inject_delay
+    sleep 3
   end
 end
