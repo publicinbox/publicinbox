@@ -7,29 +7,8 @@ class MessagesController < ApplicationController
     inbox  = current_user.incoming_messages.order(:id => :desc).limit(20)
     outbox = current_user.outgoing_messages.order(:id => :desc).limit(20)
 
-    incoming_messages = inbox.map do |message|
-      {
-        :id => message.id,
-        :sender_email => message.sender_email,
-        :reply_to => message.sender_email,
-        :profile_image => profile_image(message.sender_email),
-        :subject => message.subject,
-        :body => markdown(message.body),
-        :created_at => time_ago_in_words(message.created_at)
-      }
-    end
-
-    outgoing_messages = outbox.map do |message|
-      {
-        :id => message.id,
-        :recipient_email => message.recipient_email,
-        :reply_to => message.recipient_email,
-        :profile_image => profile_image(message.recipient_email),
-        :subject => message.subject,
-        :body => markdown(message.body),
-        :created_at => time_ago_in_words(message.created_at)
-      }
-    end
+    incoming_messages = inbox.map(&method(:render_incoming_message))
+    outgoing_messages = outbox.map(&method(:render_outgoing_message))
 
     render(:json => {
       :inbox => incoming_messages,
@@ -44,15 +23,7 @@ class MessagesController < ApplicationController
       Mailer.deliver_message!(message)
     end
 
-    render(:json => {
-      :id => message.id,
-      :recipient_email => message.recipient_email,
-      :reply_to => message.recipient_email,
-      :profile_image => profile_image(message.recipient_email),
-      :subject => message.subject,
-      :body => markdown(message.body),
-      :created_at => time_ago_in_words(message.created_at)
-    })
+    render(:json => render_outgoing_message(message))
 
   rescue => ex
     render(:text => ex.message, :status => 404)
@@ -76,7 +47,7 @@ class MessagesController < ApplicationController
     sender = User.find_by_email(from)
     recipient = User.find_by_email(to)
 
-    Message.create!({
+    message = Message.create!({
       :sender => sender,
       :sender_email => from,
       :recipient => recipient,
@@ -85,6 +56,8 @@ class MessagesController < ApplicationController
       :body => body
     })
 
+    RealtimeMessagesController.publish('/messages', render_incoming_message(message))
+
     render(:text => 'OK')
   end
 
@@ -92,5 +65,29 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:recipient_email, :subject, :body)
+  end
+
+  def render_incoming_message(message)
+    {
+      :id => message.id,
+      :sender_email => message.sender_email,
+      :reply_to => message.sender_email,
+      :profile_image => profile_image(message.sender_email),
+      :subject => message.subject,
+      :body => markdown(message.body),
+      :created_at => time_ago_in_words(message.created_at)
+    }
+  end
+
+  def render_outgoing_message(message)
+    {
+      :id => message.id,
+      :recipient_email => message.recipient_email,
+      :reply_to => message.recipient_email,
+      :profile_image => profile_image(message.recipient_email),
+      :subject => message.subject,
+      :body => markdown(message.body),
+      :created_at => time_ago_in_words(message.created_at)
+    }
   end
 end

@@ -50,5 +50,9 @@ gem 'rails_12factor', :group => :production
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.1.2'
 
-# Use unicorn as the app server
-gem 'unicorn'
+# Use thin as the app server (necessary for using faye)
+gem 'thin'
+
+# Websockets!
+# Currently I need to use @nilbus's fork for Rails >= 4
+gem 'faye-rails', :github => 'nilbus/faye-rails'
