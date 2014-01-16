@@ -8,6 +8,6 @@ module ApiHelper
 
   def markdown(text)
     @renderer ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-    @renderer.render(text)
+    @renderer.render(text || '')
   end
 end
