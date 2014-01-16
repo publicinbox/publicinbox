@@ -48,6 +48,10 @@ class MessagesController < ApplicationController
     sender = User.find_by_email(from)
     recipient = User.find_by_email(to)
 
+    if recipient.nil?
+      return render(:text => 'No such user', :status => 404)
+    end
+
     message = Message.create!({
       :sender => sender,
       :sender_email => from,
@@ -57,11 +61,9 @@ class MessagesController < ApplicationController
       :body => body
     })
 
-    if recipient.nil?
-      return render(:text => 'No such user', :status => 404)
-    end
-
+    puts "Publishing realtime message #{message.id} on channel '/messages/#{recipient.id}'"
     RealtimeMessagesController.publish('/messages/#{recipient.id}', render_incoming_message(message))
+    puts "Successfully published message #{message.id} on channel '/messages/#{recipient.id}'"
 
     render(:text => 'OK')
   end
