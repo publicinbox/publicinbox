@@ -39,6 +39,37 @@ describe User do
     end
   end
 
+  describe '#create_message!' do
+    let(:user) { create_user('user') }
+
+    it 'sets the current user as the sender' do
+      message = user.create_message!(:recipient_email => 'recipient@example.com')
+      message.sender.should == user
+    end
+
+    it 'prevents users from sending messages with no recipients' do
+      should_fail { user.create_message!(:subject => 'hello') }
+    end
+
+    it 'lets messages through as long as a recipient is set' do
+      recipient = create_user('recipient')
+      user.create_message!(:recipient => recipient)
+      user.create_message!(:recipient_email => 'recipient@example.com')
+    end
+
+    it 'populates recipient_id if possible, same as Message#create' do
+      recipient = create_user('recipient')
+      message = user.create_message!(:recipient_email => 'recipient@publicinbox.net')
+      message.recipient.should == recipient
+    end
+
+    it 'populates recipient_email if possible, same as Message#create' do
+      recipient = create_user('recipient')
+      message = user.create_message!(:recipient => recipient)
+      message.recipient_email.should == 'recipient@publicinbox.net'
+    end
+  end
+
   describe '#delete_message!' do
     let(:user) { create_user('user') }
 

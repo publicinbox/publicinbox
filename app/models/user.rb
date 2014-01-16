@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def create_message!(attributes)
-    message = Message.new(attributes)
+    message = self.outgoing_messages.new(attributes)
 
     raise "You must specify a recipient." if !message.has_recipient?
 
