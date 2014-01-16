@@ -38,13 +38,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = current_user.outgoing_messages.create!(message_params)
+    message = current_user.create_message!(message_params)
 
-    if message.recipient_email.ends_with?('@publicinbox.net')
-      message.recipient = User.find_by_email(message.recipient_email)
-      message.save
-    else
-      Mailer.deliver_message(message)
+    unless message.internal_recipient?
+      Mailer.deliver_message!(message)
     end
 
     render(:json => {
@@ -56,12 +53,18 @@ class MessagesController < ApplicationController
       :body => markdown(message.body),
       :created_at => time_ago_in_words(message.created_at)
     })
+
+  rescue => ex
+    render(:text => ex.message, :status => 404)
   end
 
   def destroy
     message = Message.find(params[:id])
     current_user.delete_message!(message)
     render(:text => 'Message successfully deleted.')
+
+  rescue => ex
+    render(:text => ex.message, :status => 403)
   end
 
   def incoming

@@ -15,6 +15,15 @@ class User < ActiveRecord::Base
     self.real_name || self.user_name
   end
 
+  def create_message!(attributes)
+    message = Message.new(attributes)
+
+    raise "You must specify a recipient." if !message.has_recipient?
+
+    message.save!
+    message
+  end
+
   def delete_message!(message)
     if self == message.recipient
       message.recipient_id = nil

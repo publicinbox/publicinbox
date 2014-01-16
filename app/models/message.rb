@@ -8,6 +8,18 @@ class Message < ActiveRecord::Base
 
   before_create :populate_ids, :populate_emails
 
+  def has_recipient?
+    self.recipient_id.present? || self.recipient_email.present?
+  end
+
+  def internal_sender?
+    self.sender_email.try(:ends_with?, '@publicinbox.net')
+  end
+
+  def internal_recipient?
+    self.recipient_email.try(:ends_with?, '@publicinbox.net')
+  end
+
   private
 
   def populate_ids

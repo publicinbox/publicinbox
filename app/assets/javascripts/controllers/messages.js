@@ -37,6 +37,9 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
         $scope.displayNotice('Message successfully sent.');
         $scope.outbox.unshift(message);
         $scope.showSection('outbox');
+      })
+      .error(function(response) {
+        $scope.displayNotice(response, 'error');
       });
 
     request['finally'](function() {
