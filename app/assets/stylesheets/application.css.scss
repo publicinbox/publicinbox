@@ -131,6 +131,8 @@ button.expand-nav {
 main {
   @extend .container;
 
+  min-height: calc(100% - 40px);
+
   @include desktop {
     margin-left: 240px;
 
