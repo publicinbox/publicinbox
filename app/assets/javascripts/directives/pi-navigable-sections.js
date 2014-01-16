@@ -35,7 +35,6 @@ publicInboxApp.directive('piNavigableSections', function() {
       });
 
       scope.showSection(sectionElements.first().attr('id'));
-      scope.$apply();
     }
   };
 
