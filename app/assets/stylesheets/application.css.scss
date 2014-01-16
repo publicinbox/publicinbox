@@ -172,7 +172,7 @@ input[type="submit"] {
 }
 
 button {
-  @extend .btn, .btm-sm, .btn-default;
+  @extend .btn, .btn-sm, .btn-default;
 
   &.delete {
     @extend .btn-danger;
