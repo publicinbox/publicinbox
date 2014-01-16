@@ -10,7 +10,10 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require codemirror
+//= require codemirror/markdown
 //= require app
 //= require directives/pi_nav
+//= require directives/pi_editor
 //= require controllers/main
 //= require controllers/messages
