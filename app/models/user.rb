@@ -15,6 +15,27 @@ class User < ActiveRecord::Base
     self.real_name || self.user_name
   end
 
+  def delete_message!(message)
+    if self == message.recipient
+      message.recipient_id = nil
+    elsif self == message.sender
+      message.sender_id = nil
+    else
+      raise "You can't delete someone else's e-mail!"
+    end
+
+    # Since a message is sorta owned by two parties (sender + recipient),
+    # "deleting" a message will really only unlink it from the current user (so
+    # the other user can still see it). However, if both users have deleted it,
+    # or only one user is a PublicInbox user and the other is external, then we
+    # can delete it for real.
+    if message.sender_id.nil? && message.recipient_id.nil?
+      message.destroy!
+    else
+      message.save!
+    end
+  end
+
   validates :user_name, :format => { :with => /\A\w+\Z/ }
 
   before_create :populate_email

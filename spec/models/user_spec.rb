@@ -38,4 +38,75 @@ describe User do
       end
     end
   end
+
+  describe '#delete_message!' do
+    let(:user) { create_user('user') }
+
+    context 'when the user is the sender' do
+      it 'simply deletes messages to external recipients' do
+        message = create_message(user, :recipient_email => 'joe@gmail.com')
+        user.delete_message!(message)
+        Message.find_by(:id => message.id).should be_nil
+      end
+
+      it '"unlinks" the user from messages to internal recipients' do
+        recipient = create_user('recipient')
+        message = create_message(user, :recipient => recipient)
+        user.delete_message!(message)
+
+        # The record should still exist...
+        Message.find_by(:id => message.id).should == message
+
+        # It just shouldn't have sender_id anymore
+        message.reload.sender_id.should be_nil
+      end
+    end
+
+    context 'when the user is the recipient' do
+      it 'simply deletes messages from external senders' do
+        message = Message.create!({
+          :sender_email => 'sender@example.com',
+          :recipient => user,
+          :subject => 'Heyo',
+          :body => "How you doin'?"
+        })
+        user.delete_message!(message)
+        Message.find_by(:id => message.id).should be_nil
+      end
+
+      it '"unlinks" the user from messages from internal senders' do
+        sender = create_user('sender')
+        message = create_message(sender, :recipient => user)
+        user.delete_message!(message)
+
+        # Record should still exist
+        Message.find_by(:id => message.id).should == message
+
+        # Shouldn't have recipient_id
+        message.reload.recipient_id.should be_nil
+      end
+    end
+
+    context 'when both parties delete a message' do
+      it 'gone baby gone' do
+        sender = create_user('sender')
+        recipient = create_user('recipient')
+
+        message = create_message(sender, :recipient => recipient)
+
+        sender.delete_message!(message)
+        recipient.delete_message!(message)
+
+        Message.find_by(:id => message.id).should be_nil
+      end
+    end
+
+    context 'when the user is some random schmuck' do
+      it "doesn't let him delete the message" do
+        sender = create_user('sender')
+        message = create_message(sender)
+        should_fail { user.delete_message!(message) }
+      end
+    end
+  end
 end
