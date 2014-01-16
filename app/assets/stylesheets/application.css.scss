@@ -284,7 +284,9 @@ ul.message-list {
 }
 
 #message > h2 {
-  @include empty-placeholder("[No subject]");
+  .subject {
+    @include empty-placeholder("[No subject]");
+  }
 }
 
 #notice {

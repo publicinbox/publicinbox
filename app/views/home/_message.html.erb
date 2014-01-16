@@ -1,5 +1,8 @@
 <section id="message" data-title="Message" ng-show="isActiveSection('message')">
-  <h2>{{message.subject}}</h2>
+  <h2>
+    <span class="subject">{{message.subject}}</span>
+    <small><%= link_to('Back', '#{{message.section}}') %></small>
+  </h2>
 
   <div ng-bind-html="message.body"></div>
 

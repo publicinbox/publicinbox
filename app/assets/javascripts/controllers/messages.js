@@ -3,7 +3,9 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   $scope.showMessage = function showMessage(message, e) {
     e.preventDefault();
 
-    $scope.message = message;
+    $scope.message = angular.extend({}, message, {
+      section: message.sender_email ? 'inbox' : 'outbox'
+    });
 
     $scope.showSection('message', [
       'Message',
