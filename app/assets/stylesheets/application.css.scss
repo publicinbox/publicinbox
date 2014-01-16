@@ -136,6 +136,11 @@ main {
   & > header {
     @extend .page-header;
 
+    h1 em {
+      @extend .text-muted;
+      font-style: normal;
+    }
+
     h1 small {
       white-space: nowrap;
     }
