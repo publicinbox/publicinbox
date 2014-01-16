@@ -19,8 +19,6 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   };
 
   $scope.sendMessage = function sendMessage(message) {
-    $scope.app.state = 'loading';
-
     if (!message.body) {
       if (!confirm('Really send a message without a body?')) {
         return;
@@ -31,6 +29,8 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
         return;
       }
     }
+
+    $scope.app.state = 'loading';
 
     var request = $http.post('/messages', { message: message })
       .success(function(message) {
