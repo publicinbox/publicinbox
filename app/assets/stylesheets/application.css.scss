@@ -74,11 +74,12 @@ body[data-state="loading"] {
 }
 
 body > nav {
-  @include transition(left, 0.5s);
+  @include transition(right, 0.5s);
 
   position: fixed;
+  top: 0;
+  bottom: 0;
   width: 200px;
-  min-height: 100%;
   padding: 20px;
 
   border-right: 12px solid black;
@@ -99,10 +100,13 @@ body > nav {
   }
 
   @include mobile {
-    left: -220px;
+    right: -220px;
+
+    border-left: 12px solid black;
+    border-right: none;
 
     &.revealed {
-      left: 0;
+      right: 0;
     }
   }
 }
