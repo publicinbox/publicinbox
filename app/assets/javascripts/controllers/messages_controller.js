@@ -1,10 +1,5 @@
 var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $http) {
 
-  $http.get('/messages').success(function(data) {
-    $scope.inbox  = data.inbox;
-    $scope.outbox = data.outbox;
-  });
-
   $scope.showMessage = function showMessage(message, e) {
     e.preventDefault();
 
@@ -24,16 +19,25 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
   };
 
   $scope.sendMessage = function sendMessage(message) {
-    $http.post('/messages', { message: message }).success(function(message) {
-      $scope.displayNotice('Message successfully sent.');
-      $scope.outbox.unshift(message);
-      $scope.showSection('outbox');
+    $scope.app.state = 'loading';
+
+    var request = $http.post('/messages', { message: message })
+      .success(function(message) {
+        $scope.displayNotice('Message successfully sent.');
+        $scope.outbox.unshift(message);
+        $scope.showSection('outbox');
+      });
+
+    request['finally'](function() {
+      $scope.app.state = 'ready';
     });
   };
 
   $scope.deleteMessage = function deleteMessage(message) {
     if (confirm('Are you sure you want to delete this message?')) {
-      $http.delete('/messages/' + message.id)
+      $scope.app.state = 'loading';
+
+      var request = $http.delete('/messages/' + message.id)
         .success(function(response) {
           $scope.displayNotice(response);
           removeFromArray($scope.inbox, message);
@@ -42,10 +46,22 @@ var messagesController = publicInboxApp.controller('MessagesCtrl', ['$scope', '$
         .error(function(response) {
           $scope.displayNotice(response, 'error');
         });
+
+      request['finally'](function() {
+        $scope.app.state = 'ready';
+      });
     }
   };
 
   $scope.draft = {};
+
+  $scope.app.state = 'loading';
+
+  $http.get('/messages').success(function(data) {
+    $scope.inbox  = data.inbox;
+    $scope.outbox = data.outbox;
+    $scope.app.state = 'ready';
+  });
 
 }]);
 

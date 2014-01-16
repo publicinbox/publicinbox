@@ -10,7 +10,11 @@
     <%= javascript_include_tag("application") %>
   </head>
 
-  <body data-page="#{params[:controller]}-#{params[:action]}" ng-controller="MainCtrl">
+  <body
+    data-page="<%= "#{params[:controller]}-#{params[:action]}" %>"
+    data-state="{{app.state}}"
+    ng-controller="MainCtrl">
+
     <%= nav_menu %>
 
     <main>
@@ -28,7 +32,8 @@
       class="{{notice.style}}"
       ng-bind="notice.message"
       ng-init="notice.message = '<%= flash[:notice] %>'; notice.style = '<%= flash[:style] || 'info' %>'"
-      data-state="{{notice.state}}"
-    ></div>
+      data-state="{{notice.state}}">
+    </div>
+
   </body>
 </html>

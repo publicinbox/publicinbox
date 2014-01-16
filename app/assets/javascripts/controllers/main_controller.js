@@ -38,4 +38,6 @@ var mainController = publicInboxApp.controller('MainCtrl', ['$scope', '$timeout'
 
   $scope.hideNoticeAfter(3000);
 
+  $scope.app = { state: 'ready' };
+
 }]);
