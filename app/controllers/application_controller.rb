@@ -28,6 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   def inject_delay
-    sleep 3
+    sleep 1
   end
 end
