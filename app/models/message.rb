@@ -23,7 +23,11 @@ class Message < ActiveRecord::Base
   end
 
   def mailgun_message_id
-    mailgun_attribute('Message-ID')
+    mailgun_attribute('Message-Id')
+  end
+
+  def mailgun_reply_to
+    mailgun_attribute('In-Reply-To')
   end
 
   ##### END TEMPORARY MAILGUN_DATA-RELATED CODE #####
