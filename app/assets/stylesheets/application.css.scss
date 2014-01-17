@@ -374,6 +374,10 @@ body[data-page="blog"] {
 
     & > header {
       @include page-header;
+
+      h1 small a {
+        font-weight: 300;
+      }
     }
   }
 
