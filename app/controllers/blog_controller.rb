@@ -8,6 +8,6 @@ class BlogController < ApplicationController
     @title = post.title
     @date  = post.date
 
-    render(:action => post.id)
+    render(:action => post.permalink)
   end
 end
