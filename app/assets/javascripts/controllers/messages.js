@@ -111,7 +111,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     // (in the messages controller) at least.
     var realtimeListener = new Faye.Client('/realtime');
 
-    console.log('Listening for realtime messages on channel "/messages/"' + $scope.user_id);
+    console.log('Listening for realtime messages on channel "/messages/' + $scope.user_id + '"');
     realtimeListener.subscribe('/messages/' + $scope.user_id, function(message) {
       console.log('Realtime message received! (' + message.subject + ')');
 
