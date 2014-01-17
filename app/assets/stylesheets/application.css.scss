@@ -280,7 +280,7 @@ ul.message-list {
       }
 
       .created {
-        @extend .list-group-item-text;
+        @extend .list-group-item-text, .small, .text-muted, .pull-right;
       }
     }
   }
@@ -300,7 +300,7 @@ ul.message-list {
     margin-bottom: 40px;
 
     .reply-to:before {
-      @extend small, .text-muted;
+      @extend .small, .text-muted;
       content: attr(data-preposition) " ";
     }
   }
