@@ -1,6 +1,8 @@
 <section id="message" data-title="Message" ng-show="isActiveSection('message')">
   <h3>
-    <span class="reply-to" data-preposition="{{message.preposition}}">{{message.reply_to}}</span>
+    <span class="reply-to" data-preposition="{{message.preposition}}">
+      <a href="mailto:{{message.reply_to}}">{{message.reply_to}}</a>
+    </span>
     <small><%= link_to('Back', '#{{message.section}}') %></small>
   </h3>
 
