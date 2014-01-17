@@ -114,6 +114,7 @@ body > nav {
     @extend .nav, .nav-stacked;
 
     // Keep above <footer>
+    // TODO: Actually, this doesn't work. Revisit this at some point.
     z-index: 3;
 
     li {
@@ -190,7 +191,7 @@ body > footer {
     display: block;
     bottom: 20px;
     left: 20px;
-    width: 200px;
+    width: 148px;
 
     // No padding since we're using fixed positioning
     padding: 0;
