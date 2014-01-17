@@ -90,6 +90,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.2.1)
     multi_json (1.8.4)
+    newrelic_rpm (3.7.1.182)
     pg (0.17.1)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -191,6 +192,7 @@ DEPENDENCIES
   haml-rails
   jbuilder (~> 1.2)
   markdown-rails
+  newrelic_rpm
   pg
   rails (= 4.1.0.beta1)
   rails_12factor
