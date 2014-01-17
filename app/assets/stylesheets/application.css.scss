@@ -266,7 +266,7 @@ ul.message-list {
       }
 
       .sender_email, .recipient_email {
-        @extend .pull-right;
+        float: right;
 
         &:before {
           @extend .text-muted;
@@ -287,11 +287,33 @@ ul.message-list {
       }
     }
   }
+
+  @include mobile {
+    li > a {
+      .picture { display: none; }
+      .info {
+        .sender_email, .recipient_email { float: none; }
+      }
+    }
+  }
 }
 
-#message > h2 {
-  .subject {
-    @include empty-placeholder("[No subject]");
+#message {
+  & > h3 {
+    margin-bottom: 40px;
+
+    .reply-to:before {
+      @extend small, .text-muted;
+      content: attr(data-preposition) " ";
+    }
+  }
+
+  article {
+    font-size: 150%;
+
+    @include mobile {
+      font-size: 125%;
+    }
   }
 }
 
@@ -378,6 +400,10 @@ body[data-page="blog"] {
       h1 small a {
         font-weight: 300;
       }
+    }
+
+    @include mobile {
+      font-size: 125%;
     }
   }
 

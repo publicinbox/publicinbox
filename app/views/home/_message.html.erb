@@ -1,10 +1,10 @@
 <section id="message" data-title="Message" ng-show="isActiveSection('message')">
-  <h2>
-    <span class="subject">{{message.subject}}</span>
+  <h3>
+    <span class="reply-to" data-preposition="{{message.preposition}}">{{message.reply_to}}</span>
     <small><%= link_to('Back', '#{{message.section}}') %></small>
-  </h2>
+  </h3>
 
-  <div ng-bind-html="message.body"></div>
+  <article ng-bind-html="message.body"></article>
 
   <p>
     <button ng-click="replyToMessage(message)">Reply</button>

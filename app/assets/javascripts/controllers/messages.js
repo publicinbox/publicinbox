@@ -4,14 +4,11 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     e.preventDefault();
 
     $scope.message = angular.extend({}, message, {
-      section: message.sender_email ? 'inbox' : 'outbox'
+      section: message.sender_email ? 'inbox' : 'outbox',
+      preposition: message.sender_email ? 'from' : 'to'
     });
 
-    $scope.showSection('message', [
-      'Message',
-      message.sender_email ? 'from' : 'to',
-      message.reply_to
-    ].join(' '));
+    $scope.showSection('message', message.subject || '[No subject]');
   };
 
   $scope.replyToMessage = function reply(message) {
