@@ -46,8 +46,8 @@ class MessagesController < ApplicationController
     subject = params['subject']
     body    = params['body-plain']
 
-    sender = User.find_by_email(from)
-    recipient = User.find_by_email(to)
+    sender = User.find_by(:email => from)
+    recipient = User.find_by(:email => to)
 
     if recipient.nil?
       return render(:text => 'No such user', :status => 404)
