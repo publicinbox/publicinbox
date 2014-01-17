@@ -66,9 +66,9 @@ class MessagesController < ApplicationController
       :mailgun_data => params
     })
 
-    puts "Publishing realtime message #{message.id} on channel '/messages/#{recipient.id}'"
-    RealtimeMessagesController.publish('/messages/#{recipient.id}', render_incoming_message(message))
-    puts "Successfully published message #{message.id} on channel '/messages/#{recipient.id}'"
+    # puts "Publishing realtime message #{message.id} on channel '/messages/#{recipient.id}'"
+    # RealtimeMessagesController.publish('/messages/#{recipient.id}', render_incoming_message(message))
+    # puts "Successfully published message #{message.id} on channel '/messages/#{recipient.id}'"
 
     render(:text => 'OK')
   end

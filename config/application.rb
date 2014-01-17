@@ -28,9 +28,8 @@ module PublicInbox
     # config.i18n.default_locale = :de
     config.autoload_paths << "#{config.root}/lib"
 
-    # Oh boy... not sure how I feel about this.
     # For details see:
     # https://github.com/nilbus/pinewood-derby/commit/9d90f85d05cd418013528845d33aa6e2fbe0741a
-    config.middleware.delete Rack::Lock
+    # config.middleware.delete Rack::Lock
   end
 end
