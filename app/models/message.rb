@@ -4,6 +4,16 @@ class Message < ActiveRecord::Base
 
   strip_attributes
 
+  ##### BEGIN TEMPORARY MAILGUN_DATA-RELATED CODE #####
+
+  serialize :mailgun_data, JsonSerializer
+
+  DEFAULT_COLUMNS = self.columns.map(&:name) - ['mailgun_data']
+
+  default_scope { select(DEFAULT_COLUMNS.join(', ')) }
+
+  ##### END TEMPORARY MAILGUN_DATA-RELATED CODE #####
+
   validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
 
   before_create :populate_ids, :populate_emails

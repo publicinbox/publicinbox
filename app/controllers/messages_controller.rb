@@ -59,7 +59,11 @@ class MessagesController < ApplicationController
       :recipient => recipient,
       :recipient_email => to,
       :subject => subject,
-      :body => body
+      :body => body,
+
+      # This is really just temporary; for a while it will be helpful to store
+      # this so I can go back and look at stuff
+      :mailgun_data => params
     })
 
     puts "Publishing realtime message #{message.id} on channel '/messages/#{recipient.id}'"
