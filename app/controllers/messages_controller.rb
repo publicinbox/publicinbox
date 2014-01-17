@@ -12,6 +12,7 @@ class MessagesController < ApplicationController
 
     render(:json => {
       :user_id => current_user.id,
+      :user_email => current_user.email,
       :inbox => incoming_messages,
       :outbox => outgoing_messages
     })

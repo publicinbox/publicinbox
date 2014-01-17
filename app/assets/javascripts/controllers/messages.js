@@ -39,6 +39,12 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
         $scope.displayNotice('Message successfully sent.');
         $scope.outbox.push(message);
         $scope.showSection('outbox');
+
+        // If the user sent him-/herself an e-mail, we need to add it to the
+        // inbox as well.
+        if (message.recipient_email === $scope.user_email) {
+          $scope.inbox.push(message);
+        }
       })
       .error(function(response) {
         $scope.displayNotice(response, 'error');
@@ -95,10 +101,11 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   $scope.app.state = 'loading';
 
   $http.get('/messages').success(function(data) {
-    $scope.user_id   = data.user_id;
-    $scope.inbox     = data.inbox;
-    $scope.outbox    = data.outbox;
-    $scope.app.state = 'ready';
+    $scope.user_id    = data.user_id;
+    $scope.user_email = data.user_email;
+    $scope.inbox      = data.inbox;
+    $scope.outbox     = data.outbox;
+    $scope.app.state  = 'ready';
 
     // This isn't really very Angular-y, but it seems logically to belong here
     // (in the messages controller) at least.
