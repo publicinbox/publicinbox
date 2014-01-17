@@ -5,6 +5,7 @@ class JsonSerializer
   end
 
   def self.dump(object)
+    return nil if object.nil?
     JSON.generate(object)
   end
 end
