@@ -10,19 +10,17 @@ class Mailer
       'to' => message.recipient_email,
       'subject' => message.subject,
       'text' => message.body || '',
-      'h:In-Reply-To' => message.thread_id
+      'h:In-Reply-To' => message.external_source_id
     })
 
     puts "Response from sending message #{message.id}:"
     puts response
 
-    # If a message doesn't already have a thread_id, then it's the first message
-    # of a thread. All subsequent messages that are part of this thread should
-    # have the 'In-Reply-To' header set to the same thread_id.
-    if message.thread_id.nil?
-      response = JSON.parse(response)
-      message.thread_id = response['id']
-      message.save!
-    end
+    # Parse the response to get this message's external_id. This is how we'll
+    # know, when a new message comes in, whether it's a reply to an existing
+    # message or not.
+    response = JSON.parse(response)
+    message.external_id = response['id']
+    message.save!
   end
 end

@@ -21,7 +21,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
 
   $scope.replyToMessage = function reply(message) {
     $scope.draft = {
-      thread_id: message.thread_id,
+      external_source_id: message.external_id,
       recipient_email: message.reply_to,
       subject: prepend('Re: ', message.subject)
     };

@@ -34,10 +34,40 @@ class Message < ActiveRecord::Base
 
   validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
 
-  before_create :populate_ids, :populate_emails
+  before_create :populate_ids, :populate_emails, :populate_thread_id
+
+  def self.create_from_external!(message_data)
+    from    = message_data['sender']
+    to      = message_data['recipient']
+    subject = message_data['subject']
+    body    = message_data['body-plain']
+
+    sender = User.find_by(:email => from)
+    recipient = User.find_by(:email => to)
+
+    raise 'No such user' if recipient.nil?
+
+    external_id = message_data['Message-Id']
+    external_source_id = message_data['In-Reply-To']
+
+    Message.create!({
+      :external_id => external_id,
+      :external_source_id => external_source_id,
+      :sender => sender,
+      :sender_email => from,
+      :recipient => recipient,
+      :recipient_email => to,
+      :subject => subject,
+      :body => body,
+
+      # This is really just temporary; for a while it will be helpful to store
+      # this so I can go back and look at stuff
+      :mailgun_data => message_data
+    })
+  end
 
   def thread
-    Message.where(:thread_id => self.thread_id)
+    Message.where(:thread_id => self.thread_id).order(:id => :asc)
   end
 
   def thread_before
@@ -72,5 +102,16 @@ class Message < ActiveRecord::Base
   def populate_emails
     self.sender_email ||= "#{self.sender.user_name}@publicinbox.net" if self.sender_id.present?
     self.recipient_email ||= "#{self.recipient.user_name}@publicinbox.net" if self.recipient_id.present?
+  end
+
+  def populate_thread_id
+    # If external_source_id is present, use that to find the associated message
+    # and assign this one to the same thread.
+    self.thread_id ||= self.external_source_id.present? &&
+      Message.find_by(:external_id => self.external_source_id).try(:thread_id)
+
+    # Otherwise, this is an original message and so it creates a new thread,
+    # which we will elegantly and ingeniously assign to its unique_token.
+    self.thread_id ||= self.unique_token
   end
 end

@@ -55,6 +55,123 @@ describe Message do
     end
   end
 
+  describe 'grouping messages into threads' do
+    before :each do
+      @user = create_user('internal')
+    end
+
+    let(:message_data) do
+      {
+        'sender' => 'external@example.com',
+        'recipient' => 'internal@publicinbox.net',
+        'subject' => 'Subject',
+        'body-plain' => 'body',
+      }
+    end
+
+    def create_from_external(attributes={})
+      Message.create_from_external!(message_data.merge(attributes))
+    end
+
+    describe 'a message originating from within the application' do
+      it 'automatically sets thread_id to unique_token, if not present' do
+        message = create_message(@user)
+        message.thread_id.should_not be_nil
+        message.thread_id.should == message.unique_token
+      end
+    end
+
+    describe 'a message coming from an external source (Mailgun)' do
+      it 'raises an error if the recipient does not exist' do
+        should_fail do
+          create_from_external('recipient' => 'doesnotexist@publicinbox.net')
+        end
+      end
+
+      it 'populates external_id using the "Message-Id" header' do
+        message = Message.create_from_external!(message_data.merge({
+          'Message-Id' => 'foo'
+        }))
+
+        message.external_id.should == 'foo'
+      end
+
+      it 'populates external_source_id using the "In-Reply-To" header' do
+        message = Message.create_from_external!(message_data.merge({
+          'In-Reply-To' => 'bar'
+        }))
+
+        message.external_source_id.should == 'bar'
+      end
+    end
+
+    describe 'a relatively long thread' do
+      before :each do
+        @source_message = create_message(@user, {
+          :external_id => 'yada yada'
+        })
+
+        @incoming_message = create_from_external({
+          'recipient' => @user.email,
+          'Message-Id' => 'blah blah',
+          'In-Reply-To' => 'yada yada'
+        })
+
+        @outgoing_message = create_message(@user, {
+          :external_id => 'fiddle faddle',
+          :external_source_id => 'blah blah'
+        })
+
+        @following_message = create_from_external({
+          'recipient' => @user.email,
+          'Message-Id' => 'oh brother',
+          'In-Reply-To' => 'fiddle faddle'
+        })
+      end
+
+      it 'is associated w/ the unique_token of the originating message' do
+        @source_message.thread_id.should_not be_nil
+        @source_message.thread_id.should == @source_message.unique_token
+      end
+
+      it 'associates the first response w/ the thread' do
+        @incoming_message.thread_id.should == @source_message.thread_id
+      end
+
+      it 'associates the follow-up outgoing message w/ the thread' do
+        @outgoing_message.thread_id.should == @source_message.thread_id
+      end
+
+      it 'associates the response to the response w/ the thread' do
+        @following_message.thread_id.should == @source_message.thread_id
+      end
+
+      it 'provides access to all messages in a thread via Message#thread' do
+        @source_message.thread.should == [
+          @source_message,
+          @incoming_message,
+          @outgoing_message,
+          @following_message
+        ]
+      end
+
+      it 'provides access to all the messages in a thread BEFORE a given message w/ Message#thread_before' do
+        @outgoing_message.thread_before.should == [
+          @source_message,
+          @incoming_message,
+          @outgoing_message
+        ]
+      end
+
+      it 'provides access to all the messages in a thread AFTER a given message w/ Message#thread_after' do
+        @outgoing_message.thread_after.should == [
+          @outgoing_message,
+          @following_message
+        ]
+      end
+    end
+  end
+
   describe 'trims surrounding whitespace...' do
     before :each do
       joe = create_user('joe')
