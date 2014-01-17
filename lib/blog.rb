@@ -17,14 +17,16 @@ class Blog
 
   def self.load_all_posts!
     @@posts ||= Dir[File.join(POSTS_DIR, '*.md')].inject({}) do |map, file|
-      date, id = File.basename(file, '.md').match(Post::FILENAME_PATTERN)[1, 2]
+      id, date, title = File.basename(file, '.md').match(Post::FILENAME_PATTERN)[0..2]
 
+      # Make the date an actual date so we can format it
       date = Date.parse(date)
-      title = id.gsub('-', ' ').humanize
 
-      post = Post.new(id, date, title)
+      # Make the title not hideous
+      title = title.gsub('-', ' ').humanize
 
-      map[post.id] = post
+      # Index posts by id
+      map[id] = Post.new(id, date, title)
       map
     end
   end

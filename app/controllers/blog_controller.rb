@@ -7,6 +7,7 @@ class BlogController < ApplicationController
     post   = Blog.post(params[:id])
     @title = post.title
     @date  = post.date
-    render(:action => "#{post.date}-#{post.id}")
+
+    render(:action => post.id)
   end
 end
