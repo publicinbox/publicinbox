@@ -45,6 +45,10 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
         if (message.recipient_email === $scope.user_email) {
           $scope.inbox.push(message);
         }
+
+        // And now we should clear the draft so it isn't still there when the
+        // user clicks on 'Compose' again.
+        $scope.draft = {};
       })
       .error(function(response) {
         $scope.displayNotice(response, 'error');
