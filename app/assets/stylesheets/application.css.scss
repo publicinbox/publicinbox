@@ -173,10 +173,7 @@ main {
 }
 
 body > footer {
-  @extend .small, .text-muted;
-
-  // Keep aligned w/ <main>
-  padding-left: 15px;
+  @extend .container, .small, .text-muted;
 
   p {
     margin-bottom: 1ex;
