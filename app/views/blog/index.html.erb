@@ -1,0 +1,10 @@
+<ul class="post-list">
+  <% @posts.each do |post| -%>
+    <li>
+      <%= link_to(blog_path(post.id)) do -%>
+        <h3 class="title"><%= post.title %></h3>
+        <small>posted on <%= readable_date(post.date) %></small>
+      <% end -%>
+    </li>
+  <% end -%>
+<ul>

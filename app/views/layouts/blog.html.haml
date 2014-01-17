@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %title PublicInbox Blog
+    %meta(name="viewport" content="width=device-width, user-scalable=no")
+    = stylesheet_link_tag("application")
+
+  %body(data-page="blog")
+    %article
+      %header
+        %h1
+          != @title || 'Public<em>Inbox</em> Blog'
+          %small= link_to('Back to the app', root_path)
+
+      = yield
+
+      %p= link_to('Back', blog_index_path) unless params[:action] == 'index'

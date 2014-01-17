@@ -3,6 +3,28 @@
 @import "readable";
 @import "font-awesome";
 
+@mixin page-header {
+  @extend .page-header;
+
+  h1 em {
+    @extend .text-muted;
+    font-style: normal;
+  }
+
+  h1 small {
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  p {
+    @extend .lead;
+  }
+
+  img {
+    vertical-align: bottom;
+  }
+}
+
 @mixin transition($property, $duration: 1s) {
   transition: $property $duration;
   -moz-transition: $property $duration;
@@ -145,24 +167,7 @@ main {
   }
 
   & > header {
-    @extend .page-header;
-
-    h1 em {
-      @extend .text-muted;
-      font-style: normal;
-    }
-
-    h1 small {
-      white-space: nowrap;
-    }
-
-    p {
-      @extend .lead;
-    }
-
-    img {
-      vertical-align: bottom;
-    }
+    @include page-header;
   }
 }
 
@@ -340,4 +345,41 @@ ul.message-list {
 
 .CodeMirror-focused {
   @extend .form-control:focus;
+}
+
+body[data-page="blog"] {
+  ul.post-list {
+    @extend .list-group;
+
+    list-style: none;
+
+    li > a {
+      @extend .list-group-item;
+
+      h3.title {
+        @extend .list-group-item-heading;
+      }
+
+      small {
+        @extend .list-group-item-text, .text-muted;
+      }
+    }
+  }
+
+  article {
+    font-size: 150%;
+    margin: auto;
+    padding: 10px;
+
+    & > header {
+      @include page-header;
+    }
+  }
+
+  @media all and (min-width: 960px) {
+    article {
+      min-width: 940px;
+      width: 60%;
+    }
+  }
 }

@@ -17,6 +17,9 @@ gem 'font-awesome-sass'
 # Use HAML for (some) layouts
 gem 'haml-rails'
 
+# Use Markdown views for blog
+gem 'markdown-rails'
+
 # Allow e-mails to be formatted using Markdown
 gem 'redcarpet'
 
