@@ -16,5 +16,6 @@
 //= require ui-codemirror
 //= require app
 //= require directives/pi-navigable-sections
+//= require directives/pi-editor
 //= require controllers/main
 //= require controllers/messages
