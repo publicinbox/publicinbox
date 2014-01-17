@@ -28,6 +28,7 @@ class MessagesController < ApplicationController
     render(:json => render_outgoing_message(message))
 
   rescue => ex
+    puts "Error creating message: #{ex.inspect}"
     render(:text => ex.message, :status => 404)
   end
 
@@ -37,6 +38,7 @@ class MessagesController < ApplicationController
     render(:text => 'Message successfully deleted.')
 
   rescue => ex
+    puts "Error deleting message: #{ex.inspect}"
     render(:text => ex.message, :status => 403)
   end
 
