@@ -39,6 +39,16 @@ describe User do
     end
   end
 
+  describe '#messages' do
+    let(:user) { create_user('user') }
+
+    it 'includes both outgoing and incoming messages' do
+      outgoing = create_message(user)
+      incoming = create_message(create_user('sender'), :recipient => user)
+      user.messages.should == [outgoing, incoming]
+    end
+  end
+
   describe '#create_message!' do
     let(:user) { create_user('user') }
 
