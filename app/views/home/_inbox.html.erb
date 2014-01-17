@@ -1,5 +1,5 @@
 <section id="inbox" data-title="Inbox" ng-show="isActiveSection('inbox')">
-  <p ng-hide="inbox.length">
+  <p ng-hide="inbox.length || app.state === 'loading'">
     You don't have any messages!
   </p>
 
