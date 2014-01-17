@@ -15,6 +15,7 @@ module ApiHelper
   end
 
   def markdown(text)
-    MARKDOWN_RENDERER.render(text || '')
+    return '' if text.blank?
+    MARKDOWN_RENDERER.render(text)
   end
 end
