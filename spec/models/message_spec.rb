@@ -36,6 +36,25 @@ describe Message do
     end
   end
 
+  describe 'generating a unique token for every message' do
+    it 'generates a token for all messages' do
+      user = create_user('pat')
+      message = create_message(user)
+      message.unique_token.should_not be_nil
+    end
+
+    it 'ensures tokens are unique' do
+      user = create_user('pat')
+
+      first_message = create_message(user, :unique_token => 'foo')
+      first_message.unique_token.should == 'foo'
+
+      second_message = create_message(user, :unique_token => 'foo')
+      second_message.unique_token.should_not be_nil
+      second_message.unique_token.should_not == 'foo'
+    end
+  end
+
   describe 'trims surrounding whitespace...' do
     before :each do
       joe = create_user('joe')
