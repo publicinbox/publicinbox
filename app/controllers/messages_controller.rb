@@ -22,7 +22,7 @@ class MessagesController < ApplicationController
     message = current_user.create_message!(message_params)
 
     unless message.internal_recipient?
-      Mailer.deliver_message!(message)
+      Mailer.deliver_message!(message) unless Rails.env.development?
     end
 
     render(:json => render_outgoing_message(message))
