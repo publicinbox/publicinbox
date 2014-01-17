@@ -15,6 +15,7 @@
 //= require codemirror/markdown
 //= require ui-codemirror
 //= require app
+//= require directives/pi-handle-mailtos
 //= require directives/pi-navigable-sections
 //= require directives/pi-editor
 //= require controllers/main

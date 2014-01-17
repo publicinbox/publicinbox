@@ -11,9 +11,20 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     $scope.showSection('message', message.subject || '[No subject]');
   };
 
+  $scope.compose = function compose(recipient_email) {
+    $scope.draft = {
+      recipient_email: recipient_email
+    };
+
+    $scope.showSection('compose');
+  };
+
   $scope.replyToMessage = function reply(message) {
-    $scope.draft.recipient_email = message.reply_to;
-    $scope.draft.subject = prepend('Re: ', message.subject);
+    $scope.draft = {
+      recipient_email: message.reply_to,
+      subject: prepend('Re: ', message.subject)
+    };
+
     $scope.showSection('compose');
   };
 
