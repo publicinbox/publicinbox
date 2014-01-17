@@ -14,6 +14,18 @@ class Message < ActiveRecord::Base
 
   default_scope { select(DEFAULT_COLUMNS.join(', ')) }
 
+  def get_mailgun_data
+    @fetched_mailgun_data ||= Message.where(:id => self.id).select('mailgun_data').first.mailgun_data
+  end
+
+  def mailgun_attribute(name)
+    get_mailgun_data.try(:[], name)
+  end
+
+  def mailgun_message_id
+    mailgun_attribute('Message-ID')
+  end
+
   ##### END TEMPORARY MAILGUN_DATA-RELATED CODE #####
 
   validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
