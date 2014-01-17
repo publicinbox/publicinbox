@@ -4,10 +4,10 @@ class BlogController < ApplicationController
   end
 
   def show
-    post   = Blog.post(params[:id])
+    post   = Blog.post(params[:permalink])
     @title = post.title
     @date  = post.date
 
-    render(:action => post.permalink)
+    render(:action => post.action)
   end
 end

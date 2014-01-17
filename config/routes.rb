@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :messages
   resources :blog
 
-  get '/blog/:id' => 'blog#show', :constraints => { :id => /.*/ }
+  get '/blog/*permalink' => 'blog#show'
 
   faye_server '/realtime', :timeout => 25 do
     map '/messages/**' => RealtimeMessagesController

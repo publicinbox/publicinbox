@@ -4,13 +4,13 @@ class Blog
   class Post
     FILENAME_PATTERN = /^(\d{4}-\d{2}-\d{2})-(.*)$/
 
-    attr_reader :id, :date, :title, :permalink
+    attr_reader :permalink, :date, :title, :action
 
-    def initialize(id, date, title)
-      @id = id
+    def initialize(permalink, date, title)
+      @permalink = permalink
       @date = date
       @title = title
-      @permalink = id.gsub('/', '-')
+      @action = permalink.gsub('/', '-')
     end
   end
 
@@ -24,13 +24,13 @@ class Blog
       date = Date.parse(date)
 
       # Make the permalink look like yyyy/mm/dd/title-of-post
-      id = "#{date.strftime('%Y/%m/%d')}/#{title}"
+      permalink = "#{date.strftime('%Y/%m/%d')}/#{title}"
 
       # Make the title not hideous
       title = title.gsub('-', ' ').humanize
 
-      # Index posts by id
-      map[id] = Post.new(id, date, title)
+      # Index posts by permalink
+      map[permalink] = Post.new(permalink, date, title)
       map
     end
   end
