@@ -37,7 +37,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     var request = $http.post('/messages', { message: message })
       .success(function(message) {
         $scope.displayNotice('Message successfully sent.');
-        $scope.outbox.unshift(message);
+        $scope.outbox.push(message);
         $scope.showSection('outbox');
       })
       .error(function(response) {
@@ -76,7 +76,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   };
 
   $scope.addMessage = function addMessage(message) {
-    $scope.inbox.unshift(message);
+    $scope.inbox.push(message);
   };
 
   $scope.removeMessage = function removeMessage(message) {

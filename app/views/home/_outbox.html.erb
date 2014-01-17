@@ -4,7 +4,7 @@
   </p>
 
   <ul class="message-list">
-    <li ng-repeat="message in outbox">
+    <li ng-repeat="message in outbox | orderBy:'id':true">
       <a href="/messages/{{message.id}}" ng-click="showMessage(message, $event)">
         <div class="picture">
           <img ng-src="{{message.profile_image}}" />
