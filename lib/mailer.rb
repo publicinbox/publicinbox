@@ -9,7 +9,7 @@ class Mailer
       :from => message.sender_email,
       :to => message.recipient_email,
       :subject => message.subject,
-      :text => message.body
+      :text => message.body || ''
     })
   end
 end
