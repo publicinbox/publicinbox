@@ -1,0 +1,41 @@
+<% content_for(:extra_javascripts) do -%>
+  <%= javascript_include_tag('codemirror/javascript') %>
+  <%= javascript_include_tag('controllers/test-message') %>
+<% end -%>
+
+<section id="test" data-title="Test" ng-controller="TestMessageCtrl">
+  <form ng-submit="sendTestMessage(test_message)">
+    <fieldset>
+      <legend>Send a test message</legend>
+
+      <div class="field">
+        <%= label_tag(:from) %>
+        <%= text_field_tag(:from, nil, 'ng-model' => 'test_message.from') %>
+      </div>
+
+      <div class="field">
+        <%= label_tag(:to) %>
+        <%= text_field_tag(:to, nil, 'ng-model' => 'test_message.to') %>
+      </div>
+
+      <div class="field">
+        <%= label_tag(:subject) %>
+        <%= text_field_tag(:subject, nil, 'ng-model' => 'test_message.subject') %>
+      </div>
+
+      <div class="field">
+        <%= label_tag(:body) %>
+        <div ui-codemirror="{ mode: 'markdown' }" ng-model="test_message.body"></div>
+      </div>
+
+      <div class="field">
+        <%= label_tag(:extra_data, 'Extra data (in JSON format)') %>
+        <div ui-codemirror="{ mode: 'javascript' }" ng-model="test_message.extra_data"></div>
+      </div>
+
+      <div class="field">
+        <%= submit_tag('Send test message') %>
+      </div>
+    </fieldset>
+  </form>
+</section>

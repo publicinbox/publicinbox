@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   post '/register' => 'home#register'
   get '/logout'    => 'home#logout'
 
-  post '/messages/incoming' => 'messages#incoming'
+  get  '/messages/test'     => 'messages#test' if Rails.env.development?
+  post '/messages/incoming' => 'messages#incoming', :as => :incoming_message
 
   resources :users
   resources :messages
