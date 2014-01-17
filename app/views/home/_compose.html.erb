@@ -1,5 +1,7 @@
 <section id="compose" data-title="Compose" ng-show="isActiveSection('compose')">
   <form ng-submit="sendMessage(draft)">
+    <%= hidden_field_tag(:thread_id, nil, 'ng-model' => 'draft.thread_id') %>
+
     <div class="field">
       <%= label_tag(:recipient_email) %>
       <%= text_field_tag(:recipient_email, nil, 'ng-model' => 'draft.recipient_email') %>

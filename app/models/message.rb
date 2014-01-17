@@ -36,6 +36,18 @@ class Message < ActiveRecord::Base
 
   before_create :populate_ids, :populate_emails
 
+  def thread
+    Message.where(:thread_id => self.thread_id)
+  end
+
+  def thread_before
+    thread.where('id <= ?', self.id)
+  end
+
+  def thread_after
+    thread.where('id >= ?', self.id)
+  end
+
   def has_recipient?
     self.recipient_id.present? || self.recipient_email.present?
   end

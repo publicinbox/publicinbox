@@ -55,7 +55,13 @@ class MessagesController < ApplicationController
       return render(:text => 'No such user', :status => 404)
     end
 
+    # TODO: Find out if this works.
+    thread_id = params['In-Reply-To'] || params['Message-Id']
+
+    puts "Incoming message thread ID: #{thread_id}"
+
     message = Message.create!({
+      :thread_id => thread_id,
       :sender => sender,
       :sender_email => from,
       :recipient => recipient,
@@ -78,12 +84,13 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:recipient_email, :subject, :body)
+    params.require(:message).permit(:thread_id, :recipient_email, :subject, :body)
   end
 
   def render_incoming_message(message)
     {
       :id => message.id,
+      :thread_id => message.thread_id,
       :sender_email => message.sender_email,
       :reply_to => message.sender_email,
       :profile_image => profile_image(message.sender_email),
@@ -96,6 +103,7 @@ class MessagesController < ApplicationController
   def render_outgoing_message(message)
     {
       :id => message.id,
+      :thread_id => message.thread_id,
       :recipient_email => message.recipient_email,
       :reply_to => message.recipient_email,
       :profile_image => profile_image(message.recipient_email),

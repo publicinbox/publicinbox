@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117173643) do
+ActiveRecord::Schema.define(version: 20140117193822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,12 +27,14 @@ ActiveRecord::Schema.define(version: 20140117173643) do
     t.datetime "updated_at"
     t.text     "mailgun_data"
     t.string   "unique_token"
+    t.string   "thread_id"
   end
 
   add_index "messages", ["recipient_id", "sender_id"], name: "index_messages_on_recipient_id_and_sender_id", using: :btree
   add_index "messages", ["recipient_id"], name: "index_messages_on_recipient_id", using: :btree
   add_index "messages", ["sender_id", "recipient_id"], name: "index_messages_on_sender_id_and_recipient_id", using: :btree
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id", using: :btree
+  add_index "messages", ["thread_id"], name: "index_messages_on_thread_id", using: :btree
   add_index "messages", ["unique_token"], name: "index_messages_on_unique_token", unique: true, using: :btree
 
   create_table "users", force: true do |t|
