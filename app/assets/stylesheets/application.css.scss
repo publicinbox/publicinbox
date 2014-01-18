@@ -51,6 +51,8 @@
 $desktop-width: 750px + 252px;
 $widescreen-width: 1170px + (252px * 2);
 $nav-panel-width: 240px;
+$nav-panel-padding: 20px;
+$nav-panel-border-width: 12px;
 
 @mixin mobile {
   @media all and (max-width: $desktop-width - 1) {
@@ -101,9 +103,9 @@ body > main > nav {
   top: 0;
   bottom: 0;
   width: $nav-panel-width;
-  padding: 20px;
+  padding: $nav-panel-padding;
 
-  border-right: 12px solid black;
+  border-right: $nav-panel-border-width solid black;
   background-color: #fff;
 
   // Keep above <main>, below <footer>
@@ -129,9 +131,9 @@ body > main > nav {
   }
 
   @include mobile {
-    right: -$nav-panel-width - 20px;
+    right: -$nav-panel-width - $nav-panel-padding;
 
-    border-left: 12px solid black;
+    border-left: $nav-panel-border-width solid black;
     border-right: none;
 
     &.revealed {
@@ -167,14 +169,14 @@ body > main {
   min-height: calc(100% - 40px);
 
   @include desktop {
-    margin-left: $nav-panel-width + 40px;
+    margin-left: $nav-panel-width + ($nav-panel-padding * 2);
 
     @include calc(max-width, "100% - #{$nav-panel-width + 52px}");
   }
 
   @include widescreen {
     width: auto;
-    margin-right: $nav-panel-width + 52px;
+    margin-right: $nav-panel-width + ($nav-panel-padding * 2) + $nav-panel-border-width;
   }
 
   & > header {
@@ -198,7 +200,7 @@ body > main > footer {
     display: block;
     bottom: 20px;
     left: 20px;
-    width: $nav-panel-width - 52px;
+    width: $nav-panel-width - ($nav-panel-padding * 2) - $nav-panel-border-width;
 
     // No padding since we're using fixed positioning
     padding: 0;
