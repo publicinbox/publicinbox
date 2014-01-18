@@ -27,3 +27,8 @@ Rails.application.configure do
   # number of complex assets.
   config.assets.debug = true
 end
+
+Pusher.app_id = Rails.application.secrets.pusher_app_id
+Pusher.key    = Rails.application.secrets.pusher_key
+Pusher.secret = Rails.application.secrets.pusher_secret
+Pusher.url    = Rails.application.secrets.pusher_url
