@@ -58,12 +58,9 @@ class MessagesController < ApplicationController
   def incoming
     message = Message.create_from_external!(params)
 
-    # puts "Publishing realtime message #{message.id} on channel '/messages/#{recipient.id}'"
-    # RealtimeMessagesController.publish('/messages/#{recipient.id}', render_message(message))
-    # puts "Successfully published message #{message.id} on channel '/messages/#{recipient.id}'"
-
-    # Using Pusher instead of faye-rails
+    puts "Publishing realtime message #{message.id} on channel '/#{message.recipient_email}'"
     Pusher[message.recipient_email].trigger('message', render_message(message))
+    puts "Successfully published message #{message.id} on channel '/#{message.recipient_email}'"
 
     render(:text => 'OK')
 
