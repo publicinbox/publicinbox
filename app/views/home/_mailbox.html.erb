@@ -1,0 +1,20 @@
+<section id="mailbox" data-title="Mailbox" ng-show="isActiveSection('mailbox')">
+  <p ng-hide="messages.length || app.state === 'loading'">
+    You don't have any messages!
+  </p>
+
+  <ul class="message-list">
+    <li ng-repeat="message in messages | orderBy:'id':true">
+      <a href="/messages/{{message.id}}" class="{{message.type}}-message" data-opened="{{message.opened}}" ng-click="showMessage(message, $event)">
+        <div class="picture">
+          <img ng-src="{{message.profile_image}}" />
+        </div>
+        <div class="info">
+          <div class="created">{{message.created_at}} ago</div>
+          <h3 class="subject">{{message.subject}}</h3>
+          <div class="sender_email">{{message.sender_email}}</div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</section>

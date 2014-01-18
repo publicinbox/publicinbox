@@ -1,11 +1,42 @@
 publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $http) {
 
+  $scope.loadMessages = function loadMessages() {
+    $scope.app.state = 'loading';
+
+    $http.get('/messages').success(function(data) {
+      $scope.user_id    = data.user_id;
+      $scope.user_email = data.user_email;
+      $scope.messages   = data.messages;
+      $scope.app.state  = 'ready';
+
+      // This isn't really very Angular-y, but it seems logically to belong here
+      // (in the messages controller) at least.
+      // var realtimeListener = new Faye.Client('/realtime');
+
+      // console.log('Listening for realtime messages on channel "/messages/' + $scope.user_id + '"');
+      // realtimeListener.subscribe('/messages/' + $scope.user_id, function(message) {
+      //   console.log('Realtime message received! (' + message.subject + ')');
+
+      //   $scope.addMessage(message);
+      //   $scope.displayNotice('New message received from ' + message.sender_email + '!');
+      //   $scope.$apply();
+      // });
+    });
+  };
+
   $scope.showMessage = function showMessage(message, e) {
     e.preventDefault();
 
+    $http.put('/messages/' + message.id)
+      .success(function() {
+        message.opened = true;
+      })
+      .error(function() {
+        $scope.displayNotice('Failed to mark message as "opened" for some reason...');
+      });
+
     $scope.message = angular.extend({}, message, {
-      section: message.sender_email ? 'inbox' : 'outbox',
-      preposition: message.sender_email ? 'from' : 'to'
+      preposition: message.type === 'incoming' ? 'from' : 'to'
     });
 
     $scope.showSection('message', message.subject || '[No subject]');
@@ -47,7 +78,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
       .success(function(message) {
         $scope.displayNotice('Message successfully sent.');
         $scope.outbox.push(message);
-        $scope.showSection('outbox');
+        $scope.showSection('mailbox');
 
         // If the user sent him-/herself an e-mail, we need to add it to the
         // inbox as well.
@@ -69,20 +100,18 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   };
 
   $scope.deleteMessage = function deleteMessage(message) {
-    var confirmationPrompt = message.sender_email ?
+    var confirmationPrompt = message.type === 'incoming' ?
       'Are you sure you want to delete this message?' :
       'Really delete your copy of this message (you cannot unsend it)?';
 
     if (confirm(confirmationPrompt)) {
       $scope.app.state = 'loading';
 
-      var section = message.sender_email ? 'inbox' : 'outbox';
-
       var request = $http.delete('/messages/' + message.id)
         .success(function(response) {
           $scope.displayNotice(response);
           $scope.removeMessage(message);
-          $scope.showSection(section);
+          $scope.showSection('mailbox');
         })
         .error(function(response) {
           $scope.displayNotice(response, 'error');
@@ -111,28 +140,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
 
   $scope.draft = {};
 
-  $scope.app.state = 'loading';
-
-  $http.get('/messages').success(function(data) {
-    $scope.user_id    = data.user_id;
-    $scope.user_email = data.user_email;
-    $scope.inbox      = data.inbox;
-    $scope.outbox     = data.outbox;
-    $scope.app.state  = 'ready';
-
-    // This isn't really very Angular-y, but it seems logically to belong here
-    // (in the messages controller) at least.
-    // var realtimeListener = new Faye.Client('/realtime');
-
-    // console.log('Listening for realtime messages on channel "/messages/' + $scope.user_id + '"');
-    // realtimeListener.subscribe('/messages/' + $scope.user_id, function(message) {
-    //   console.log('Realtime message received! (' + message.subject + ')');
-
-    //   $scope.addMessage(message);
-    //   $scope.displayNotice('New message received from ' + message.sender_email + '!');
-    //   $scope.$apply();
-    // });
-  });
+  $scope.loadMessages();
 
 }]);
 

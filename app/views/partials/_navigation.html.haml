@@ -1,9 +1,8 @@
 %nav(class="{{nav.state}}")
   %ul
     - if logged_in?
-      %li= link_to('Inbox', '#inbox')
+      %li= link_to('Mailbox', '#mailbox')
       %li= link_to('Compose', '#compose')
-      %li= link_to('Outbox', '#outbox')
       %li= link_to('Profile', '#profile')
       %li= link_to('About', '#about')
       %li= link_to('Blog', blog_index_path)

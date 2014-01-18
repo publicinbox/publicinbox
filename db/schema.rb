@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117214926) do
+ActiveRecord::Schema.define(version: 20140117231833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140117214926) do
     t.string   "thread_id"
     t.string   "external_id"
     t.string   "external_source_id"
+    t.datetime "opened_at"
   end
 
   add_index "messages", ["external_id"], name: "index_messages_on_external_id", using: :btree

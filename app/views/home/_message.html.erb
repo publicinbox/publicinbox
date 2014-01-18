@@ -3,7 +3,7 @@
     <span class="reply-to" data-preposition="{{message.preposition}}">
       <a href="mailto:{{message.reply_to}}">{{message.reply_to}}</a>
     </span>
-    <small><%= link_to('Back', '#{{message.section}}') %></small>
+    <small><%= link_to('Back', '#mailbox') %></small>
   </h3>
 
   <article ng-bind-html="message.body"></article>

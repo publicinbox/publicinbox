@@ -249,8 +249,6 @@ ul.message-list {
     @extend .list-group-item, .media;
 
     .picture {
-      @extend .pull-left;
-
       img { @extend .media-object; }
     }
 
@@ -263,8 +261,6 @@ ul.message-list {
       }
 
       .sender_email, .recipient_email {
-        float: right;
-
         &:before {
           @extend .text-muted;
           font-size: 80%;
@@ -280,7 +276,43 @@ ul.message-list {
       }
 
       .created {
-        @extend .list-group-item-text, .small, .text-muted, .pull-right;
+        @extend .list-group-item-text, .small, .text-muted;
+      }
+    }
+
+    &.incoming-message {
+      text-align: right;
+
+      .picture {
+        @extend .pull-right;
+      }
+
+      .info .created {
+        float: left;
+      }
+    }
+
+    &.outgoing-message {
+      text-align: left;
+
+      .picture {
+        @extend .pull-left;
+      }
+
+      .info .created {
+        float: right;
+      }
+    }
+
+    &[data-opened="true"] {
+      .info {
+        @extend .text-muted;
+
+        h3.subject {
+          @extend .text-muted;
+
+          font-weight: normal;
+        }
       }
     }
   }

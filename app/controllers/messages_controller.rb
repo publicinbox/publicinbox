@@ -4,17 +4,14 @@ class MessagesController < ApplicationController
   include ApiHelper
 
   def index
-    inbox  = current_user.incoming_messages.order(:id => :desc).limit(20)
-    outbox = current_user.outgoing_messages.order(:id => :desc).limit(20)
-
-    incoming_messages = inbox.map(&method(:render_incoming_message))
-    outgoing_messages = outbox.map(&method(:render_outgoing_message))
+    messages = current_user.messages.order(:id => :desc).limit(50).map do |message|
+      render_message(message)
+    end
 
     render(:json => {
       :user_id => current_user.id,
       :user_email => current_user.email,
-      :inbox => incoming_messages,
-      :outbox => outgoing_messages
+      :messages => messages,
     })
   end
 
@@ -25,10 +22,23 @@ class MessagesController < ApplicationController
       Mailer.deliver_message!(message) unless Rails.env.development?
     end
 
-    render(:json => render_outgoing_message(message))
+    render(:json => render_message(message))
 
   rescue => ex
     puts "Error creating message: #{ex.inspect}"
+    render(:text => ex.message, :status => 404)
+  end
+
+  def update
+    message = Message.find(params[:id])
+
+    message.opened_at = Time.now
+    message.save!
+
+    render(:json => render_message(message))
+
+  rescue => ex
+    puts "Error marking message opened: #{ex.inspect}"
     render(:text => ex.message, :status => 404)
   end
 
@@ -46,7 +56,7 @@ class MessagesController < ApplicationController
     message = Message.create_from_external!(params)
 
     # puts "Publishing realtime message #{message.id} on channel '/messages/#{recipient.id}'"
-    # RealtimeMessagesController.publish('/messages/#{recipient.id}', render_incoming_message(message))
+    # RealtimeMessagesController.publish('/messages/#{recipient.id}', render_message(message))
     # puts "Successfully published message #{message.id} on channel '/messages/#{recipient.id}'"
 
     render(:text => 'OK')
@@ -61,29 +71,19 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:external_source_id, :recipient_email, :subject, :body)
   end
 
-  def render_incoming_message(message)
+  def render_message(message)
     {
       :id => message.id,
+      :type => message.type_for_user(current_user),
       :external_id => message.external_id,
       :sender_email => message.sender_email,
+      :recipient_email => message.recipient_email,
       :reply_to => message.sender_email,
       :profile_image => profile_image(message.sender_email),
       :subject => message.subject,
       :body => markdown(message.body),
-      :created_at => time_ago_in_words(message.created_at)
-    }
-  end
-
-  def render_outgoing_message(message)
-    {
-      :id => message.id,
-      :external_id => message.external_id,
-      :recipient_email => message.recipient_email,
-      :reply_to => message.recipient_email,
-      :profile_image => profile_image(message.recipient_email),
-      :subject => message.subject,
-      :body => markdown(message.body),
-      :created_at => time_ago_in_words(message.created_at)
+      :created_at => time_ago_in_words(message.created_at),
+      :opened => !!message.opened_at
     }
   end
 end

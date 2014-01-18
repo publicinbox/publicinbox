@@ -78,6 +78,10 @@ class Message < ActiveRecord::Base
     thread.where('id >= ?', self.id)
   end
 
+  def type_for_user(user)
+    user == self.recipient ? 'incoming' : 'outgoing'
+  end
+
   def has_recipient?
     self.recipient_id.present? || self.recipient_email.present?
   end
