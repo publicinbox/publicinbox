@@ -185,7 +185,7 @@ body > main {
 }
 
 body > main > footer {
-  @extend .container, .small, .text-muted;
+  @extend .small, .text-muted;
 
   p {
     margin-bottom: 1ex;
