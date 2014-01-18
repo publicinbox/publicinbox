@@ -14,10 +14,20 @@ publicInboxApp.controller('MainCtrl', ['$scope', '$timeout', function($scope, $t
   };
 
   $scope.revealNav = function revealNav() {
+    // Yes, this is unfortunate. I'm sure there's a less hacky way to accomplish
+    // the same thing. Alas, this feels acceptable to my tired brain at the
+    // moment.
+    $scope.revealingNav = true;
+
     $scope.nav.state = 'revealed';
   };
 
   $scope.hideNav = function hideNav() {
+    if ($scope.revealingNav) {
+      $scope.revealingNav = false;
+      return;
+    }
+
     $scope.nav.state = 'ready';
   };
 
