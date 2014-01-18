@@ -93,7 +93,7 @@ body[data-state="loading"] {
   }
 }
 
-body > nav {
+body > main > nav {
   @include transition(right, 0.5s);
 
   position: fixed;
@@ -117,6 +117,10 @@ body > nav {
 
     li {
       @extend h4;
+
+      a[href='#mailbox'] span.unread-count {
+        @extend .badge;
+      }
     }
   }
 
@@ -129,6 +133,10 @@ body > nav {
     &.revealed {
       right: 0;
     }
+  }
+
+  @include desktop {
+    left: 0;
   }
 }
 
@@ -149,7 +157,7 @@ button.expand-nav {
   }
 }
 
-main {
+body > main {
   @extend .container;
 
   min-height: calc(100% - 40px);
@@ -170,7 +178,7 @@ main {
   }
 }
 
-body > footer {
+body > main > footer {
   @extend .container, .small, .text-muted;
 
   p {
@@ -359,6 +367,9 @@ ul.message-list {
   // Explicitly set the height for animation purposes
   height: 50px;
   line-height: 50px;
+
+  // COVER EVERYTHING
+  z-index: 10;
 
   &:empty {
     display: none;

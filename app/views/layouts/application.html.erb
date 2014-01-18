@@ -16,19 +16,25 @@
   <body
     data-page="<%= "#{params[:controller]}-#{params[:action]}" %>"
     data-state="{{app.state}}"
-    ng-controller="MainCtrl">
+    ng-controller="MainCtrl"
+    pi-navigable-sections>
 
-    <%= nav_menu %>
+    <main
+      ng-controller="MessagesCtrl"
+      ng-click="hideNav()"
+      pi-handle-mailtos>
 
-    <main ng-click="hideNav()" pi-navigable-sections>
+      <%= nav_menu %>
+
       <header>
         <h1 ng-bind-html="title"></h1>
       </header>
 
       <%= yield %>
+
+      <%= site_footer %>
     </main>
 
-    <%= site_footer %>
 
     <div
       id="notice"
