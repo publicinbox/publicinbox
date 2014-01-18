@@ -6,11 +6,7 @@
     <%= stylesheet_link_tag("application") %>
     <%= yield(:extra_stylesheets) if content_for?(:extra_stylesheets) %>
     <%= favicon_link_tag %>
-    <%= javascript_include_tag("//code.jquery.com/jquery-1.10.2.min.js") %>
-    <%= javascript_include_tag("//code.angularjs.org/1.2.8/angular.min.js") %>
-    <%= javascript_include_tag("//code.angularjs.org/1.2.8/angular-sanitize.min.js") %>
-    <%= javascript_include_tag("//js.pusher.com/2.1/pusher.min.js") %>
-    <%= javascript_include_tag("application") %>
+    <%= partial('javascripts') %>
     <%= yield(:extra_javascripts) if content_for?(:extra_javascripts) %>
   </head>
 
@@ -20,11 +16,7 @@
     ng-controller="MainCtrl"
     pi-navigable-sections>
 
-    <main
-      ng-controller="MessagesCtrl"
-      ng-click="hideNav()"
-      pi-handle-mailtos>
-
+    <%= content_tag(:main, main_attributes) do %>
       <%= nav_menu %>
 
       <header>
@@ -34,7 +26,7 @@
       <%= yield %>
 
       <%= site_footer %>
-    </main>
+    <% end %>
 
     <div
       id="notice"

@@ -14,4 +14,17 @@ module ApplicationHelper
   def site_about
     partial('about')
   end
+
+  def main_attributes
+    attributes = { 'ng-click' => 'hideNav()' }
+
+    if logged_in?
+      attributes.merge!({
+        'ng-controller' => 'MessagesCtrl',
+        'pi-handle-mailtos' => 'true'
+      })
+    end
+
+    attributes
+  end
 end
