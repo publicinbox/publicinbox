@@ -14,4 +14,12 @@
       <%= f.submit('Log in') %> or <%= link_to('Register', '#register') %>
     </div>
   <% end -%>
+
+  <p>Or log in through:</p>
+
+  <p>
+    <%= link_to('Google', '/auth/google_oauth2') %>
+    <%= link_to('Facebook', '/auth/facebook') %>
+    <%= link_to('Twitter', '/auth/twitter') %>
+  </p>
 </section>

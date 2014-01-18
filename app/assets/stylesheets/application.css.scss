@@ -42,6 +42,14 @@
   @extend .fa, .fa-#{$name};
 }
 
+@mixin contains-icon($name) {
+  @include icon($name);
+
+  &:before {
+    margin-right: 1em;
+  }
+}
+
 @mixin empty-placeholder($content) {
   &:empty:before {
     content: $content;
@@ -218,6 +226,30 @@ nav {
   a[href="/logout"] {
     color: #d9534f;
   }
+}
+
+a[href="/auth/google_oauth2"],
+a[href="/auth/facebook"],
+a[href="/auth/twitter"] {
+  color: #fff;
+}
+
+a[href="/auth/google_oauth2"] {
+  @extend .btn;
+  background-color: #C61800;
+  @include contains-icon(google-plus);
+}
+
+a[href="/auth/facebook"] {
+  @extend .btn;
+  background-color: #3B5998;
+  @include contains-icon(facebook);
+}
+
+a[href="/auth/twitter"] {
+  @extend .btn;
+  background-color: #30D8F0;
+  @include contains-icon(twitter);
 }
 
 table {
