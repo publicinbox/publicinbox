@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
       :messages => messages,
 
       # Yeah... I don't feel great about this, but whatever.
-      :subscription_key => Rails.application.secrets.pusher_key
+      :subscription_key => Pusher.key
     })
   end
 
