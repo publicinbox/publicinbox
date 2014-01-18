@@ -77,7 +77,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
         message.type = 'outgoing';
 
         $scope.displayNotice('Message successfully sent.');
-        $scope.messages.push(message);
+        $scope.addMessage(message);
         $scope.showSection('mailbox');
 
         // And now we should clear the draft so it isn't still there when the
@@ -118,7 +118,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   };
 
   $scope.addMessage = function addMessage(message) {
-    $scope.message.push(message);
+    $scope.messages.push(message);
   };
 
   $scope.removeMessage = function removeMessage(message) {
