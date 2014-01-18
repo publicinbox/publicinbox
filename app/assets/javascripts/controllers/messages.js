@@ -35,9 +35,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
         $scope.displayNotice('Failed to mark message as "opened" for some reason...');
       });
 
-    $scope.message = angular.extend({}, message, {
-      preposition: message.type === 'incoming' ? 'from' : 'to'
-    });
+    $scope.message = message;
 
     $scope.showSection('message', message.subject || '[No subject]');
   };
@@ -76,15 +74,11 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
 
     var request = $http.post('/messages', { message: message })
       .success(function(message) {
-        $scope.displayNotice('Message successfully sent.');
-        $scope.outbox.push(message);
-        $scope.showSection('mailbox');
+        message.type = 'outgoing';
 
-        // If the user sent him-/herself an e-mail, we need to add it to the
-        // inbox as well.
-        if (message.recipient_email === $scope.user_email) {
-          $scope.inbox.push(message);
-        }
+        $scope.displayNotice('Message successfully sent.');
+        $scope.messages.push(message);
+        $scope.showSection('mailbox');
 
         // And now we should clear the draft so it isn't still there when the
         // user clicks on 'Compose' again.
@@ -124,18 +118,11 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   };
 
   $scope.addMessage = function addMessage(message) {
-    $scope.inbox.push(message);
+    $scope.message.push(message);
   };
 
   $scope.removeMessage = function removeMessage(message) {
-    var isSameMessage = function(m) {
-      return m.id === message.id;
-    };
-
-    // Remove from both inbox and outbox, to account for scenario where the user
-    // sent him-/herself a message.
-    removeFromArray($scope.inbox, isSameMessage);
-    removeFromArray($scope.outbox, isSameMessage);
+    removeFromArray($scope.messages, message);
   };
 
   $scope.draft = {};

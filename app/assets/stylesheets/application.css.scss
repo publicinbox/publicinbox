@@ -44,8 +44,6 @@
 
 @mixin empty-placeholder($content) {
   &:empty:before {
-    @extend .text-muted;
-
     content: $content;
   }
 }
@@ -260,19 +258,13 @@ ul.message-list {
         @include empty-placeholder("[No subject]");
       }
 
-      .sender_email, .recipient_email {
-        &:before {
-          @extend .text-muted;
-          font-size: 80%;
-        }
+      .display_email:before {
+        @extend .text-muted;
+        font-size: 80%;
       }
 
-      .sender_email:before {
-        content: "From: ";
-      }
-
-      .recipient_email:before {
-        content: "To: ";
+      .display_email:before {
+        content: attr(data-preposition) ": ";
       }
 
       .created {
@@ -281,26 +273,34 @@ ul.message-list {
     }
 
     &.incoming-message {
-      text-align: right;
-
-      .picture {
-        @extend .pull-right;
-      }
-
-      .info .created {
-        float: left;
-      }
-    }
-
-    &.outgoing-message {
       text-align: left;
 
       .picture {
         @extend .pull-left;
       }
 
-      .info .created {
-        float: right;
+      .info {
+        padding-left: 15px;
+
+        .created {
+          float: right;
+        }
+      }
+    }
+
+    &.outgoing-message {
+      text-align: right;
+
+      .picture {
+        @extend .pull-right;
+      }
+
+      .info {
+        padding-right: 15px;
+
+        .created {
+          float: left;
+        }
       }
     }
 
@@ -320,9 +320,6 @@ ul.message-list {
   @include mobile {
     li > a {
       .picture { display: none; }
-      .info {
-        .sender_email, .recipient_email { float: none; }
-      }
     }
   }
 }

@@ -72,12 +72,17 @@ class MessagesController < ApplicationController
   end
 
   def render_message(message)
+    message_type = message.type_for_user(current_user)
+    incoming = message_type == 'incoming'
+
     {
       :id => message.id,
-      :type => message.type_for_user(current_user),
+      :type => message_type,
       :external_id => message.external_id,
       :sender_email => message.sender_email,
       :recipient_email => message.recipient_email,
+      :display_email => incoming ? message.sender_email : message.recipient_email,
+      :preposition => incoming ? 'From' : 'To',
       :reply_to => message.sender_email,
       :profile_image => profile_image(message.sender_email),
       :subject => message.subject,
