@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_secure_password
+  has_secure_password :validations => false
 
   has_many :outgoing_messages, :class_name => 'Message', :foreign_key => 'sender_id'
   has_many :incoming_messages, :class_name => 'Message', :foreign_key => 'recipient_id'
@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates :user_name, :format => { :with => /\A\w+\Z/ }
+  validates :user_name, :format => { :with => /\A[0-9a-z_\.\-\+]+\Z/ }
 
   before_create :populate_email
 

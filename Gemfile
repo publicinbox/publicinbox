@@ -8,6 +8,12 @@ gem 'rails', '4.1.0.beta1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Allow users to authenticate through Google, Facebook, or Twitter
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+
 # Use New Relic for performance monitoring
 gem 'newrelic_rpm'
 

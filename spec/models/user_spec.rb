@@ -29,12 +29,28 @@ describe User do
         should_fail { create_user('mike*!@') }
       end
 
-      it 'allows underscores' do
-        create_user('mike_tyson')
+      it 'disallows capital letters' do
+        should_fail { create_user('MIKE') }
       end
 
       it 'allows numbers' do
         create_user('superman2000')
+      end
+
+      it 'allows underscores' do
+        create_user('mike_tyson')
+      end
+
+      it 'allows dashes' do
+        create_user('peter-pan')
+      end
+
+      it 'allows the plus sign' do
+        create_user('alexander+the+great')
+      end
+
+      it 'allows periods' do
+        create_user('john.smith')
       end
     end
   end

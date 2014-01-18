@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   post '/register' => 'home#register'
   get '/logout'    => 'home#logout'
 
+  match '/auth/:provider/callback' => 'home#login_with_oauth', :via => [:get, :post]
+
   get  '/messages/test'     => 'messages#test' if Rails.env.development?
   post '/messages/incoming' => 'messages#incoming', :as => :incoming_message
 
