@@ -9,7 +9,7 @@
 
 # Ignore sensitive credentials
 /config/database.yml
-/config/.env
+/.env
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
