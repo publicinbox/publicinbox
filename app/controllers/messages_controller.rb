@@ -12,6 +12,9 @@ class MessagesController < ApplicationController
       :user_id => current_user.id,
       :user_email => current_user.email,
       :messages => messages,
+
+      # Yeah... I don't feel great about this, but whatever.
+      :subscription_key => Rails.application.secrets.pusher_key
     })
   end
 
@@ -58,6 +61,9 @@ class MessagesController < ApplicationController
     # puts "Publishing realtime message #{message.id} on channel '/messages/#{recipient.id}'"
     # RealtimeMessagesController.publish('/messages/#{recipient.id}', render_message(message))
     # puts "Successfully published message #{message.id} on channel '/messages/#{recipient.id}'"
+
+    # Using Pusher instead of faye-rails
+    Pusher[message.recipient_email].trigger('message', render_message(message))
 
     render(:text => 'OK')
 

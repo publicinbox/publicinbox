@@ -21,6 +21,15 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
       //   $scope.displayNotice('New message received from ' + message.sender_email + '!');
       //   $scope.$apply();
       // });
+
+      // Using Pusher instead of faye-rails
+      var realtimeListener = new Pusher(data.subscription_key);
+      var channel = realtimeListener.subscribe($scope.user_email);
+      channel.bind('message', function(message) {
+        $scope.addMessage(message);
+        $scope.displayNotice('New message received from ' + message.sender_email + '!');
+        $scope.$apply();
+      });
     });
   };
 

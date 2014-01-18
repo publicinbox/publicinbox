@@ -65,3 +65,6 @@ gem 'thin'
 # Websockets!
 # Currently I need to use @nilbus's fork for Rails >= 4
 gem 'faye-rails', :github => 'nilbus/faye-rails'
+
+# For now I'm going to use Pusher instead of faye-rails
+gem 'pusher'
