@@ -279,6 +279,10 @@ input[type="submit"] {
 button {
   @extend .btn, .btn-sm, .btn-default;
 
+  &.reply {
+    @include contains-icon(reply);
+  }
+
   &.delete {
     @extend .btn-danger;
   }
