@@ -50,6 +50,7 @@
 
 $desktop-width: 750px + 252px;
 $widescreen-width: 1170px + (252px * 2);
+$nav-panel-width: 240px;
 
 @mixin mobile {
   @media all and (max-width: $desktop-width - 1) {
@@ -99,7 +100,7 @@ body > main > nav {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 200px;
+  width: $nav-panel-width;
   padding: 20px;
 
   border-right: 12px solid black;
@@ -119,13 +120,16 @@ body > main > nav {
       @extend h4;
 
       a[href='#mailbox'] span.unread-count {
-        @extend .badge;
+        @extend .badge, .pull-right;
+
+        float: right;
+        vertical-align: top;
       }
     }
   }
 
   @include mobile {
-    right: -220px;
+    right: -$nav-panel-width - 20px;
 
     border-left: 12px solid black;
     border-right: none;
@@ -163,14 +167,14 @@ body > main {
   min-height: calc(100% - 40px);
 
   @include desktop {
-    margin-left: 240px;
+    margin-left: $nav-panel-width + 40px;
 
-    @include calc(max-width, "100% - 252px");
+    @include calc(max-width, "100% - #{$nav-panel-width + 52px}");
   }
 
   @include widescreen {
     width: auto;
-    margin-right: 252px;
+    margin-right: $nav-panel-width + 52px;
   }
 
   & > header {
@@ -194,7 +198,7 @@ body > main > footer {
     display: block;
     bottom: 20px;
     left: 20px;
-    width: 148px;
+    width: $nav-panel-width - 52px;
 
     // No padding since we're using fixed positioning
     padding: 0;
