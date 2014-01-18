@@ -1,5 +1,23 @@
 <section id="profile" data-title="Profile" ng-show="isActiveSection('profile')">
-  <%= form_for(current_user) do |f| %>
+  <div class="info" ng-show="!user.editing">
+    <h2 class="user-name">
+      {{user.user_name}}
+      <small class="member-for">Member for {{user.created_at}}</small>
+    </h2>
+
+    <p class="real-name">Real name: {{user.real_name}}</p>
+
+    <article ng-bind-html="user.bio"></article>
+
+    <button ng-click="editProfile()">Edit Profile</button>
+  </div>
+
+  <%= form_for(current_user, :html => { 'ng-show' => 'user.editing' }) do |f| %>
+    <div class="field">
+      <%= f.label(:user_name) %>
+      <%= f.text_field(:user_name) %>
+    </div>
+
     <div class="field">
       <%= f.label(:real_name) %>
       <%= f.text_field(:real_name) %>

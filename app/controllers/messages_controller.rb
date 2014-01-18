@@ -4,14 +4,13 @@ class MessagesController < ApplicationController
   include ApiHelper
 
   def index
-    messages = current_user.messages.order(:id => :desc).limit(50).map do |message|
-      render_message(message)
-    end
+    messages = current_user.messages.order(:id => :desc).limit(50)
 
     render(:json => {
-      :user_id => current_user.id,
-      :user_email => current_user.email,
-      :messages => messages,
+      :user => render_user(current_user),
+      :messages => messages.map { |message|
+        render_message(message)
+      },
 
       # Yeah... I don't feel great about this, but whatever.
       :subscription_key => Pusher.key
@@ -72,6 +71,17 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:external_source_id, :recipient_email, :subject, :body)
+  end
+
+  def render_user(user)
+    {
+      :id => user.id,
+      :user_name => user.user_name,
+      :real_name => user.real_name,
+      :email => user.email,
+      :bio => markdown(user.bio),
+      :created_at => time_ago_in_words(user.created_at)
+    }
   end
 
   def render_message(message)

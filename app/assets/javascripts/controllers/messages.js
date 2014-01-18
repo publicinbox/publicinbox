@@ -4,15 +4,14 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     $scope.app.state = 'loading';
 
     $http.get('/messages').success(function(data) {
-      $scope.user_id    = data.user_id;
-      $scope.user_email = data.user_email;
+      $scope.user       = data.user;
       $scope.messages   = data.messages;
       $scope.app.state  = 'ready';
 
       // This isn't really very Angular-y, but it seems logically to belong here
       // (in the messages controller) at least.
       var realtimeListener = new Pusher(data.subscription_key);
-      var channel = realtimeListener.subscribe($scope.user_email);
+      var channel = realtimeListener.subscribe($scope.user.email);
       channel.bind('message', function(message) {
         $scope.addMessage(message);
         $scope.displayNotice('New message received from ' + message.sender_email + '!');
@@ -120,6 +119,10 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
 
   $scope.removeMessage = function removeMessage(message) {
     removeFromArray($scope.messages, message);
+  };
+
+  $scope.editProfile = function editProfile() {
+    $scope.user.editing = true;
   };
 
   $scope.draft = {};

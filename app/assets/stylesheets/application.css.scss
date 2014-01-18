@@ -374,6 +374,14 @@ ul.message-list {
   }
 }
 
+#profile {
+  .info {
+    h2.user-name small {
+      display: block;
+    }
+  }
+}
+
 #message {
   & > h3 {
     margin-bottom: 40px;
