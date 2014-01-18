@@ -3,6 +3,13 @@
 @import "readable";
 @import "font-awesome";
 
+$nav-panel-width: 240px;
+$nav-panel-padding: 20px;
+$nav-panel-border-width: 12px;
+$total-nav-width: $nav-panel-width + ($nav-panel-padding * 2) + $nav-panel-border-width;
+$desktop-width: 750px + $total-nav-width;
+$widescreen-width: 1170px + ($total-nav-width * 2);
+
 @mixin page-header {
   @extend .page-header;
 
@@ -42,7 +49,7 @@
   @extend .fa, .fa-#{$name};
 }
 
-@mixin contains-icon($name) {
+@mixin button-with-icon($name) {
   @include icon($name);
 
   &:before {
@@ -55,12 +62,6 @@
     content: $content;
   }
 }
-
-$desktop-width: 750px + 252px;
-$widescreen-width: 1170px + (252px * 2);
-$nav-panel-width: 240px;
-$nav-panel-padding: 20px;
-$nav-panel-border-width: 12px;
 
 @mixin mobile {
   @media all and (max-width: $desktop-width - 1) {
@@ -179,12 +180,12 @@ body > main {
   @include desktop {
     margin-left: $nav-panel-width + ($nav-panel-padding * 2);
 
-    @include calc(max-width, "100% - #{$nav-panel-width + 52px}");
+    @include calc(max-width, "100% - #{$total-nav-width}");
   }
 
   @include widescreen {
     width: auto;
-    margin-right: $nav-panel-width + ($nav-panel-padding * 2) + $nav-panel-border-width;
+    margin-right: $total-nav-width;
   }
 
   & > header {
@@ -208,6 +209,8 @@ body > main > footer {
     display: block;
     bottom: 20px;
     left: 20px;
+
+    // I'm not going to pretend to understand this
     width: $nav-panel-width - ($nav-panel-padding * 2) - $nav-panel-border-width;
 
     // No padding since we're using fixed positioning
@@ -228,28 +231,25 @@ nav {
   }
 }
 
-a[href="/auth/google_oauth2"],
-a[href="/auth/facebook"],
-a[href="/auth/twitter"] {
+a.login-button {
+  @extend .btn, .btn-lg;
+
   color: #fff;
 }
 
 a[href="/auth/google_oauth2"] {
-  @extend .btn;
   background-color: #C61800;
-  @include contains-icon(google-plus);
+  @include button-with-icon(google-plus);
 }
 
 a[href="/auth/facebook"] {
-  @extend .btn;
   background-color: #3B5998;
-  @include contains-icon(facebook);
+  @include button-with-icon(facebook);
 }
 
 a[href="/auth/twitter"] {
-  @extend .btn;
   background-color: #30D8F0;
-  @include contains-icon(twitter);
+  @include button-with-icon(twitter);
 }
 
 table {
@@ -280,7 +280,7 @@ button {
   @extend .btn, .btn-sm, .btn-default;
 
   &.reply {
-    @include contains-icon(reply);
+    @include button-with-icon(reply);
   }
 
   &.delete {
