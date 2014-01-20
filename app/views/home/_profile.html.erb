@@ -1,6 +1,7 @@
 <section id="profile" data-title="Profile" ng-show="isActiveSection('profile')">
   <div class="info" ng-show="!user.editing">
     <h2 class="user-name">
+      <img ng-src="{{user.profile_image}}" />
       {{user.user_name}}
       <small class="member-for">Member for {{user.created_at}}</small>
     </h2>
@@ -17,7 +18,7 @@
       <li><%= link_to('Twitter', '/auth/twitter', :class => 'login-button', 'data-identity-linked' => current_user.has_identity?('twitter')) %></li>
     </ul>
 
-    <article ng-bind-html="user.bio"></article>
+    <article class="bio" ng-bind-html="user.bio"></article>
 
     <button ng-click="editProfile()">Edit Profile</button>
   </div>
@@ -40,7 +41,7 @@
 
     <div class="field">
       <%= f.label(:bio) %>
-      <%= f.text_area(:bio, 'pi-editor' => true) %>
+      <%= f.text_area(:bio, 'pi-editor' => '{ "lineWrapping": true }') %>
     </div>
 
     <div class="field">

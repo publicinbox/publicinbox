@@ -395,27 +395,48 @@ ul.message-list {
 
 #profile {
   .info {
-    h2.user-name small {
-      display: block;
+    h2.user-name {
+      @extend .media;
+
+      img {
+        @extend .media-object, .pull-left;
+
+        height: 100px;
+        width: 100px;
+      }
+
+      small {
+        display: block;
+      }
     }
 
-    .real-name, .external-email {
+    h3 {
+      font-weight: normal;
+    }
+
+    .real-name, .external-email, .bio {
       &:empty {
         display: none;
       }
 
       &:before {
+        @extend h3;
+
         display: block;
-        font-weight: bold;
+        font-weight: normal;
       }
     }
 
     .real-name:before {
-      content: "Real name:";
+      content: "Real name";
     }
 
     .external-email:before {
       content: "External e-mail address";
+    }
+
+    .bio:before {
+      content: "Bio";
     }
 
     ul.identity-list {
