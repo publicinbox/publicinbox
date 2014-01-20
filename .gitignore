@@ -7,6 +7,9 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore rspec options.
+/.rspec
+
 # Ignore sensitive credentials
 /config/database.yml
 /.env

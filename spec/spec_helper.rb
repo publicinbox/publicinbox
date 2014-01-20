@@ -66,3 +66,19 @@ end
 def should_fail(&block)
   block.should raise_error
 end
+
+# Make RSpec failures more readable
+require 'user'
+require 'message'
+
+class User
+  def inspect
+    "<#User #{self.id} (#{self.user_name})>"
+  end
+end
+
+class Message
+  def inspect
+    "<#Message #{self.id}>"
+  end
+end
