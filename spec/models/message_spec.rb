@@ -172,6 +172,21 @@ describe Message do
     end
   end
 
+  describe 'archiving messages' do
+    before :each do
+      @user = create_user('ted')
+    end
+
+    it "by default, only messages that haven't been archived are loaded" do
+      first_message = create_message(@user)
+      second_message = create_message(@user)
+
+      first_message.archive!
+
+      @user.messages.should == [second_message]
+    end
+  end
+
   describe 'trims surrounding whitespace...' do
     before :each do
       joe = create_user('joe')

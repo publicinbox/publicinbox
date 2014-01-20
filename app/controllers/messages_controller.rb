@@ -46,7 +46,7 @@ class MessagesController < ApplicationController
 
   def destroy
     message = Message.find(params[:id])
-    current_user.delete_message!(message)
+    current_user.archive_message!(message)
     render(:text => 'Message successfully deleted.')
 
   rescue => ex

@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     message
   end
 
-  def delete_message!(message)
+  def archive_message!(message)
     if self == message.recipient
       message.recipient_id = nil
     elsif self == message.sender
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
     # or only one user is a PublicInbox user and the other is external, then we
     # can delete it for real.
     if message.sender_id.nil? && message.recipient_id.nil?
-      message.destroy!
+      message.archive!
     else
       message.save!
     end

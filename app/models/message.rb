@@ -12,8 +12,6 @@ class Message < ActiveRecord::Base
 
   DEFAULT_COLUMNS = self.columns.map(&:name) - ['mailgun_data']
 
-  default_scope { select(DEFAULT_COLUMNS.join(', ')) }
-
   def get_mailgun_data
     @fetched_mailgun_data ||= Message.where(:id => self.id).select('mailgun_data').first.mailgun_data
   end
@@ -31,6 +29,8 @@ class Message < ActiveRecord::Base
   end
 
   ##### END TEMPORARY MAILGUN_DATA-RELATED CODE #####
+
+  default_scope { where('archived_at IS NULL').select(DEFAULT_COLUMNS.join(', ')) }
 
   validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
 
@@ -64,6 +64,11 @@ class Message < ActiveRecord::Base
       # this so I can go back and look at stuff
       :mailgun_data => message_data
     })
+  end
+
+  def archive!
+    self.archived_at = Time.now
+    self.save!
   end
 
   def thread
