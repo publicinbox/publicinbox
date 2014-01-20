@@ -61,7 +61,7 @@ describe User do
     it 'includes both outgoing and incoming messages' do
       outgoing = create_message(user)
       incoming = create_message(create_user('sender'), :recipient => user)
-      user.messages.should == [outgoing, incoming]
+      user.messages.should =~ [outgoing, incoming]
     end
   end
 
