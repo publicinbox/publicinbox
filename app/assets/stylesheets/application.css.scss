@@ -397,14 +397,23 @@ ul.message-list {
       display: block;
     }
 
-    .real-name {
+    .real-name, .external-email {
       &:empty {
         display: none;
       }
 
       &:before {
-        content: "Real name: ";
+        display: block;
+        font-weight: bold;
       }
+    }
+
+    .real-name:before {
+      content: "Real name:";
+    }
+
+    .external-email:before {
+      content: "External e-mail address";
     }
 
     ul.identity-list {

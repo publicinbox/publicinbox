@@ -79,6 +79,7 @@ class MessagesController < ApplicationController
       :user_name => user.user_name,
       :real_name => user.real_name,
       :email => user.email,
+      :external_email => user.external_email,
       :bio => markdown(user.bio),
       :created_at => time_ago_in_words(user.created_at)
     }

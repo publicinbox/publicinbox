@@ -7,6 +7,8 @@
 
     <p class="real-name">{{user.real_name}}</p>
 
+    <p class="external-email">{{user.external_email}}</p>
+
     <h3>External accounts (click to link)</h3>
 
     <ul class="identity-list">
@@ -29,6 +31,11 @@
     <div class="field">
       <%= f.label(:real_name) %>
       <%= f.text_field(:real_name) %>
+    </div>
+
+    <div class="field">
+      <%= f.label(:external_email) %>
+      <%= f.text_field(:external_email) %>
     </div>
 
     <div class="field">
