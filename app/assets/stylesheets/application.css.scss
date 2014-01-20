@@ -236,12 +236,6 @@ a.login-button {
 
   color: #fff;
 
-  @include mobile {
-    margin-bottom: 5px;
-  }
-}
-
-a[data-identity-linked="false"] {
   &[href="/auth/google_oauth2"] {
     background-color: #C61800;
     @include button-with-icon(google-plus);
@@ -256,16 +250,24 @@ a[data-identity-linked="false"] {
     background-color: #30D8F0;
     @include button-with-icon(twitter);
   }
-}
 
-a[data-identity-linked="true"] {
-  @extend .btn-default, .disabled;
-  @include button-with-icon(check);
+  &[data-identity-linked="true"] {
+    @include button-with-icon(check);
 
-  &:after {
-    @extend .small, .text-muted;
-    content: "(already linked)";
-    margin-left: 0.5em;
+    // Need to set these values manually rather than use @extend
+    // because @extend doesn't override prior values properly.
+    background-color: #888;
+    border-color: #888;
+
+    &:after {
+      @extend .small, .text-muted;
+      content: "(already linked)";
+      margin-left: 0.5em;
+    }
+  }
+
+  @include mobile {
+    margin-bottom: 5px;
   }
 }
 
