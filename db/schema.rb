@@ -59,10 +59,11 @@ ActiveRecord::Schema.define(version: 20140119224315) do
     t.string   "user_name"
     t.string   "email"
     t.string   "real_name"
+    t.text     "bio"
+    t.string   "external_email"
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "bio"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
