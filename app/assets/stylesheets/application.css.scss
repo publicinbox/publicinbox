@@ -345,6 +345,12 @@ button {
     @extend .btn-danger;
     @include button-with-icon(trash-o);
   }
+
+  &.add-cc-or-bcc {
+    @extend .btn-xs, .btn-info;
+
+    margin-bottom: 15px;
+  }
 }
 
 ul.message-list {

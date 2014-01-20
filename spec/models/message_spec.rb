@@ -36,6 +36,26 @@ describe Message do
     end
   end
 
+  describe 'CC list' do
+    it 'accepts a comma- and/or space-separated list and formats as comma-separated' do
+      lars = create_user('lars')
+      message = create_message(lars, {
+        :cc_list => 'bob@hotmail.com, kate@gmail.com sarah@yahoo.com,,john@aol.com'
+      })
+      message.cc_list.should == 'bob@hotmail.com,kate@gmail.com,sarah@yahoo.com,john@aol.com'
+    end
+  end
+
+  describe 'BCC list' do
+    it 'accepts a comma- and/or space-separated list and formats as comma-separated' do
+      lars = create_user('lars')
+      message = create_message(lars, {
+        :bcc_list => 'bob@hotmail.com, kate@gmail.com sarah@yahoo.com,,john@aol.com'
+      })
+      message.bcc_list.should == 'bob@hotmail.com,kate@gmail.com,sarah@yahoo.com,john@aol.com'
+    end
+  end
+
   describe 'generating a unique token for every message' do
     it 'generates a token for all messages' do
       user = create_user('pat')

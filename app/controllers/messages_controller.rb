@@ -70,7 +70,14 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:external_source_id, :recipient_email, :subject, :body)
+    params.require(:message).permit(
+      :external_source_id,
+      :recipient_email,
+      :cc_list,
+      :bcc_list,
+      :subject,
+      :body
+    )
   end
 
   def render_user(user)

@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20140119224315) do
     t.string   "sender_email"
     t.integer  "recipient_id"
     t.string   "recipient_email"
+    t.text     "cc_list"
+    t.text     "bcc_list"
     t.string   "thread_id"
     t.string   "external_id"
     t.string   "external_source_id"

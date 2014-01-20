@@ -54,6 +54,10 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     $scope.showSection('compose');
   };
 
+  $scope.addCc = function addCc() {
+    $scope.draft.include_cc = true;
+  };
+
   $scope.sendMessage = function sendMessage(message) {
     if (!message.body) {
       if (!confirm('Really send a message without a body?')) {

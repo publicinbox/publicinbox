@@ -34,7 +34,7 @@ class Message < ActiveRecord::Base
 
   validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
 
-  before_create :populate_ids, :populate_emails, :populate_thread_id
+  before_create :populate_ids, :populate_emails, :populate_thread_id, :format_cc_and_bcc
 
   def self.create_from_external!(message_data)
     from    = message_data['sender']
@@ -122,5 +122,10 @@ class Message < ActiveRecord::Base
     # Otherwise, this is an original message and so it creates a new thread,
     # which we will elegantly and ingeniously assign to its unique_token.
     self.thread_id ||= self.unique_token
+  end
+
+  def format_cc_and_bcc
+    self.cc_list = self.cc_list.split(/[,\s]+/).join(',') if self.cc_list.present?
+    self.bcc_list = self.bcc_list.split(/[,\s]+/).join(',') if self.bcc_list.present?
   end
 end

@@ -1,16 +1,33 @@
 <section id="compose" data-title="Compose" ng-show="isActiveSection('compose')">
   <form ng-submit="sendMessage(draft)">
-    <div class="field">
+    <div class="field recipient-email">
       <%= label_tag(:recipient_email) %>
       <%= text_field_tag(:recipient_email, nil, 'ng-model' => 'draft.recipient_email') %>
     </div>
 
-    <div class="field">
+    <button
+      class="add-cc-or-bcc"
+      ng-click="addCc(); $event.preventDefault();"
+      ng-show="!draft.include_cc">
+      Add cc/bcc
+    </button>
+
+    <div class="field cc-list" ng-show="draft.include_cc">
+      <%= label_tag(:cc_list, 'CC') %>
+      <%= text_field_tag(:cc_list, nil, 'ng-model' => 'draft.cc_list') %>
+    </div>
+
+    <div class="field bcc-list" ng-show="draft.include_cc">
+      <%= label_tag(:bcc_list, 'BCC') %>
+      <%= text_field_tag(:bcc_list, nil, 'ng-model' => 'draft.bcc_list') %>
+    </div>
+
+    <div class="field subject">
       <%= label_tag(:subject) %>
       <%= text_field(:subject, nil, 'ng-model' => 'draft.subject') %>
     </div>
 
-    <div class="field">
+    <div class="field body">
       <%= label_tag(:body) %>
       <div ui-codemirror="{ mode: 'markdown' }" ng-model="draft.body"></div>
     </div>

@@ -8,6 +8,8 @@ class Mailer
     response = RestClient.post("#{API_URL}/messages", {
       'from' => message.sender_email,
       'to' => message.recipient_email,
+      'cc' => message.cc_list,
+      'bcc' => message.bcc_list,
       'subject' => message.subject,
       'text' => message.body || '',
       'h:In-Reply-To' => message.external_source_id
