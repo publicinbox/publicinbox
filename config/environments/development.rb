@@ -28,7 +28,9 @@ Rails.application.configure do
   config.assets.debug = true
 end
 
-Pusher.app_id = ENV['PUSHER_APP_ID']
-Pusher.key    = ENV['PUSHER_KEY']
-Pusher.secret = ENV['PUSHER_SECRET']
-Pusher.url    = ENV['PUSHER_URL']
+if ENV.include?('PUSHER_APP_ID')
+  Pusher.app_id = ENV['PUSHER_APP_ID']
+  Pusher.key    = ENV['PUSHER_KEY']
+  Pusher.secret = ENV['PUSHER_SECRET']
+  Pusher.url    = ENV['PUSHER_URL']
+end
