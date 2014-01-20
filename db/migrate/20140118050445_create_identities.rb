@@ -5,6 +5,7 @@ class CreateIdentities < ActiveRecord::Migration
       t.string  :provider,    :nil => false
       t.string  :provider_id, :nil => false
       t.string  :name
+      t.string  :real_name
       t.string  :email
     end
 
