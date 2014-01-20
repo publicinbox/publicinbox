@@ -3,7 +3,7 @@
 @import "readable";
 @import "font-awesome";
 
-$nav-panel-width: 240px;
+$nav-panel-width: 280px;
 $nav-panel-padding: 20px;
 $nav-panel-border-width: 12px;
 $total-nav-width: $nav-panel-width + ($nav-panel-padding * 2) + $nav-panel-border-width;
@@ -53,7 +53,9 @@ $widescreen-width: 1170px + ($total-nav-width * 2);
   @include icon($name);
 
   &:before {
-    margin-right: 1em;
+    display: inline-block;
+    width: 1.5em;
+    text-align: left;
   }
 }
 
@@ -130,11 +132,43 @@ body > main > nav {
     li {
       @extend h4;
 
-      a[href='#mailbox'] span.unread-count {
-        @extend .badge, .pull-right;
+      a {
+        display: block !important;
+      }
 
-        float: right;
-        vertical-align: top;
+      a[href="#mailbox"] {
+        @include button-with-icon(inbox);
+
+        span.unread-count {
+          @extend .badge;
+
+          float: right;
+          vertical-align: top;
+        }
+      }
+
+      a[href="#compose"] {
+        @include button-with-icon(pencil);
+      }
+
+      a[href="#profile"] {
+        @include button-with-icon(user);
+      }
+
+      a[href="#about"] {
+        @include button-with-icon(question);
+      }
+
+      a[href="/blog"] {
+        @include button-with-icon(rss);
+      }
+
+      a[href="#login"] {
+        @include button-with-icon(sign-in);
+      }
+
+      a[href="/logout"] {
+        @include button-with-icon(sign-out);
       }
     }
   }
@@ -298,12 +332,18 @@ input[type="submit"] {
 button {
   @extend .btn, .btn-sm, .btn-default;
 
+  &.reply, &.delete {
+    // Without these the buttons get squashed.
+    line-height: 1.5;
+  }
+
   &.reply {
     @include button-with-icon(reply);
   }
 
   &.delete {
     @extend .btn-danger;
+    @include button-with-icon(trash-o);
   }
 }
 
