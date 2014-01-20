@@ -5,16 +5,19 @@ API_URL = "https://api:#{API_KEY}@api.mailgun.net/v2/publicinbox.net"
 
 class Mailer
   def self.deliver_message!(message)
-    response = RestClient.post("#{API_URL}/messages", {
+    request_data = {
       'from' => message.sender_email,
       'to' => message.recipient_email,
-      'cc' => message.cc_list,
-      'bcc' => message.bcc_list,
       'subject' => message.subject,
       'text' => message.body || '',
       'html' => message.body_html || '',
       'h:In-Reply-To' => message.external_source_id
-    })
+    }
+
+    request_data['cc'] = message.cc_list if message.cc_list.present?
+    request_data['bcc'] = message.bcc_list if message.bcc_list.present?
+
+    response = RestClient.post("#{API_URL}/messages", request_data)
 
     puts "Response from sending message #{message.id}:"
     puts response
