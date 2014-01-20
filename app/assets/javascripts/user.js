@@ -10,9 +10,13 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require angular
+//= require angular-sanitize
 //= require codemirror
 //= require codemirror/markdown
 //= require ui-codemirror
+//= require pusher
 //= require app
 //= require directives/pi-handle-mailtos
 //= require directives/pi-navigable-sections

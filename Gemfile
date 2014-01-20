@@ -32,6 +32,12 @@ gem 'markdown-rails'
 # Allow e-mails to be formatted using Markdown
 gem 'redcarpet'
 
+# Include Angular in sprockets
+gem 'angularjs-rails'
+
+# Include jQuery in sprockets
+gem 'jquery-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
