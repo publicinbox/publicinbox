@@ -8,7 +8,7 @@ class Identity < ActiveRecord::Base
   def populate_user_id
     # It's pretty far-fetched, but MAYBE somebody signed up for Twitter w/ a
     # @publicinbox.net account? Yeah, right...
-    self.user = User.find_by(:email => self.email)
+    self.user ||= User.find_by(:email => self.email)
 
     # More plausible is that somebody might sign in w/ say, Google, then log out
     # and come back later through Facebook or something. (Although I don't even

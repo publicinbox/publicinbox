@@ -5,7 +5,15 @@
       <small class="member-for">Member for {{user.created_at}}</small>
     </h2>
 
-    <p class="real-name">Real name: {{user.real_name}}</p>
+    <p class="real-name">{{user.real_name}}</p>
+
+    <h3>External accounts (click to link)</h3>
+
+    <ul class="identity-list">
+      <li><%= link_to('Google', '/auth/google_oauth2', :class => 'login-button', 'data-identity-linked' => current_user.has_identity?('google_oauth2')) %></li>
+      <li><%= link_to('Facebook', '/auth/facebook', :class => 'login-button', 'data-identity-linked' => current_user.has_identity?('facebook')) %></li>
+      <li><%= link_to('Twitter', '/auth/twitter', :class => 'login-button', 'data-identity-linked' => current_user.has_identity?('twitter')) %></li>
+    </ul>
 
     <article ng-bind-html="user.bio"></article>
 

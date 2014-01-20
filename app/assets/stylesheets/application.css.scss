@@ -242,14 +242,32 @@ a[href="/auth/google_oauth2"] {
   @include button-with-icon(google-plus);
 }
 
-a[href="/auth/facebook"] {
-  background-color: #3B5998;
-  @include button-with-icon(facebook);
+a[data-identity-linked="false"] {
+  &[href="/auth/google_oauth2"] {
+    background-color: #C61800;
+    @include button-with-icon(google-plus);
+  }
+
+  &[href="/auth/facebook"] {
+    background-color: #3B5998;
+    @include button-with-icon(facebook);
+  }
+
+  &[href="/auth/twitter"] {
+    background-color: #30D8F0;
+    @include button-with-icon(twitter);
+  }
 }
 
-a[href="/auth/twitter"] {
-  background-color: #30D8F0;
-  @include button-with-icon(twitter);
+a[data-identity-linked="true"] {
+  @extend .btn-default, .disabled;
+  @include button-with-icon(check);
+
+  &:after {
+    @extend .small, .text-muted;
+    content: "(already linked)";
+    margin-left: 0.5em;
+  }
 }
 
 table {
@@ -378,6 +396,15 @@ ul.message-list {
   .info {
     h2.user-name small {
       display: block;
+    }
+
+    ul.identity-list {
+      list-style: none;
+      padding-left: 0;
+
+      li a {
+        margin-bottom: 5px;
+      }
     }
   }
 }
