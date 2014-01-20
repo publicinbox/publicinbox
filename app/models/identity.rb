@@ -27,7 +27,7 @@ class Identity < ActiveRecord::Base
         name   = "#{name_base}#{suffix}"
       end
 
-      self.user = User.create!(:user_name => name)
+      self.user = User.create!(:user_name => name, :real_name => self.real_name)
     end
   end
 end

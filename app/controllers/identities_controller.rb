@@ -14,6 +14,7 @@ class IdentitiesController < ApplicationController
       identity = Identity.create!(identity_info.merge({
         :user => current_user,
         :name => user_info['nickname'] || user_info['name'],
+        :real_name => user_info['name'],
         :email => user_info['email']
       }))
     end
