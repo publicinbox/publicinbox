@@ -18,15 +18,17 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = current_user.create_message!(message_params.merge({
-      :body_html => markdown(message_params[:body])
-    }))
+    Message.transaction do
+      @message = current_user.create_message!(message_params.merge({
+        :body_html => markdown(message_params[:body])
+      }))
 
-    unless message.internal_recipient?
-      Mailer.deliver_message!(message) unless Rails.env.development?
+      unless @message.internal_recipient?
+        Mailer.deliver_message!(@message) unless Rails.env.development?
+      end
     end
 
-    render(:json => render_message(message))
+    render(:json => render_message(@message))
 
   rescue => ex
     puts "Error creating message: #{ex.inspect}"
