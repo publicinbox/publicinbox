@@ -232,14 +232,13 @@ nav {
 }
 
 a.login-button {
-  @extend .btn, .btn-lg;
+  @extend .btn;
 
   color: #fff;
-}
 
-a[href="/auth/google_oauth2"] {
-  background-color: #C61800;
-  @include button-with-icon(google-plus);
+  @include mobile {
+    margin-bottom: 5px;
+  }
 }
 
 a[data-identity-linked="false"] {
@@ -396,6 +395,16 @@ ul.message-list {
   .info {
     h2.user-name small {
       display: block;
+    }
+
+    .real-name {
+      &:empty {
+        display: none;
+      }
+
+      &:before {
+        content: "Real name: ";
+      }
     }
 
     ul.identity-list {
