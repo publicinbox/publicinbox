@@ -29,24 +29,25 @@ ActiveRecord::Schema.define(version: 20140119224315) do
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "messages", force: true do |t|
+    t.string   "unique_token"
     t.integer  "sender_id"
     t.string   "sender_email"
     t.integer  "recipient_id"
     t.string   "recipient_email"
-    t.string   "subject"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "mailgun_data"
-    t.string   "unique_token"
     t.string   "thread_id"
     t.string   "external_id"
     t.string   "external_source_id"
+    t.string   "subject"
+    t.text     "body"
     t.datetime "opened_at"
+    t.datetime "archived_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "mailgun_data"
   end
 
+  add_index "messages", ["archived_at"], name: "index_messages_on_archived_at", using: :btree
   add_index "messages", ["external_id"], name: "index_messages_on_external_id", using: :btree
-  add_index "messages", ["external_source_id"], name: "index_messages_on_external_source_id", using: :btree
   add_index "messages", ["recipient_id", "sender_id"], name: "index_messages_on_recipient_id_and_sender_id", using: :btree
   add_index "messages", ["recipient_id"], name: "index_messages_on_recipient_id", using: :btree
   add_index "messages", ["sender_id", "recipient_id"], name: "index_messages_on_sender_id_and_recipient_id", using: :btree
