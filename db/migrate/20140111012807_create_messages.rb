@@ -27,6 +27,7 @@ class CreateMessages < ActiveRecord::Migration
 
       t.string  :subject
       t.text    :body
+      t.text    :body_html
 
       t.datetime :opened_at
       t.datetime :archived_at

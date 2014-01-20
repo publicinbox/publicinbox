@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20140119224315) do
     t.string   "external_source_id"
     t.string   "subject"
     t.text     "body"
+    t.text     "body_html"
     t.datetime "opened_at"
     t.datetime "archived_at"
     t.datetime "created_at"

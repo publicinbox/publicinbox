@@ -41,6 +41,7 @@ class Message < ActiveRecord::Base
     to      = message_data['recipient']
     subject = message_data['subject']
     body    = message_data['body-plain']
+    html    = message_data['body-html']
 
     sender = User.find_by(:email => from)
     recipient = User.find_by(:email => to)
@@ -59,6 +60,7 @@ class Message < ActiveRecord::Base
       :recipient_email => to,
       :subject => subject,
       :body => body,
+      :body_html => html,
 
       # This is really just temporary; for a while it will be helpful to store
       # this so I can go back and look at stuff

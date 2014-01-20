@@ -12,6 +12,7 @@ class Mailer
       'bcc' => message.bcc_list,
       'subject' => message.subject,
       'text' => message.body || '',
+      'html' => message.body_html || '',
       'h:In-Reply-To' => message.external_source_id
     })
 

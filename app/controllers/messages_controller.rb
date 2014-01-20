@@ -18,7 +18,9 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = current_user.create_message!(message_params)
+    message = current_user.create_message!(message_params.merge({
+      :body_html => markdown(message_params[:body])
+    }))
 
     unless message.internal_recipient?
       Mailer.deliver_message!(message) unless Rails.env.development?
@@ -108,7 +110,7 @@ class MessagesController < ApplicationController
       :reply_to => message.sender_email,
       :profile_image => profile_image(message.sender_email),
       :subject => message.subject,
-      :body => markdown(message.body),
+      :body => message.body_html || markdown(message.body),
       :created_at => time_ago_in_words(message.created_at),
       :opened => !!message.opened_at
     }
