@@ -96,20 +96,20 @@ describe User do
     end
   end
 
-  describe '#delete_message!' do
+  describe '#archive_message!' do
     let(:user) { create_user('user') }
 
     context 'when the user is the sender' do
       it 'simply deletes messages to external recipients' do
         message = create_message(user, :recipient_email => 'joe@gmail.com')
-        user.delete_message!(message)
+        user.archive_message!(message)
         Message.find_by(:id => message.id).should be_nil
       end
 
       it '"unlinks" the user from messages to internal recipients' do
         recipient = create_user('recipient')
         message = create_message(user, :recipient => recipient)
-        user.delete_message!(message)
+        user.archive_message!(message)
 
         # The record should still exist...
         Message.find_by(:id => message.id).should == message
@@ -127,14 +127,14 @@ describe User do
           :subject => 'Heyo',
           :body => "How you doin'?"
         })
-        user.delete_message!(message)
+        user.archive_message!(message)
         Message.find_by(:id => message.id).should be_nil
       end
 
       it '"unlinks" the user from messages from internal senders' do
         sender = create_user('sender')
         message = create_message(sender, :recipient => user)
-        user.delete_message!(message)
+        user.archive_message!(message)
 
         # Record should still exist
         Message.find_by(:id => message.id).should == message
@@ -151,8 +151,8 @@ describe User do
 
         message = create_message(sender, :recipient => recipient)
 
-        sender.delete_message!(message)
-        recipient.delete_message!(message)
+        sender.archive_message!(message)
+        recipient.archive_message!(message)
 
         Message.find_by(:id => message.id).should be_nil
       end
@@ -162,7 +162,7 @@ describe User do
       it "doesn't let him delete the message" do
         sender = create_user('sender')
         message = create_message(sender)
-        should_fail { user.delete_message!(message) }
+        should_fail { user.archive_message!(message) }
       end
     end
   end
