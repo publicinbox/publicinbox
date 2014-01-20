@@ -109,7 +109,6 @@ class MessagesController < ApplicationController
       :recipient_email => message.recipient_email,
       :display_email => incoming ? message.sender_email : message.recipient_email,
       :preposition => incoming ? 'From' : 'To',
-      :reply_to => message.sender_email,
       :profile_image => profile_image(message.sender_email),
       :subject => message.subject,
       :body => message.body_html || markdown(message.body),
