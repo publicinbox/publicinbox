@@ -62,7 +62,7 @@ class MessagesController < ApplicationController
     message = Message.create_from_external!(params)
 
     puts "Publishing realtime message #{message.id} on channel '/#{message.recipient_email}'"
-    Pusher[message.recipient_email].trigger('message', render_message(message))
+    Pusher[message.recipient_email].trigger('message', render_message(message, message.recipient))
     puts "Successfully published message #{message.id} on channel '/#{message.recipient_email}'"
 
     render(:text => 'OK')
@@ -97,8 +97,8 @@ class MessagesController < ApplicationController
     }
   end
 
-  def render_message(message)
-    message_type = message.type_for_user(current_user)
+  def render_message(message, user=nil)
+    message_type = message.type_for_user(user || current_user)
     incoming = message_type == 'incoming'
 
     {
