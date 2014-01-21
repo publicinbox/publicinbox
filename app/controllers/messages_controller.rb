@@ -100,6 +100,7 @@ class MessagesController < ApplicationController
   def render_message(message, user=nil)
     message_type = message.type_for_user(user || current_user)
     incoming = message_type == 'incoming'
+    display_email = incoming ? message.sender_email : message.recipient_email
 
     {
       :id => message.id,
@@ -107,9 +108,9 @@ class MessagesController < ApplicationController
       :external_id => message.external_id,
       :sender_email => message.sender_email,
       :recipient_email => message.recipient_email,
-      :display_email => incoming ? message.sender_email : message.recipient_email,
+      :display_email => display_email,
       :preposition => incoming ? 'From' : 'To',
-      :profile_image => profile_image(message.sender_email),
+      :profile_image => profile_image(display_email),
       :subject => message.subject,
       :body => message.body_html || markdown(message.body),
       :created_at => time_ago_in_words(message.created_at),

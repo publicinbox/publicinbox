@@ -362,7 +362,14 @@ ul.message-list {
     @extend .list-group-item, .media;
 
     .picture {
-      img { @extend .media-object; }
+      img {
+        @extend .media-object;
+
+        // Eagerly set height and width so layout is consistent even before
+        // remote images are fetched
+        height: 50px;
+        width: 50px;
+      }
     }
 
     .info {
@@ -447,6 +454,8 @@ ul.message-list {
       img {
         @extend .media-object, .pull-left;
 
+        // Eagerly set height and width so layout is consistent even before
+        // remote images are fetched
         height: 100px;
         width: 100px;
       }

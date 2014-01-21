@@ -73,11 +73,9 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     $scope.app.state = 'loading';
 
     var request = $http.post('/messages', { message: message })
-      .success(function(message) {
-        message.type = 'outgoing';
-
+      .success(function(response) {
         $scope.displayNotice('Message successfully sent.');
-        $scope.addMessage(message);
+        $scope.addMessage(response);
         $scope.showSection('mailbox');
 
         // And now we should clear the draft so it isn't still there when the
