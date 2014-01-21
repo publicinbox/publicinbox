@@ -2,7 +2,7 @@
   <form ng-submit="sendMessage(draft)">
     <div class="field recipient-email">
       <%= label_tag(:recipient_email) %>
-      <%= text_field_tag(:recipient_email, nil, 'ng-model' => 'draft.recipient_email') %>
+      <%= text_field_tag(:recipient_email, nil, 'ng-model' => 'draft.recipient_email', 'typeahead' => 'contact for contact in contacts | orderBy:"toString()"') %>
     </div>
 
     <button

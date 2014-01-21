@@ -65,6 +65,27 @@ describe User do
     end
   end
 
+  describe '#contacts' do
+    let(:user) {
+      user = create_user('user')
+      create_message(user, :recipient_email => 'pete@gmail.com')
+      create_message(user, :recipient_email => 'tom@yahoo.com')
+
+      create_message(nil, :sender_email => 'matt@hotmail.com', :recipient => user)
+      create_message(nil, :sender_email => 'barb@aol.com', :recipient => user)
+
+      user
+    }
+
+    it 'includes the e-mail addresses of people the user has written to' do
+      user.contacts.should include('pete@gmail.com', 'tom@yahoo.com')
+    end
+
+    it 'includes the e-mail addresses of people who have written to the user' do
+      user.contacts.should include('matt@hotmail.com', 'barb@aol.com')
+    end
+  end
+
   describe '#create_message!' do
     let(:user) { create_user('user') }
 

@@ -56,7 +56,8 @@ def create_user(name, attributes={})
 end
 
 def create_message(user, attributes={})
-  user.outgoing_messages.create!({
+  Message.create!({
+    :sender => user,
     :recipient_email => 'user@example.com',
     :subject => 'Hello',
     :body => 'Want to get lunch?'

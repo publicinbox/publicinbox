@@ -16,6 +16,7 @@
 //= require codemirror
 //= require codemirror/markdown
 //= require ui-codemirror
+//= require ui-bootstrap
 //= require pusher
 //= require app
 //= require directives/pi-handle-mailtos

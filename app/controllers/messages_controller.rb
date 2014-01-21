@@ -8,6 +8,7 @@ class MessagesController < ApplicationController
 
     render(:json => {
       :user => render_user(current_user),
+      :contacts => current_user.contacts,
       :messages => messages.map { |message|
         render_message(message)
       },

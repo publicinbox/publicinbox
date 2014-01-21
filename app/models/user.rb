@@ -19,6 +19,13 @@ class User < ActiveRecord::Base
     Message.where('sender_id = ? or recipient_id = ?', self.id, self.id)
   end
 
+  def contacts
+    [
+      *self.outgoing_messages.select('recipient_email').distinct.map(&:recipient_email),
+      *self.incoming_messages.select('sender_email').distinct.map(&:sender_email)
+    ].uniq
+  end
+
   def create_message!(attributes)
     message = self.outgoing_messages.new(attributes)
 

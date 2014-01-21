@@ -4,9 +4,10 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     $scope.app.state = 'loading';
 
     $http.get('/messages').success(function(data) {
-      $scope.user       = data.user;
-      $scope.messages   = data.messages;
-      $scope.app.state  = 'ready';
+      $scope.user      = data.user;
+      $scope.contacts  = data.contacts;
+      $scope.messages  = data.messages;
+      $scope.app.state = 'ready';
 
       // This isn't really very Angular-y, but it seems logically to belong here
       // (in the messages controller) at least.
