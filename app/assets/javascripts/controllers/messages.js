@@ -176,8 +176,9 @@ function createPredicate(predicate) {
     return function(x) { return !!predicate(x); };
   }
 
-  if (isNaN(predicate)) {
-    return function(x) { return isNaN(x); };
+  // Special case: NaN
+  if (predicate !== predicate) {
+    return function(x) { return x !== predicate; };
   }
 
   return function(x) { return x === predicate; };
