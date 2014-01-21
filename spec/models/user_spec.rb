@@ -84,6 +84,13 @@ describe User do
     it 'includes the e-mail addresses of people who have written to the user' do
       user.contacts.should include('matt@hotmail.com', 'barb@aol.com')
     end
+
+    it 'does not include duplicates' do
+      jack = create_user('jack')
+      create_message(jack, :recipient_email => 'jill@example.com')
+      create_message(jack, :recipient_email => 'jill@example.com')
+      jack.contacts.should == ['jill@example.com']
+    end
   end
 
   describe '#create_message!' do

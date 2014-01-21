@@ -20,10 +20,12 @@ class User < ActiveRecord::Base
   end
 
   def contacts
-    [
-      *self.outgoing_messages.select('recipient_email').distinct.map(&:recipient_email),
-      *self.incoming_messages.select('sender_email').distinct.map(&:sender_email)
-    ].uniq
+    recipients = Message.connection.select_values(
+      "select distinct recipient_email from messages where sender_id = #{self.id}")
+    senders = Message.connection.select_values(
+      "select distinct sender_email from messages where recipient_id = #{self.id}")
+
+    (recipients + senders).uniq
   end
 
   def create_message!(attributes)
