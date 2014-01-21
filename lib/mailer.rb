@@ -9,7 +9,7 @@ class Mailer
       'from' => message.sender_email,
       'to' => message.recipient_email,
       'subject' => message.subject,
-      'text' => message.body || '',
+      'text' => message.body || '[No content]',
       'html' => message.body_html || '',
       'h:In-Reply-To' => message.external_source_id
     }
