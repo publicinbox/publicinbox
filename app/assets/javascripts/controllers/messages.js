@@ -118,10 +118,15 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
 
   $scope.addMessage = function addMessage(message) {
     $scope.messages.push(message);
+    $scope.addContact(message.recipient_email);
   };
 
   $scope.removeMessage = function removeMessage(message) {
     removeFromArray($scope.messages, message);
+  };
+
+  $scope.addContact = function addContact(contact) {
+    addToArray($scope.contacts, contact);
   };
 
   $scope.editProfile = function editProfile() {
@@ -162,6 +167,21 @@ function removeFromArray(array, predicate) {
       array.splice(i, 1);
     }
   }
+}
+
+/**
+ * Adds an element to an array (if not already present).
+ *
+ * @param {Array.<*>} array
+ * @param {*} element
+ */
+function addToArray(array, element) {
+  for (var i = 0, len = array.length; i < len; ++i) {
+    if (array[i] === element) {
+      return;
+    }
+  }
+  array.push(element);
 }
 
 /**
