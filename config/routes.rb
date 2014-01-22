@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   post '/login'    => 'home#login'
   post '/register' => 'home#register'
-  get '/logout'    => 'home#logout'
+  get  '/logout'   => 'home#logout'
 
   match '/auth/:provider/callback' => 'identities#create', :via => [:get, :post]
 
@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   resources :users
   resources :messages
   resources :blog
+
+  put    '/batches' => 'batches#update'
+  delete '/batches' => 'batches#delete'
 
   get '/blog/*permalink' => 'blog#show'
 

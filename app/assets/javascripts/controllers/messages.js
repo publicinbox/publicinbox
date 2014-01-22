@@ -1,13 +1,34 @@
 publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $http) {
 
-  $scope.loadMessages = function loadMessages() {
+  function sendRequest(method) {
+    var requestArgs = Array.prototype.slice.call(arguments, 1);
+
+    var callback = requestArgs.pop();
+
+    var request = $http[method].apply($http, requestArgs)
+
+    console.log('Calling $http.' + method + ' w/ args: ' + requestArgs.join(', '));
+
+    request.success(callback);
+
+    request.error(function(response) {
+      $scope.displayNotice(response, 'error');
+    });
+
+    request['finally'](function() {
+      $scope.app.state = 'ready';
+    });
+
     $scope.app.state = 'loading';
 
-    $http.get('/messages').success(function(data) {
+    return request;
+  }
+
+  $scope.loadMessages = function loadMessages() {
+    return sendRequest('get', '/messages', function(data) {
       $scope.user      = data.user;
       $scope.contacts  = data.contacts;
       $scope.messages  = data.messages;
-      $scope.app.state = 'ready';
 
       // This isn't really very Angular-y, but it seems logically to belong here
       // (in the messages controller) at least.
@@ -24,7 +45,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
   $scope.showMessage = function showMessage(message, e) {
     e.preventDefault();
 
-    $http.put('/messages/' + message.id)
+    $http.put('/messages/' + message.unique_token)
       .success(function() {
         message.opened = true;
       })
@@ -98,22 +119,41 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
       'Really delete your copy of this message (you cannot unsend it)?';
 
     if (confirm(confirmationPrompt)) {
-      $scope.app.state = 'loading';
-
-      var request = $http.delete('/messages/' + message.id)
-        .success(function(response) {
-          $scope.displayNotice(response);
-          $scope.removeMessage(message);
-          $scope.showSection('mailbox');
-        })
-        .error(function(response) {
-          $scope.displayNotice(response, 'error');
-        });
-
-      request['finally'](function() {
-        $scope.app.state = 'ready';
+      sendRequest('delete', '/messages/' + message.unique_token, function(response) {
+        $scope.displayNotice(response);
+        $scope.removeMessage(message);
+        $scope.showSection('mailbox');
       });
     }
+  };
+
+  $scope.batchRead = function batchRead() {
+    var tokens = $scope.selection.map(function(message) {
+      return message.unique_token;
+    });
+
+    sendRequest('put', '/batches', { batch: { messages: tokens } }, function() {
+      angular.forEach($scope.selection, function(message) {
+        message.opened = true;
+      });
+
+      $scope.displayNotice('Marked ' + tokens.length + ' messages as read.');
+    });
+  };
+
+  $scope.batchDelete = function batchDelete() {
+    var tokens = $scope.selection.map(function(message) {
+      return message.unique_token;
+    });
+
+    sendRequest('delete', '/batches?messages=' + tokens.join(','), function() {
+      angular.forEach($scope.selection, function(message) {
+        $scope.removeMessage(message);
+      });
+      $scope.selection = [];
+
+      $scope.displayNotice('Successfully deleted ' + tokens.length + ' messages.');
+    });
   };
 
   $scope.addMessage = function addMessage(message) {
@@ -129,11 +169,25 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
     addToArray($scope.contacts, contact);
   };
 
+  $scope.toggleSelection = function toggleSelection(message) {
+    if (arrayContains($scope.selection, message)) {
+      removeFromArray($scope.selection, message);
+    } else {
+      $scope.selection.push(message);
+    }
+  };
+
+  $scope.messageIsSelected = function messageIsSelected(message) {
+    return arrayContains($scope.selection, message);
+  };
+
   $scope.editProfile = function editProfile() {
     $scope.user.editing = true;
   };
 
   $scope.draft = {};
+
+  $scope.selection = [];
 
   $scope.loadMessages();
 
@@ -158,7 +212,7 @@ function prepend(prefix, string) {
  * Removes an element from an array.
  *
  * @param {Array.<*>} array
- * @param {*} element
+ * @param {*} predicate
  */
 function removeFromArray(array, predicate) {
   predicate = createPredicate(predicate);
@@ -176,12 +230,25 @@ function removeFromArray(array, predicate) {
  * @param {*} element
  */
 function addToArray(array, element) {
+  if (!arrayContains(array, element)) {
+    array.push(element);
+  }
+}
+
+/**
+ * Checks whether an element exists in an array.
+ *
+ * @param {Array.<*>} array
+ * @param {*} predicate
+ */
+function arrayContains(array, predicate) {
+  predicate = createPredicate(predicate);
   for (var i = 0, len = array.length; i < len; ++i) {
-    if (array[i] === element) {
-      return;
+    if (predicate(array[i])) {
+      return true;
     }
   }
-  array.push(element);
+  return false;
 }
 
 /**

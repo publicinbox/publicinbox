@@ -353,6 +353,25 @@ button {
   }
 }
 
+.batch-actions {
+  margin-bottom: 15px;
+
+  &:before {
+    @extend h3;
+
+    display: block;
+    content: "Bulk actions";
+  }
+
+  .batch-open {
+    @extend .btn, .btn-info;
+  }
+
+  .batch-delete {
+    @extend .btn, .btn-danger;
+  }
+}
+
 ul.message-list {
   @extend .list-group;
 
@@ -360,6 +379,32 @@ ul.message-list {
 
   li > a {
     @extend .list-group-item, .media;
+
+    overflow: visible;
+
+    .selection {
+      position: absolute;
+
+      top: 50%;
+      left: -40px;
+      height: 24px;
+      width: 24px;
+      margin-top: -12px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    &[data-selected="false"] {
+      .selection {
+        @include icon(square-o);
+      }
+    }
+
+    &[data-selected="true"] {
+      .selection {
+        @include icon(check-square-o);
+      }
+    }
 
     .picture {
       img {

@@ -37,7 +37,7 @@ class MessagesController < ApplicationController
   end
 
   def update
-    message = Message.find(params[:id])
+    message = Message.find_by(:unique_token => params[:id])
 
     message.opened_at = Time.now
     message.save!
@@ -50,8 +50,10 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    message = Message.find(params[:id])
+    message = Message.find_by(:unique_token => params[:id])
+
     current_user.archive_message!(message)
+
     render(:text => 'Message successfully deleted.')
 
   rescue => ex
@@ -104,7 +106,7 @@ class MessagesController < ApplicationController
     display_email = incoming ? message.sender_email : message.recipient_email
 
     {
-      :id => message.id,
+      :unique_token => message.unique_token,
       :type => message_type,
       :external_id => message.external_id,
       :sender_email => message.sender_email,
