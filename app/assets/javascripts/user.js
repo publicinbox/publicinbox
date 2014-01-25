@@ -19,6 +19,7 @@
 //= require ui-bootstrap
 //= require pusher
 //= require app
+//= require directives/pi-message-container
 //= require directives/pi-handle-mailtos
 //= require directives/pi-navigable-sections
 //= require directives/pi-editor

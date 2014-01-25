@@ -560,7 +560,11 @@ ul.message-list {
     }
   }
 
-  article {
+  iframe {
+    border: none;
+    height: auto;
+    width: 100%;
+
     font-size: 150%;
 
     @include mobile {
