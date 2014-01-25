@@ -7,10 +7,10 @@ publicInboxApp.directive('piMessageContainer', function() {
         var messageWindow   = element[0].contentWindow,
             messageDocument = messageWindow.document;
 
-        // Check out THIS hackiness: we're going to find the closing </html> tag
-        // and inject a <script> tag just before it that posts the window's size
-        // to the parent window. Genius, right?!
-        var html = injectSizeMessage(ngModel.$viewValue);
+        // Check out THIS hackiness: we're going to tack on an extra <script>
+        // tag that adds target="_blank" to all hyperlinks and then posts back
+        // the document's size so we can resize the iframe. Genius, right?!
+        var html = injectCustomScripts(ngModel.$viewValue);
 
         // First reset the height of the iframe.
         element.height('auto');
@@ -31,14 +31,33 @@ publicInboxApp.directive('piMessageContainer', function() {
     }
   };
 
-  function injectSizeMessage(html) {
+  function injectCustomScripts(html) {
     return html +
       '<script>' +
-        // 'setTimeout(function() {' +
-          'var height = document.body.clientHeight;' +
-          'window.parent.postMessage(height, "*");' +
-        // '}, 0);' +
+        '(' + updateLinks.toString() + ')();' +
+        '(' + reportSize.toString() + ')();' +
       '</script>';
+  }
+
+  // This function only exists to be toString()'d and injected after the HTML of
+  // an e-mail body.
+  function updateLinks() {
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0, len = links.length; i < len; ++i) {
+      // Skip mailto: links
+      if (links[i].getAttribute('href').match(/^\s*mailto:/)) {
+        continue;
+      }
+
+      links[i].setAttribute('target', '_blank');
+    }
+  }
+
+  // This function only exists to be toString()'d and injected after the HTML of
+  // an e-mail body.
+  function reportSize() {
+    var height = document.body.clientHeight;
+    window.parent.postMessage(height, '*');
   }
 
 });
