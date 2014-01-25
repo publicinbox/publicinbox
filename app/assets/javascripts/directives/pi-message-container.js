@@ -26,7 +26,18 @@ publicInboxApp.directive('piMessageContainer', function() {
       };
 
       window.addEventListener('message', function(e) {
-        element.height(e.data);
+        var data = JSON.parse(e.data);
+
+        switch (data.type) {
+          case 'mailto':
+            scope.compose(data.href.replace(/^\s*mailto:/, ''));
+            scope.$apply();
+            break;
+
+          case 'height':
+            element.height(data.height);
+            break;
+        }
       });
     }
   };
@@ -42,22 +53,45 @@ publicInboxApp.directive('piMessageContainer', function() {
   // This function only exists to be toString()'d and injected after the HTML of
   // an e-mail body.
   function updateLinks() {
+    var isEmailLink = function(link) {
+      return (/^\s*mailto:/).test(link.getAttribute('href'));
+    };
+
     var links = document.querySelectorAll('a[href]');
     for (var i = 0, len = links.length; i < len; ++i) {
-      // Skip mailto: links
-      if (links[i].getAttribute('href').match(/^\s*mailto:/)) {
+      if (isEmailLink(links[i])) {
         continue;
       }
 
       links[i].setAttribute('target', '_blank');
     }
+
+    document.body.addEventListener('click', function(e) {
+      var link = e.target;
+
+      if (link.nodeName !== 'A') {
+        return;
+      }
+
+      if (isEmailLink(link)) {
+        e.preventDefault();
+
+        window.parent.postMessage(JSON.stringify({
+          type: 'mailto',
+          href: link.getAttribute('href')
+        }), '*');
+      }
+    });
   }
 
   // This function only exists to be toString()'d and injected after the HTML of
   // an e-mail body.
   function reportSize() {
     var height = document.body.clientHeight;
-    window.parent.postMessage(height, '*');
+    window.parent.postMessage(JSON.stringify({
+      type: 'height',
+      height: height
+    }), '*');
   }
 
 });
