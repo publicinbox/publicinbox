@@ -560,12 +560,14 @@ ul.message-list {
     }
   }
 
+  article {
+    font-size: 150%;
+  }
+
   iframe {
     border: none;
     height: auto;
     width: 100%;
-
-    font-size: 150%;
 
     @include mobile {
       font-size: 125%;

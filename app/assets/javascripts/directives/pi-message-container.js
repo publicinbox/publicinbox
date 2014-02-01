@@ -4,16 +4,23 @@ publicInboxApp.directive('piMessageContainer', function() {
     require: '?ngModel',
     link: function(scope, element, attrs, ngModel) {
       ngModel.$render = function() {
-        var messageWindow   = element[0].contentWindow,
+        var message = ngModel.$viewValue;
+        if (!message) {
+          return;
+        }
+
+        var html = message.body;
+        if (message.internal_sender) {
+          element.html(html);
+          return;
+        }
+
+        var iframe          = getOrInsertIFrame(element),
+            messageWindow   = iframe[0].contentWindow,
             messageDocument = messageWindow.document;
 
-        // Check out THIS hackiness: we're going to tack on an extra <script>
-        // tag that adds target="_blank" to all hyperlinks and then posts back
-        // the document's size so we can resize the iframe. Genius, right?!
-        var html = injectCustomScripts(ngModel.$viewValue);
-
         // First reset the height of the iframe.
-        element.height('auto');
+        iframe.height('auto');
 
         // Write the HTML to the iframe on the next turn of the event loop so
         // that its document is able to observe the freshly reset document
@@ -21,6 +28,12 @@ publicInboxApp.directive('piMessageContainer', function() {
         setTimeout(function() {
           messageDocument.open();
           messageDocument.write(html);
+
+          // Check out THIS hackiness: we're going to tack on an extra <script>
+          // tag that adds target="_blank" to all hyperlinks and then posts back
+          // the document's size so we can resize the iframe. Genius, right?!
+          messageDocument.write(injectCustomScripts());
+
           messageDocument.close();
         }, 0);
       };
@@ -35,19 +48,31 @@ publicInboxApp.directive('piMessageContainer', function() {
             break;
 
           case 'height':
-            element.height(data.height);
+            getOrInsertIFrame(element).height(data.height);
             break;
         }
       });
     }
   };
 
-  function injectCustomScripts(html) {
-    return html +
-      '<script>' +
+  function getOrInsertIFrame(element) {
+    var iframe = element.find('iframe');
+    if (iframe.length > 0) {
+      return iframe;
+    }
+
+    iframe = $('<iframe>');
+    element.empty().append(iframe);
+    return iframe;
+  }
+
+  function injectCustomScripts() {
+    var customScripts = '<script>' +
         '(' + updateLinks.toString() + ')();' +
         '(' + reportSize.toString() + ')();' +
       '</script>';
+
+    return customScripts;
   }
 
   // This function only exists to be toString()'d and injected after the HTML of

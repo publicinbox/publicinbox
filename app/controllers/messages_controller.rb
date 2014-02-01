@@ -115,6 +115,7 @@ class MessagesController < ApplicationController
       :preposition => incoming ? 'From' : 'To',
       :profile_image => profile_image(display_email),
       :subject => message.subject,
+      :internal_sender => message.internal_sender?,
       :body => message.body_html || markdown(message.body),
       :created_at => time_ago_in_words(message.created_at),
       :opened => !!message.opened_at

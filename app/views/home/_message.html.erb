@@ -6,7 +6,7 @@
     <small><%= link_to('Back', '#mailbox') %></small>
   </h3>
 
-  <iframe pi-message-container ng-model="message.body"></iframe>
+  <article pi-message-container ng-model="message"></article>
 
   <p>
     <button class="reply" ng-click="replyToMessage(message)">Reply</button>
