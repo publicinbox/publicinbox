@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140119224315) do
+ActiveRecord::Schema.define(version: 20140203145737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20140119224315) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "mailgun_data"
+    t.boolean  "display_in_iframe",  default: false
   end
 
   add_index "messages", ["archived_at"], name: "index_messages_on_archived_at", using: :btree

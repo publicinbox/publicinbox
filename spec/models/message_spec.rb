@@ -252,4 +252,56 @@ describe Message do
       end
     end
   end
+
+  context 'displaying messages' do
+    describe 'when the message HTML contains <style> elements' do
+      before :each do
+        kyle = create_user('kyle')
+
+        @message = create_message kyle, :body_html => <<-EOM
+          <style>
+            h1 { font-family: sans-serif; }
+            p { font-weight: 300; }
+          </style>
+
+          <h1>Message header</h1>
+          <p>Message body</p>
+        EOM
+      end
+
+      it 'is marked to display in an <iframe>' do
+        @message.display_in_iframe?.should == true
+      end
+    end
+
+    describe 'otherwise' do
+      before :each do
+        mark = create_user('mark')
+
+        @message = create_message mark, :body_html => <<-EOM
+          <h1>Message header</h1>
+          <p>Message body</p>
+        EOM
+      end
+
+      it 'is not marked to display in an iframe' do
+        @message.display_in_iframe?.should == false
+      end
+    end
+
+    it 'strips out any <script> tags' do
+      message = create_message create_user('paul'), :body_html => <<-EOM
+        <div class="header">Message header</div>
+        <script>alert('Hello!');</script>
+        <div class="content">Message body</div>
+      EOM
+
+      message.body_html.should =~ Regexp.new([
+        '',
+        '<div class="header">Message header</div>',
+        '<div class="content">Message body</div>',
+        ''
+      ].join('\\s*'))
+    end
+  end
 end

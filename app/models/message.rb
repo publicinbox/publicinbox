@@ -34,7 +34,8 @@ class Message < ActiveRecord::Base
 
   validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
 
-  before_create :populate_ids, :populate_emails, :populate_thread_id, :format_cc_and_bcc
+  before_create :populate_ids, :populate_emails, :populate_thread_id,
+    :format_cc_and_bcc, :parse_html
 
   def self.create_from_external!(message_data)
     from    = message_data['sender']
@@ -129,5 +130,20 @@ class Message < ActiveRecord::Base
   def format_cc_and_bcc
     self.cc_list = self.cc_list.split(/[,\s]+/).join(',') if self.cc_list.present?
     self.bcc_list = self.bcc_list.split(/[,\s]+/).join(',') if self.bcc_list.present?
+  end
+
+  def parse_html
+    return if self.body_html.nil?
+
+    document = Nokogiri::HTML.fragment(self.body_html)
+
+    if document.css('style').any?
+      self.display_in_iframe = true
+    end
+
+    if document.css('script').any?
+      document.css('script').each(&:remove)
+      self.body_html = document.to_html
+    end
   end
 end

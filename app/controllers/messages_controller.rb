@@ -108,17 +108,17 @@ class MessagesController < ApplicationController
     {
       :unique_token => message.unique_token,
       :type => message_type,
-      :external_id => message.external_id,
       :sender_email => message.sender_email,
       :recipient_email => message.recipient_email,
+      :subject => message.subject,
+      :body => message.body_html || markdown(message.body),
+      :external_id => message.external_id,
       :display_email => display_email,
       :preposition => incoming ? 'From' : 'To',
       :profile_image => profile_image(display_email),
-      :subject => message.subject,
-      :internal_sender => message.internal_sender?,
-      :body => message.body_html || markdown(message.body),
       :created_at => time_ago_in_words(message.created_at),
-      :opened => !!message.opened_at
+      :opened => !!message.opened_at,
+      :display_in_iframe => message.display_in_iframe?
     }
   end
 end

@@ -10,7 +10,7 @@ publicInboxApp.directive('piMessageContainer', function() {
         }
 
         var html = message.body;
-        if (message.internal_sender) {
+        if (!message.display_in_iframe) {
           element.html(html);
           return;
         }

@@ -32,6 +32,9 @@ gem 'markdown-rails'
 # Allow e-mails to be formatted using Markdown
 gem 'redcarpet'
 
+# Parse e-mail HTML
+gem 'nokogiri'
+
 # Include Angular in sprockets
 gem 'angularjs-rails'
 
