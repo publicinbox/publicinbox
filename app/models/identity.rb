@@ -13,7 +13,7 @@ class Identity < ActiveRecord::Base
     # More plausible is that somebody might sign in w/ say, Google, then log out
     # and come back later through Facebook or something. (Although I don't even
     # know if Facebook gives you an e-mail address. I guess I'll find out!)
-    if self.user.nil?
+    if self.user.nil? && self.email.present?
       self.user = Identity.find_by(:email => self.email).try(:user)
     end
 

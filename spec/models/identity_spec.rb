@@ -31,6 +31,17 @@ describe Identity do
     second_identity.user.should == first_identity.user
   end
 
+  it 'does not mistakenly associate different identities with null e-mails' do
+    first_identity = create_identity(:name => 'jim')
+
+    second_identity = create_identity({
+      :provider => 'some other provider',
+      :name => 'jim',
+    })
+
+    second_identity.user.should_not == first_identity.user
+  end
+
   it 'creates a new user if none already exists that matches' do
     identity = Identity.create!({
       :provider => 'whoever',
