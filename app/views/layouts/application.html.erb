@@ -6,7 +6,7 @@
     <%= stylesheet_link_tag("application") %>
     <%= yield(:extra_stylesheets) if content_for?(:extra_stylesheets) %>
     <%= favicon_link_tag %>
-    <%= javascript_include_tag(logged_in? && "user" || "guest") %>
+    <%= javascript_include_tag("application") %>
     <%= yield(:extra_javascripts) if content_for?(:extra_javascripts) %>
   </head>
 

@@ -24,4 +24,4 @@
 //= require directives/pi_handle_mailtos
 //= require directives/pi_navigable_sections
 //= require directives/pi_editor
-//= require app
+//= require public_inbox

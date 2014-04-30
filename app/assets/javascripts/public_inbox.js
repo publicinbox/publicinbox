@@ -29,7 +29,6 @@ var PublicInbox = angular.module('PublicInbox', getModules());
 
 PublicInbox.controller('MainController', MainController);
 PublicInbox.controller('MessagesController', MessagesController);
-PublicInbox.controller('TestMessageController', TestMessageController);
 
 PublicInbox.directive('piEditor', PIEditor);
 PublicInbox.directive('piHandleMailtos', PIHandleMailtos);
