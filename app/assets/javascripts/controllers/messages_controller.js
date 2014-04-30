@@ -7,8 +7,6 @@ function MessagesController($scope, $http) {
 
     var request = $http[method].apply($http, requestArgs)
 
-    console.log('Calling $http.' + method + ' w/ args: ' + requestArgs.join(', '));
-
     request.success(callback);
 
     request.error(function(response) {
