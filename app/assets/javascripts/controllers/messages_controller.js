@@ -179,10 +179,6 @@ function MessagesController($scope, $http) {
     return arrayContains($scope.selection, message);
   };
 
-  $scope.editProfile = function editProfile() {
-    $scope.user.editing = true;
-  };
-
   $scope.draft = {};
 
   $scope.selection = [];

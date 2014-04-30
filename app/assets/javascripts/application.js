@@ -20,6 +20,7 @@
 //= require pusher
 //= require controllers/main_controller
 //= require controllers/messages_controller
+//= require controllers/profile_controller
 //= require directives/pi_message_container
 //= require directives/pi_handle_mailtos
 //= require directives/pi_navigable_sections

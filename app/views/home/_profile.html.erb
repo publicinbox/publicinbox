@@ -1,5 +1,9 @@
-<section id="profile" data-title="Profile" ng-show="isActiveSection('profile')">
-  <div class="info" ng-show="!user.editing">
+<section id="profile"
+  ng-controller="ProfileController as ctrl"
+  data-title="Profile"
+  ng-show="isActiveSection('profile')">
+
+  <div class="info" ng-show="!editing">
     <h2 class="user-name">
       <img ng-src="{{user.profile_image}}" />
       {{user.user_name}}
@@ -20,10 +24,10 @@
 
     <article class="bio" ng-bind-html="user.bio"></article>
 
-    <button ng-click="editProfile()">Edit Profile</button>
+    <button ng-click="ctrl.editProfile()">Edit Profile</button>
   </div>
 
-  <%= form_for(current_user, :html => { 'ng-show' => 'user.editing' }) do |f| %>
+  <%= form_for(current_user, :html => { 'ng-show' => 'editing' }) do |f| %>
     <div class="field">
       <%= f.label(:user_name) %>
       <%= f.text_field(:user_name) %>
@@ -46,6 +50,8 @@
 
     <div class="field">
       <%= f.submit('Update Profile') %>
+      <%= button_tag('Cancel', 'ng-click' => 'ctrl.cancelEdit($event)') %>
     </div>
   <% end %>
+
 </section>
