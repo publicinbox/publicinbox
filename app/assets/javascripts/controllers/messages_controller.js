@@ -187,6 +187,8 @@ function MessagesController($scope, $http) {
 
 }
 
+MessagesController.$inject = ['$scope', '$http'];
+
 /**
  * Prepends `prefix` to `string`, *if* not the string does not already begin
  * with that prefix.

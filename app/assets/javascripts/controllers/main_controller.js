@@ -60,3 +60,5 @@ function MainController($scope, $timeout) {
   $scope.app = { state: 'ready' };
 
 }
+
+MainController.$inject = ['$scope', '$timeout'];

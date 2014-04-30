@@ -10,3 +10,5 @@ ProfileController.prototype.cancelEdit = function(e) {
   e.preventDefault();
   this.$scope.editing = false;
 };
+
+ProfileController.$inject = ['$scope'];

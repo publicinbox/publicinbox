@@ -33,3 +33,5 @@ function TestMessageController($scope, $http) {
   };
 
 }
+
+TestMessageController.$inject = ['$scope', '$http'];
