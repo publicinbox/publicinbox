@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     @user = current_user || User.new
-    render(:action => logged_in? && 'app' || 'guest')
+    render(:action => logged_in? && 'user' || 'guest')
   end
 
   def login
