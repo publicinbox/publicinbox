@@ -1,0 +1,11 @@
+// ----- Base
+
+$nav-panel-width:        280px;
+$nav-panel-padding:      20px;
+$nav-panel-border-width: 12px;
+
+// ----- Derived
+
+$total-nav-width: $nav-panel-width + ($nav-panel-padding * 2) + $nav-panel-border-width;
+$desktop-width: 750px + $total-nav-width;
+$widescreen-width: 1170px + ($total-nav-width * 2);

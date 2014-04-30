@@ -1,87 +1,9 @@
 //= require codemirror
+//= require profile
 
 @import "readable";
-@import "font-awesome";
-
-$nav-panel-width: 280px;
-$nav-panel-padding: 20px;
-$nav-panel-border-width: 12px;
-$total-nav-width: $nav-panel-width + ($nav-panel-padding * 2) + $nav-panel-border-width;
-$desktop-width: 750px + $total-nav-width;
-$widescreen-width: 1170px + ($total-nav-width * 2);
-
-@mixin page-header {
-  @extend .page-header;
-
-  h1 em {
-    @extend .text-muted;
-    font-style: normal;
-  }
-
-  h1 small {
-    text-transform: none;
-    white-space: nowrap;
-  }
-
-  p {
-    @extend .lead;
-  }
-
-  img {
-    vertical-align: bottom;
-  }
-}
-
-@mixin transition($property, $duration: 1s) {
-  transition: $property $duration;
-  -moz-transition: $property $duration;
-  -o-transition: $property $duration;
-  -webkit-transition: $property $duration;
-}
-
-@mixin calc($property, $value) {
-  #{$property}: calc(#{$value});
-  #{$property}: -moz-calc(#{$value});
-  #{$property}: -webkit-calc(#{$value});
-}
-
-@mixin icon($name) {
-  @extend .fa, .fa-#{$name};
-}
-
-@mixin button-with-icon($name) {
-  @include icon($name);
-
-  &:before {
-    display: inline-block;
-    width: 1.5em;
-    text-align: left;
-  }
-}
-
-@mixin empty-placeholder($content) {
-  &:empty:before {
-    content: $content;
-  }
-}
-
-@mixin mobile {
-  @media all and (max-width: $desktop-width - 1) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media all and (min-width: $desktop-width) {
-    @content;
-  }
-}
-
-@mixin widescreen {
-  @media all and (min-width: $widescreen-width) {
-    @content;
-  }
-}
+@import "_const";
+@import "_mixins";
 
 html, body {
   margin: 0;
@@ -262,46 +184,6 @@ nav {
 
   a[href="/logout"] {
     color: #d9534f;
-  }
-}
-
-a.login-button {
-  @extend .btn;
-
-  color: #fff;
-
-  &[href="/auth/google_oauth2"] {
-    background-color: #C61800;
-    @include button-with-icon(google-plus);
-  }
-
-  &[href="/auth/facebook"] {
-    background-color: #3B5998;
-    @include button-with-icon(facebook);
-  }
-
-  &[href="/auth/twitter"] {
-    background-color: #30D8F0;
-    @include button-with-icon(twitter);
-  }
-
-  &[data-identity-linked="true"] {
-    @include button-with-icon(check);
-
-    // Need to set these values manually rather than use @extend
-    // because @extend doesn't override prior values properly.
-    background-color: #888;
-    border-color: #888;
-
-    &:after {
-      @extend .small, .text-muted;
-      content: "(already linked)";
-      margin-left: 0.5em;
-    }
-  }
-
-  @include mobile {
-    margin-bottom: 5px;
   }
 }
 
@@ -487,65 +369,6 @@ ul.message-list {
   @include mobile {
     li > a {
       .picture { display: none; }
-    }
-  }
-}
-
-#profile {
-  .info {
-    h2.user-name {
-      @extend .media;
-
-      img {
-        @extend .media-object, .pull-left;
-
-        // Eagerly set height and width so layout is consistent even before
-        // remote images are fetched
-        height: 100px;
-        width: 100px;
-      }
-
-      small {
-        display: block;
-      }
-    }
-
-    h3 {
-      font-weight: normal;
-    }
-
-    .real-name, .external-email, .bio {
-      &:empty {
-        display: none;
-      }
-
-      &:before {
-        @extend h3;
-
-        display: block;
-        font-weight: normal;
-      }
-    }
-
-    .real-name:before {
-      content: "Real name";
-    }
-
-    .external-email:before {
-      content: "External e-mail address";
-    }
-
-    .bio:before {
-      content: "Bio";
-    }
-
-    ul.identity-list {
-      list-style: none;
-      padding-left: 0;
-
-      li a {
-        margin-bottom: 5px;
-      }
     }
   }
 }

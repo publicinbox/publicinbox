@@ -14,6 +14,12 @@
 
     <p class="external-email">{{user.external_email}}</p>
 
+    <article class="bio" ng-bind-html="user.bio"></article>
+
+    <button ng-click="ctrl.editProfile()">Edit Profile</button>
+  </div>
+
+  <div class="external-accounts">
     <h3>External accounts (click to link)</h3>
 
     <ul class="identity-list">
@@ -21,10 +27,6 @@
       <li><%= link_to('Facebook', '/auth/facebook', :class => 'login-button', 'data-identity-linked' => current_user.has_identity?('facebook')) %></li>
       <li><%= link_to('Twitter', '/auth/twitter', :class => 'login-button', 'data-identity-linked' => current_user.has_identity?('twitter')) %></li>
     </ul>
-
-    <article class="bio" ng-bind-html="user.bio"></article>
-
-    <button ng-click="ctrl.editProfile()">Edit Profile</button>
   </div>
 
   <%= form_for(current_user, :html => { 'ng-show' => 'editing' }) do |f| %>

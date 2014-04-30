@@ -1,0 +1,76 @@
+@import "readable";
+@import "font-awesome";
+@import "_const";
+
+@mixin page-header {
+  @extend .page-header;
+
+  h1 em {
+    @extend .text-muted;
+    font-style: normal;
+  }
+
+  h1 small {
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  p {
+    @extend .lead;
+  }
+
+  img {
+    vertical-align: bottom;
+  }
+}
+
+@mixin transition($property, $duration: 1s) {
+  transition: $property $duration;
+  -moz-transition: $property $duration;
+  -o-transition: $property $duration;
+  -webkit-transition: $property $duration;
+}
+
+@mixin calc($property, $value) {
+  #{$property}: calc(#{$value});
+  #{$property}: -moz-calc(#{$value});
+  #{$property}: -webkit-calc(#{$value});
+}
+
+@mixin icon($name) {
+  @extend .fa, .fa-#{$name};
+}
+
+@mixin button-with-icon($name) {
+  @include icon($name);
+
+  &:before {
+    display: inline-block;
+    width: 1.5em;
+    text-align: left;
+  }
+}
+
+@mixin empty-placeholder($content) {
+  &:empty:before {
+    content: $content;
+  }
+}
+
+@mixin mobile {
+  @media all and (max-width: $desktop-width - 1) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media all and (min-width: $desktop-width) {
+    @content;
+  }
+}
+
+@mixin widescreen {
+  @media all and (min-width: $widescreen-width) {
+    @content;
+  }
+}

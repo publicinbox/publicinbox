@@ -1,0 +1,111 @@
+@import "readable";
+@import "_mixins";
+
+#profile {
+  @extend .row;
+
+  .info {
+    @extend .col-lg-8;
+
+    h2.user-name {
+      @extend .media;
+
+      img {
+        @extend .media-object, .pull-left;
+
+        // Eagerly set height and width so layout is consistent even before
+        // remote images are fetched
+        height: 100px;
+        width: 100px;
+      }
+
+      small {
+        display: block;
+      }
+    }
+
+    h3 {
+      font-weight: normal;
+    }
+
+    .real-name, .external-email, .bio {
+      &:empty {
+        display: none;
+      }
+
+      &:before {
+        @extend h3;
+
+        display: block;
+        font-weight: normal;
+      }
+    }
+
+    .real-name:before {
+      content: "Real name";
+    }
+
+    .external-email:before {
+      content: "External e-mail address";
+    }
+
+    .bio:before {
+      content: "Bio";
+    }
+  }
+
+  .external-accounts {
+    @extend .col-lg-4;
+
+    text-align: right;
+
+    ul.identity-list {
+      list-style: none;
+      padding-left: 0;
+
+      li a {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+a.login-button {
+  @extend .btn;
+
+  color: #fff;
+
+  &[href="/auth/google_oauth2"] {
+    background-color: #C61800;
+    @include button-with-icon(google-plus);
+  }
+
+  &[href="/auth/facebook"] {
+    background-color: #3B5998;
+    @include button-with-icon(facebook);
+  }
+
+  &[href="/auth/twitter"] {
+    background-color: #30D8F0;
+    @include button-with-icon(twitter);
+  }
+
+  &[data-identity-linked="true"] {
+    @include button-with-icon(check);
+
+    // Need to set these values manually rather than use @extend
+    // because @extend doesn't override prior values properly.
+    background-color: #888;
+    border-color: #888;
+
+    &:after {
+      @extend .small, .text-muted;
+      content: "(already linked)";
+      margin-left: 0.5em;
+    }
+  }
+
+  @include mobile {
+    margin-bottom: 5px;
+  }
+}
