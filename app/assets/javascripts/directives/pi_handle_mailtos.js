@@ -1,4 +1,4 @@
-publicInboxApp.directive('piHandleMailtos', function() {
+function PIHandleMailtos() {
 
   return {
     link: function(scope, element) {
@@ -11,4 +11,4 @@ publicInboxApp.directive('piHandleMailtos', function() {
     }
   };
 
-});
+}

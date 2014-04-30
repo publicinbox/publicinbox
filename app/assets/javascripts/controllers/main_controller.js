@@ -1,4 +1,4 @@
-publicInboxApp.controller('MainCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+function MainController($scope, $timeout) {
 
   $scope.showSection = function showSection(sectionName, title) {
     if (sectionName.charAt(0) === '#') {
@@ -59,4 +59,4 @@ publicInboxApp.controller('MainCtrl', ['$scope', '$timeout', function($scope, $t
   $scope.nav = { state: 'ready' };
   $scope.app = { state: 'ready' };
 
-}]);
+}

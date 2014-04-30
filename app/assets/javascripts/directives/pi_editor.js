@@ -3,7 +3,7 @@
 // does a post and a page reload, and you want CodeMirror to replace a textarea
 // in the form. The ui-codemirror directive is more heavyweight but it handles
 // Angular bindings properly (this one doesn't).
-publicInboxApp.directive('piEditor', function() {
+function PIEditor() {
 
   function tryParse(string, callback) {
     try {
@@ -32,4 +32,4 @@ publicInboxApp.directive('piEditor', function() {
     }
   };
 
-});
+}

@@ -18,10 +18,10 @@
 //= require ui-codemirror
 //= require ui-bootstrap
 //= require pusher
+//= require controllers/main_controller
+//= require controllers/messages_controller
+//= require directives/pi_message_container
+//= require directives/pi_handle_mailtos
+//= require directives/pi_navigable_sections
+//= require directives/pi_editor
 //= require app
-//= require directives/pi-message-container
-//= require directives/pi-handle-mailtos
-//= require directives/pi-navigable-sections
-//= require directives/pi-editor
-//= require controllers/main
-//= require controllers/messages

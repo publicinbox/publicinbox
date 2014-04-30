@@ -25,4 +25,13 @@ function getModules() {
   return modules;
 }
 
-var publicInboxApp = angular.module('publicInboxApp', getModules());
+var PublicInbox = angular.module('PublicInbox', getModules());
+
+PublicInbox.controller('MainController', MainController);
+PublicInbox.controller('MessagesController', MessagesController);
+PublicInbox.controller('TestMessageController', TestMessageController);
+
+PublicInbox.directive('piEditor', PIEditor);
+PublicInbox.directive('piHandleMailtos', PIHandleMailtos);
+PublicInbox.directive('piMessageContainer', PIMessageContainer);
+PublicInbox.directive('piNavigableSections', PINavigableSections);

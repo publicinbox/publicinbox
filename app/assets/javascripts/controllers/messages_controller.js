@@ -1,4 +1,4 @@
-publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $http) {
+function MessagesController($scope, $http) {
 
   function sendRequest(method) {
     var requestArgs = Array.prototype.slice.call(arguments, 1);
@@ -191,7 +191,7 @@ publicInboxApp.controller('MessagesCtrl', ['$scope', '$http', function($scope, $
 
   $scope.loadMessages();
 
-}]);
+}
 
 /**
  * Prepends `prefix` to `string`, *if* not the string does not already begin

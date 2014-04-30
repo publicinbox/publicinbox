@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="publicInboxApp">
+<html ng-app="PublicInbox">
   <head>
     <title>PublicInbox</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
@@ -13,7 +13,7 @@
   <body
     data-page="<%= "#{params[:controller]}-#{params[:action]}" %>"
     data-state="{{app.state}}"
-    ng-controller="MainCtrl"
+    ng-controller="MainController"
     pi-navigable-sections>
 
     <%= content_tag(:main, main_attributes) do %>

@@ -1,4 +1,4 @@
-publicInboxApp.directive('piNavigableSections', function() {
+function PINavigableSections() {
 
   var sections = {};
 
@@ -38,4 +38,4 @@ publicInboxApp.directive('piNavigableSections', function() {
     }
   };
 
-});
+}

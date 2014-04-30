@@ -20,7 +20,7 @@ module ApplicationHelper
 
     if logged_in?
       attributes.merge!({
-        'ng-controller' => 'MessagesCtrl',
+        'ng-controller' => 'MessagesController',
         'pi-handle-mailtos' => 'true'
       })
     end

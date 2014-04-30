@@ -1,4 +1,4 @@
-publicInboxApp.directive('piMessageContainer', function() {
+function PIMessageContainer() {
 
   return {
     require: '?ngModel',
@@ -119,4 +119,4 @@ publicInboxApp.directive('piMessageContainer', function() {
     }), '*');
   }
 
-});
+}

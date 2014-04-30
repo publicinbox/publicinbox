@@ -1,4 +1,4 @@
-publicInboxApp.controller('TestMessageCtrl', ['$scope', '$http', function($scope, $http) {
+function TestMessageController($scope, $http) {
 
   $scope.sendTestMessage = function sendTestMessage(message) {
     var data = {
@@ -32,4 +32,4 @@ publicInboxApp.controller('TestMessageCtrl', ['$scope', '$http', function($scope
     })
   };
 
-}]);
+}
