@@ -111,7 +111,7 @@ class MessagesController < ApplicationController
       :sender_email => message.sender_email,
       :recipient_email => message.recipient_email,
       :subject => message.subject,
-      :body => message.body_html || markdown(message.body),
+      :body => message.display_in_iframe? && message.body_html || markdown(message.body),
       :external_id => message.external_id,
       :display_email => display_email,
       :preposition => incoming ? 'From' : 'To',
