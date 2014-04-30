@@ -18,7 +18,7 @@ gem 'omniauth-twitter'
 gem 'newrelic_rpm'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'sass-rails', '~> 4.0.2'
 
 # Use Font Awesome for icons
 gem 'font-awesome-sass'
