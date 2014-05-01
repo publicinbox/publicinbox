@@ -4,8 +4,8 @@
   </p>
 
   <div class="batch-actions" ng-show="selection.length">
-    <button class="batch-open" ng-click="batchRead()">Mark as read</button>
-    <button class="batch-delete" ng-click="batchDelete()">Delete</button>
+    <button class="batch-open" ng-click="ctrl.batchRead()">Mark as read</button>
+    <button class="batch-delete" ng-click="ctrl.batchDelete()">Delete</button>
   </div>
 
   <ul class="message-list">
@@ -13,10 +13,10 @@
       <a href="/messages/{{message.unique_token}}"
         class="{{message.type}}-message"
         data-opened="{{message.opened}}"
-        data-selected="{{messageIsSelected(message)}}"
-        ng-click="showMessage(message, $event)">
+        data-selected="{{ctrl.messageIsSelected(message)}}"
+        ng-click="ctrl.showMessage(message, $event)">
 
-        <div class="selection" ng-click="toggleSelection(message); $event.preventDefault(); $event.stopPropagation()">
+        <div class="selection" ng-click="ctrl.toggleSelection(message); $event.preventDefault(); $event.stopPropagation()">
         </div>
 
         <div class="picture">

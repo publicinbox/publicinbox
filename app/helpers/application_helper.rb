@@ -15,12 +15,14 @@ module ApplicationHelper
     partial('about')
   end
 
+  # TODO: This is... just awful. Separate UI into multiple controllers and use
+  # services to share data where appropriate.
   def main_attributes
     attributes = { 'ng-click' => 'hideNav()' }
 
     if logged_in?
       attributes.merge!({
-        'ng-controller' => 'MessagesController',
+        'ng-controller' => 'MessagesController as ctrl',
         'pi-handle-mailtos' => 'true'
       })
     end
