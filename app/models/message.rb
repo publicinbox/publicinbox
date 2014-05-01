@@ -47,7 +47,7 @@ class Message < ActiveRecord::Base
     sender = User.find_by(:email => from)
     recipient = User.find_by(:email => to)
 
-    raise 'No such user' if recipient.nil?
+    raise "No such user: #{to}" if recipient.nil?
 
     external_id = message_data['Message-Id']
     external_source_id = message_data['In-Reply-To']
