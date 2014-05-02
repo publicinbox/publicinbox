@@ -41,8 +41,8 @@ class Message < ActiveRecord::Base
     from    = message_data['sender']
     to      = message_data['recipient']
     subject = message_data['subject']
-    body    = message_data['body-plain']
-    html    = message_data['body-html']
+    body    = message_data['stripped-text']
+    html    = message_data['stripped-html']
 
     sender = User.find_by(:email => from)
     recipient = User.find_by(:email => to)
@@ -138,7 +138,8 @@ class Message < ActiveRecord::Base
     document = Nokogiri::HTML.fragment(self.body_html)
 
     if document.css('style').any?
-      self.display_in_iframe = true
+      # For now, screw iframes.
+      # self.display_in_iframe = true
     end
 
     if document.css('script').any?
