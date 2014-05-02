@@ -5,6 +5,11 @@ function MessagesController($scope, $http) {
   $scope.draft = {};
   $scope.selection = [];
 
+  var ctrl = this;
+  $scope.$on('mailto', function(e, email) {
+    ctrl.compose(email);
+  });
+
   this.loadMessages();
 }
 

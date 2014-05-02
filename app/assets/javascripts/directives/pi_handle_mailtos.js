@@ -6,7 +6,7 @@ function PIHandleMailtos() {
         e.preventDefault();
 
         var email = $(this).attr('href').substring(7);
-        scope.compose(email);
+        scope.$broadcast('mailto', email);
       });
     }
   };
