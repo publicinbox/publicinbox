@@ -106,7 +106,9 @@ class MessagesController < ApplicationController
     display_email = incoming ? message.sender_email : message.recipient_email
 
     {
+      :timestamp => message.created_at.to_i,
       :unique_token => message.unique_token,
+      :thread_id => message.thread_id,
       :type => message_type,
       :sender_email => message.sender_email,
       :recipient_email => message.recipient_email,

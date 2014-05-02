@@ -37,7 +37,18 @@ MessagesController.prototype.loadMessages = function loadMessages() {
   return this.sendRequest('get', '/messages', function(data) {
     $scope.user     = data.user;
     $scope.contacts = data.contacts;
-    $scope.messages = data.messages;
+
+    $scope.threads = Lazy(data.messages)
+      .groupBy('thread_id')
+      .map(function(messages, threadId) {
+        return {
+          timestamp: Lazy(messages).map('timestamp').min(),
+          thread_id: threadId,
+          messages: Lazy(messages).sortBy('timestamp').toArray(),
+          lastMessage: Lazy(messages).last()
+        };
+      })
+      .toArray();
 
     // This isn't really very Angular-y, but it seems logically to belong here
     // (in the messages controller) at least.
@@ -51,24 +62,26 @@ MessagesController.prototype.loadMessages = function loadMessages() {
   });
 };
 
-MessagesController.prototype.showMessage = function showMessage(message, e) {
+MessagesController.prototype.showThread = function showThread(thread, e) {
   e.preventDefault();
 
-  var $scope = this.$scope;
+  var $scope      = this.$scope,
+      lastMessage = thread.lastMessage;
 
-  if (!message.opened) {
-    this.$http.put('/messages/' + message.unique_token)
+  if (!lastMessage.opened) {
+    this.$http.put('/messages/' + lastMessage.unique_token)
       .success(function() {
-        message.opened = true;
+        lastMessage.opened = true;
       })
       .error(function() {
         $scope.displayNotice('Failed to mark message as "opened" for some reason...');
       });
   }
 
-  $scope.message = message;
+  $scope.thread = thread;
+  $scope.message = lastMessage;
 
-  $scope.showSection('message', message.subject || '[No subject]');
+  $scope.showSection('thread', lastMessage.subject || '[No subject]');
 };
 
 MessagesController.prototype.compose = function compose(recipient_email) {

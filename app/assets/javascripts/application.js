@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require lazy
 //= require angular
 //= require angular-sanitize
 //= require codemirror
@@ -18,6 +19,7 @@
 //= require ui-codemirror
 //= require ui-bootstrap
 //= require pusher
+//= require filters/count
 //= require controllers/main_controller
 //= require controllers/messages_controller
 //= require controllers/profile_controller

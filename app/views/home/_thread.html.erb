@@ -1,0 +1,20 @@
+<section id="thread" data-title="Message" ng-show="isActiveSection('thread')">
+  <h3>
+    {{thread.messages.length | count:'Message'}}
+    <small><%= link_to('Back', '#mailbox') %></small>
+  </h3>
+
+  <article class="message" ng-repeat="message in thread.messages">
+    <h4>
+      {{message.preposition}}
+      <a href="mailto:{{message.display_email}}">{{message.display_email}}</a>
+      <small>{{message.created_at}} ago</small>
+    </h4>
+    <div pi-message-container ng-model="message"></div>
+  </article>
+
+  <p>
+    <button class="reply" ng-click="replyToMessage(message)">Reply</button>
+    <button class="delete" ng-click="deleteMessage(message)">Delete</button>
+  </p>
+</section>

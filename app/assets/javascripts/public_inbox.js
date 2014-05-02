@@ -27,6 +27,8 @@ function getModules() {
 
 var PublicInbox = angular.module('PublicInbox', getModules());
 
+PublicInbox.filter('count', CountFilter);
+
 PublicInbox.controller('MainController', MainController);
 PublicInbox.controller('MessagesController', MessagesController);
 PublicInbox.controller('ProfileController', ProfileController);

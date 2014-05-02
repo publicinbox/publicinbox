@@ -1,5 +1,5 @@
 <section id="mailbox" data-title="Mailbox" ng-show="isActiveSection('mailbox')">
-  <p ng-hide="messages.length || app.state === 'loading'">
+  <p ng-hide="threads.length || app.state === 'loading'">
     You don't have any messages!
   </p>
 
@@ -9,21 +9,24 @@
   </div>
 
   <ul class="message-list">
-    <li ng-repeat="message in messages | orderBy:'id':true">
+    <li ng-repeat="thread in threads | orderBy:'timestamp':true"
+      ng-init="message = thread.lastMessage">
+
       <a href="/messages/{{message.unique_token}}"
         class="{{message.type}}-message"
         data-opened="{{message.opened}}"
         data-selected="{{ctrl.messageIsSelected(message)}}"
-        ng-click="ctrl.showMessage(message, $event)">
+        ng-click="ctrl.showThread(thread, $event)">
 
-        <div class="selection" ng-click="ctrl.toggleSelection(message); $event.preventDefault(); $event.stopPropagation()">
+        <div class="selection"
+          ng-click="ctrl.toggleSelection(message); $event.preventDefault(); $event.stopPropagation()">
         </div>
 
         <div class="picture">
           <img ng-src="{{message.profile_image}}" />
         </div>
         <div class="info">
-          <div class="created">{{message.created_at}} ago</div>
+          <div class="created">{{thread.messages.length | count:'message'}}, last {{message.created_at}} ago</div>
           <h3 class="subject">{{message.subject}}</h3>
           <div class="display_email" data-preposition="{{message.preposition}}">{{message.display_email}}</div>
         </div>
