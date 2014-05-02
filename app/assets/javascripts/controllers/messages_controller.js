@@ -56,13 +56,15 @@ MessagesController.prototype.showMessage = function showMessage(message, e) {
 
   var $scope = this.$scope;
 
-  this.$http.put('/messages/' + message.unique_token)
-    .success(function() {
-      message.opened = true;
-    })
-    .error(function() {
-      $scope.displayNotice('Failed to mark message as "opened" for some reason...');
-    });
+  if (!message.opened) {
+    this.$http.put('/messages/' + message.unique_token)
+      .success(function() {
+        message.opened = true;
+      })
+      .error(function() {
+        $scope.displayNotice('Failed to mark message as "opened" for some reason...');
+      });
+  }
 
   $scope.message = message;
 
