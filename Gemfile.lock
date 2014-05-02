@@ -28,6 +28,9 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     angularjs-rails (1.2.9)
+    annotate (2.6.3)
+      activerecord (>= 2.3.0)
+      rake (>= 0.8.7)
     arel (5.0.1.20140414130214)
     bcrypt-ruby (3.1.2)
     builder (3.2.2)
@@ -201,6 +204,7 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails
+  annotate
   bcrypt-ruby (~> 3.1.2)
   font-awesome-sass
   gravatar_image_tag

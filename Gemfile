@@ -8,6 +8,9 @@ gem 'rails', '4.1.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Include table schemas in model/spec files
+gem 'annotate', :group => :development
+
 # Allow users to authenticate through Google, Facebook, or Twitter
 gem 'omniauth'
 gem 'omniauth-google-oauth2'

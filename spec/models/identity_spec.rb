@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: identities
+#
+#  id          :integer          not null, primary key
+#  user_id     :integer
+#  provider    :string(255)
+#  provider_id :string(255)
+#  name        :string(255)
+#  real_name   :string(255)
+#  email       :string(255)
+#
+
 require 'spec_helper'
 
 describe Identity do

@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  id                 :integer          not null, primary key
+#  unique_token       :string(255)
+#  sender_id          :integer
+#  sender_email       :string(255)
+#  recipient_id       :integer
+#  recipient_email    :string(255)
+#  cc_list            :text
+#  bcc_list           :text
+#  thread_id          :string(255)
+#  external_id        :string(255)
+#  external_source_id :string(255)
+#  subject            :string(255)
+#  body               :text
+#  body_html          :text
+#  opened_at          :datetime
+#  archived_at        :datetime
+#  created_at         :datetime
+#  updated_at         :datetime
+#  mailgun_data       :text
+#  display_in_iframe  :boolean          default(FALSE)
+#
+
 class Message < ActiveRecord::Base
   include HasUniqueToken
 
