@@ -1,0 +1,123 @@
+@import "readable";
+@import "_mixins";
+
+ul.message-list {
+  @extend .list-group;
+
+  list-style: none;
+
+  li > a {
+    @extend .list-group-item, .media;
+
+    overflow: visible;
+
+    .selection {
+      position: absolute;
+
+      top: 50%;
+      left: -40px;
+      height: 24px;
+      width: 24px;
+      margin-top: -12px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    &[data-selected="false"] {
+      .selection {
+        @include icon(square-o);
+      }
+    }
+
+    &[data-selected="true"] {
+      .selection {
+        @include icon(check-square-o);
+      }
+    }
+
+    .picture {
+      img {
+        @extend .media-object;
+
+        // Eagerly set height and width so layout is consistent even before
+        // remote images are fetched
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    .info {
+      @extend .media-body;
+
+      h3.subject {
+        @extend .list-group-item-heading;
+        @include empty-placeholder("[No subject]");
+      }
+
+      .display_email:before {
+        @extend .text-muted;
+        font-size: 80%;
+      }
+
+      .display_email:before {
+        content: attr(data-preposition) ": ";
+      }
+
+      .created {
+        @extend .list-group-item-text, .small, .text-muted;
+      }
+    }
+
+    &.incoming-message {
+      text-align: left;
+
+      .picture {
+        @extend .pull-left;
+      }
+
+      .info {
+        padding-left: 15px;
+
+        .created {
+          float: right;
+          text-align: right;
+        }
+      }
+    }
+
+    &.outgoing-message {
+      text-align: right;
+
+      .picture {
+        @extend .pull-right;
+      }
+
+      .info {
+        padding-right: 15px;
+
+        .created {
+          float: left;
+          text-align: left;
+        }
+      }
+    }
+
+    &[data-opened="true"] {
+      .info {
+        @extend .text-muted;
+
+        h3.subject {
+          @extend .text-muted;
+
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    li > a {
+      .picture { display: none; }
+    }
+  }
+}
