@@ -1,4 +1,8 @@
-<section id="register" data-title="Register" ng-show="isActiveSection('register')">
+<section id="register" ng-show="isActiveSection('register')">
+  <header>
+    <h1>Register</h1>
+  </header>
+
   <%= form_for(@user, :url => register_path) do |f| -%>
     <div class="field">
       <%= f.label(:user_name) %>

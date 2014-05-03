@@ -1,4 +1,8 @@
-<section id="login" data-title="Log In" ng-show="isActiveSection('login')">
+<section id="login" ng-show="isActiveSection('login')">
+  <header>
+    <h1>Log In</h1>
+  </header>
+
   <%= form_for(@user, :url => login_path) do |f| -%>
     <fieldset>
       <legend>Log in through:</legend>

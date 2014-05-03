@@ -1,4 +1,8 @@
-<section id="about" data-title="Public<em>Inbox</em>" ng-show="isActiveSection('about')">
+<section id="about" ng-show="isActiveSection('about')">
+  <header>
+    <h1>Public<em>Inbox</em></h1>
+  </header>
+
   <%= site_about %>
   <p>You must <%= link_to('log in', '#login') %> to continue.</p>
 </section>

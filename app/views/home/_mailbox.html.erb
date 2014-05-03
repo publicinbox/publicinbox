@@ -1,4 +1,8 @@
-<section id="mailbox" data-title="Mailbox" ng-show="isActiveSection('mailbox')">
+<section id="mailbox" ng-show="isActiveSection('mailbox')">
+  <header>
+    <h1>Mailbox</h1>
+  </header>
+
   <p ng-hide="threads.length || app.state === 'loading'">
     You don't have any messages!
   </p>

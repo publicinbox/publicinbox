@@ -1,16 +1,7 @@
 function MainController($scope, $timeout) {
 
-  $scope.showSection = function showSection(sectionName, title) {
-    if (sectionName.charAt(0) === '#') {
-      sectionName = sectionName.substring(1);
-    }
-
-    $scope.title = title || $scope.sections[sectionName].title;
-    $scope.activeSection = sectionName;
-  };
-
   $scope.isActiveSection = function isActiveSection(sectionName) {
-    return $scope.activeSection === sectionName;
+    return $scope.app.section === sectionName;
   };
 
   $scope.revealNav = function revealNav() {
@@ -57,7 +48,7 @@ function MainController($scope, $timeout) {
   $scope.hideNoticeAfter(3000);
 
   $scope.nav = { state: 'ready' };
-  $scope.app = { state: 'ready' };
+  $scope.app = { state: 'ready', section: 'inbox' };
 
 }
 

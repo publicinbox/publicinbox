@@ -1,4 +1,8 @@
-<section id="thread" data-title="Message" ng-show="isActiveSection('thread')">
+<section id="thread" ng-show="isActiveSection('thread')">
+  <header>
+    <h1>Thread</h1>
+  </header>
+
   <h3>
     {{thread.messages.length | count:'Message'}}
     <small><%= link_to('Back', '#mailbox') %></small>
