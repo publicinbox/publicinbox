@@ -1,9 +1,9 @@
-<section id="profile">
+<section id="profile" class="{{editing ? 'editing' : 'showing'}}">
   <header>
     <h1>Profile</h1>
   </header>
 
-  <div class="info" ng-show="!editing">
+  <div class="info">
     <h2 class="user-name">
       <img ng-src="{{user.profile_image}}" />
       {{user.user_name}}
@@ -29,7 +29,7 @@
     </ul>
   </div>
 
-  <%= form_for(current_user, :html => { 'ng-show' => 'editing' }) do |f| %>
+  <%= form_for(current_user, :html => { :class => 'profile-form' }) do |f| %>
     <div class="field">
       <%= f.label(:user_name) %>
       <%= f.text_field(:user_name) %>

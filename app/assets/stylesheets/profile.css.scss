@@ -68,6 +68,22 @@
       }
     }
   }
+
+  .profile-form {
+    @extend .col-lg-12;
+
+    display: none;
+  }
+
+  &.editing {
+    .info, .external-accounts {
+      display: none;
+    }
+
+    .profile-form {
+      display: block;
+    }
+  }
 }
 
 a.login-button {
