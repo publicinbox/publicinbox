@@ -1,4 +1,5 @@
 //= require codemirror
+//= require nav
 //= require mailbox
 //= require profile
 
@@ -30,105 +31,6 @@ body[data-state="loading"] {
   }
 }
 
-body > main > nav {
-  @include transition(right, 0.5s);
-
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: $nav-panel-width;
-  padding: $nav-panel-padding;
-
-  border-right: $nav-panel-border-width solid black;
-  background-color: #fff;
-
-  // Keep above <main>, below <footer>
-  z-index: 1;
-
-  ul {
-    @extend .nav, .nav-stacked;
-
-    // Keep above <footer>
-    // TODO: Actually, this doesn't work. Revisit this at some point.
-    z-index: 3;
-
-    li {
-      @extend h4;
-
-      a {
-        display: block !important;
-      }
-
-      a[href="#mailbox"] {
-        @include button-with-icon(inbox);
-
-        span.unread-count {
-          @extend .badge;
-
-          float: right;
-          vertical-align: top;
-        }
-      }
-
-      a[href="#compose"] {
-        @include button-with-icon(pencil);
-      }
-
-      a[href="#profile"] {
-        @include button-with-icon(user);
-      }
-
-      a[href="#about"] {
-        @include button-with-icon(question);
-      }
-
-      a[href="/blog"] {
-        @include button-with-icon(rss);
-      }
-
-      a[href="#login"] {
-        @include button-with-icon(sign-in);
-      }
-
-      a[href="/logout"] {
-        @include button-with-icon(sign-out);
-      }
-    }
-  }
-
-  @include mobile {
-    right: -$nav-panel-width - $nav-panel-padding;
-
-    border-left: $nav-panel-border-width solid black;
-    border-right: none;
-
-    &.revealed {
-      right: 0;
-    }
-  }
-
-  @include desktop {
-    left: 0;
-  }
-}
-
-button.expand-nav {
-  @include icon(list);
-
-  position: absolute;
-  top: 10px;
-  right: 10px;
-
-  font-size: 200%;
-  background-color: #fff;
-  border: #fff;
-  color: #000;
-
-  @include desktop {
-    visibility: hidden;
-  }
-}
-
 body > main {
   @extend .container;
 
@@ -148,6 +50,10 @@ body > main {
   & > header {
     @include page-header;
   }
+}
+
+#templates {
+  display: none;
 }
 
 body > main > footer {
