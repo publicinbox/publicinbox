@@ -1,8 +1,9 @@
-<section id="compose" ng-show="isActiveSection('compose')">
+<section id="compose">
   <header>
     <h1>Compose</h1>
   </header>
 
+  <form ng-submit="ctrl.sendMessage(draft)">
     <div class="field recipient-email">
       <%= label_tag(:recipient_email) %>
       <%= text_field_tag(:recipient_email, nil, {

@@ -1,6 +1,7 @@
-function MessagesController($scope, $http) {
+function MailboxController($scope, $http, messages) {
   this.$scope = $scope;
   this.$http = $http;
+  this.messages = messages;
 
   $scope.draft = {};
   $scope.selection = [];
@@ -13,9 +14,9 @@ function MessagesController($scope, $http) {
   this.loadMessages();
 }
 
-MessagesController.$inject = ['$scope', '$http'];
+MailboxController.$inject = ['$scope', '$http', 'messages'];
 
-MessagesController.prototype.sendRequest = function sendRequest(method) {
+MailboxController.prototype.sendRequest = function sendRequest(method) {
   var $scope = this.$scope,
       requestArgs = Array.prototype.slice.call(arguments, 1),
       callback = requestArgs.pop(),
@@ -36,60 +37,32 @@ MessagesController.prototype.sendRequest = function sendRequest(method) {
   return request;
 };
 
-MessagesController.prototype.loadMessages = function loadMessages() {
-  var $scope = this.$scope;
+MailboxController.prototype.loadContacts = function loadContacts() {
+  // TODO: implement this
+  $scope.contacts = data.contacts;
+};
 
-  return this.sendRequest('get', '/messages', function(data) {
-    $scope.user     = data.user;
-    $scope.contacts = data.contacts;
+MailboxController.prototype.loadMessages = function loadMessages() {
+  var $scope = this.$scope,
+      messages = this.messages;
 
-    $scope.threads = Lazy(data.messages)
-      .groupBy('thread_id')
-      .map(function(messages, threadId) {
-        return {
-          timestamp: Lazy(messages).map('timestamp').min(),
-          thread_id: threadId,
-          messages: Lazy(messages).sortBy('timestamp').toArray(),
-          lastMessage: Lazy(messages).last()
-        };
-      })
-      .toArray();
+  return messages.getMessages().then(function() {
+    $scope.threads = messages.threads;
 
-    // This isn't really very Angular-y, but it seems logically to belong here
-    // (in the messages controller) at least.
-    var realtimeListener = new Pusher(data.subscription_key);
-    var channel = realtimeListener.subscribe($scope.user.email);
-    channel.bind('message', function(message) {
-      $scope.addMessage(message);
-      $scope.displayNotice('New message received from ' + message.sender_email + '!');
-      $scope.$apply();
-    });
+    // TODO: Figure out where to put this Pusher code (probably in its own
+    // service?)
+
+    // var realtimeListener = new Pusher(data.subscription_key);
+    // var channel = realtimeListener.subscribe($scope.user.email);
+    // channel.bind('message', function(message) {
+    //   $scope.addMessage(message);
+    //   $scope.displayNotice('New message received from ' + message.sender_email + '!');
+    //   $scope.$apply();
+    // });
   });
 };
 
-MessagesController.prototype.showThread = function showThread(thread, e) {
-  e.preventDefault();
-
-  var $scope      = this.$scope,
-      lastMessage = thread.lastMessage;
-
-  if (!lastMessage.opened) {
-    this.$http.put('/messages/' + lastMessage.unique_token)
-      .success(function() {
-        lastMessage.opened = true;
-      })
-      .error(function() {
-        $scope.displayNotice('Failed to mark message as "opened" for some reason...');
-      });
-  }
-
-  $scope.thread = thread;
-  $scope.message = lastMessage;
-
-  $scope.showSection('thread', lastMessage.subject || '[No subject]');
-};
-
-MessagesController.prototype.compose = function compose(recipient_email) {
+MailboxController.prototype.compose = function compose(recipient_email) {
   this.$scope.draft = {
     recipient_email: recipient_email
   };
@@ -97,7 +70,7 @@ MessagesController.prototype.compose = function compose(recipient_email) {
   this.$scope.showSection('compose');
 };
 
-MessagesController.prototype.replyToMessage = function replyToMessage(message) {
+MailboxController.prototype.replyToMessage = function replyToMessage(message) {
   this.$scope.draft = {
     external_source_id: message.external_id,
     recipient_email: message.display_email,
@@ -107,11 +80,11 @@ MessagesController.prototype.replyToMessage = function replyToMessage(message) {
   this.$scope.showSection('compose');
 };
 
-MessagesController.prototype.addCc = function addCc() {
+MailboxController.prototype.addCc = function addCc() {
   this.$scope.draft.include_cc = true;
 };
 
-MessagesController.prototype.sendMessage = function sendMessage(message) {
+MailboxController.prototype.sendMessage = function sendMessage(message) {
   if (!message.body) {
     if (!confirm('Really send a message without a body?')) {
       return;
@@ -146,7 +119,7 @@ MessagesController.prototype.sendMessage = function sendMessage(message) {
   });
 };
 
-MessagesController.prototype.deleteMessage = function deleteMessage(message) {
+MailboxController.prototype.deleteMessage = function deleteMessage(message) {
   var $scope = tihs.$scope;
 
   var confirmationPrompt = message.type === 'incoming' ?
@@ -162,7 +135,7 @@ MessagesController.prototype.deleteMessage = function deleteMessage(message) {
   }
 };
 
-MessagesController.prototype.batchRead = function batchRead() {
+MailboxController.prototype.batchRead = function batchRead() {
   var $scope = this.$scope;
 
   var tokens = this.$scope.selection.map(function(message) {
@@ -178,7 +151,7 @@ MessagesController.prototype.batchRead = function batchRead() {
   });
 };
 
-MessagesController.prototype.batchDelete = function batchDelete() {
+MailboxController.prototype.batchDelete = function batchDelete() {
   var $scope = this.$scope;
 
   var tokens = $scope.selection.map(function(message) {
@@ -195,20 +168,20 @@ MessagesController.prototype.batchDelete = function batchDelete() {
   });
 };
 
-MessagesController.prototype.addMessage = function addMessage(message) {
+MailboxController.prototype.addMessage = function addMessage(message) {
   this.$scope.messages.push(message);
   this.$scope.addContact(message.recipient_email);
 };
 
-MessagesController.prototype.removeMessage = function removeMessage(message) {
+MailboxController.prototype.removeMessage = function removeMessage(message) {
   removeFromArray(this.$scope.messages, message);
 };
 
-MessagesController.prototype.addContact = function addContact(contact) {
+MailboxController.prototype.addContact = function addContact(contact) {
   addToArray(this.$scope.contacts, contact);
 };
 
-MessagesController.prototype.toggleSelection = function toggleSelection(message) {
+MailboxController.prototype.toggleSelection = function toggleSelection(message) {
   if (arrayContains(this.$scope.selection, message)) {
     removeFromArray(this.$scope.selection, message);
   } else {
@@ -216,7 +189,7 @@ MessagesController.prototype.toggleSelection = function toggleSelection(message)
   }
 };
 
-MessagesController.prototype.messageIsSelected = function messageIsSelected(message) {
+MailboxController.prototype.messageIsSelected = function messageIsSelected(message) {
   return arrayContains(this.$scope.selection, message);
 };
 

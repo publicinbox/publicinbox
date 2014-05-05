@@ -1,0 +1,31 @@
+<header>
+  <h1>Log In</h1>
+</header>
+
+<%= form_for(@user, :url => login_path) do |f| -%>
+  <fieldset>
+    <legend>Log in through:</legend>
+    <p>
+      <%= link_to('Google', '/auth/google_oauth2', :class => 'login-button') %>
+      <%= link_to('Facebook', '/auth/facebook', :class => 'login-button') %>
+      <%= link_to('Twitter', '/auth/twitter', :class => 'login-button') %>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Or with your PublicInbox account:</legend>
+    <div class="field">
+      <%= f.label(:user_name) %>
+      <%= f.text_field(:user_name) %>
+    </div>
+
+    <div class="field">
+      <%= f.label(:password) %>
+      <%= f.password_field(:password) %>
+    </div>
+
+    <div class="field">
+      <%= f.submit('Log in') %> or <%= link_to('Register', '#register') %>
+    </div>
+  </fieldset>
+<% end -%>

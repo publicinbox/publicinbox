@@ -1,36 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="PublicInbox">
-  <head>
+
+<head>
     <title>PublicInbox</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <%= stylesheet_link_tag("application") %>
-    <%= yield(:extra_stylesheets) if content_for?(:extra_stylesheets) %>
     <%= favicon_link_tag %>
-    <%= javascript_include_tag("application") %>
-    <%= yield(:extra_javascripts) if content_for?(:extra_javascripts) %>
-  </head>
+</head>
 
-  <body
-    data-page="<%= "#{params[:controller]}-#{params[:action]}" %>"
-    data-state="{{app.state}}"
-    ng-controller="MainController"
-    pi-navigable-sections>
+<body>
+    <main class="container">
+        <%= yield %>
+    </main>
+</body>
 
-    <%= content_tag(:main, main_attributes) do %>
-      <%= nav_menu %>
-
-      <%= yield %>
-
-      <%= site_footer %>
-    <% end %>
-
-    <div
-      id="notice"
-      class="{{notice.style}}"
-      ng-bind="notice.message"
-      ng-init="notice.message = '<%= flash[:notice] %>'; notice.style = '<%= flash[:style] || 'info' %>'"
-      data-state="{{notice.state}}">
-    </div>
-
-  </body>
 </html>

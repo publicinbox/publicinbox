@@ -1,18 +1,12 @@
 %nav(class="{{nav.state}}")
   %ul
-    - if logged_in?
-      %li
-        = link_to('#mailbox') do
-          Mailbox
-          %span.unread-count {{(messages | filter:{opened:false}).length || ''}}
-      %li= link_to('Compose', '#compose')
-      %li= link_to('Profile', '#profile')
-      %li= link_to('About', '#about')
-      %li= link_to('Blog', blog_index_path)
-      %li= link_to('Log out', logout_path)
-    - else
-      %li= link_to('About', '#about')
-      %li= link_to('Blog', blog_index_path)
-      %li= link_to('Log in', '#login')
+    %li
+      = link_to('/ui/mailbox') do
+        Mailbox
+        %span.unread-count {{(messages | filter:{opened:false}).length || ''}}
+    %li= link_to('Compose', '/ui/compose')
+    %li= link_to('Profile', '/ui/profile')
+    %li= link_to('Blog', blog_index_path, :target => '_self')
+    %li= link_to('Log out', logout_path, :target => '_self')
 
 %button.expand-nav(ng-click="revealNav()")

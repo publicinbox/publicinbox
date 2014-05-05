@@ -13,6 +13,7 @@
 //= require jquery
 //= require lazy
 //= require angular
+//= require angular-route
 //= require angular-sanitize
 //= require codemirror
 //= require codemirror/markdown
@@ -20,11 +21,14 @@
 //= require ui-bootstrap
 //= require pusher
 //= require filters/count
+//= require services/messages_service
+//= require services/profile_service
 //= require controllers/main_controller
-//= require controllers/messages_controller
+//= require controllers/mailbox_controller
+//= require controllers/thread_controller
 //= require controllers/profile_controller
 //= require directives/pi_message_container
 //= require directives/pi_handle_mailtos
-//= require directives/pi_navigable_sections
 //= require directives/pi_editor
+//= require config/routing_config
 //= require public_inbox

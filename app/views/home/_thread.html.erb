@@ -1,11 +1,11 @@
-<section id="thread" ng-show="isActiveSection('thread')">
+<section id="thread">
   <header>
     <h1>Thread</h1>
   </header>
 
   <h3>
     {{thread.messages.length | count:'Message'}}
-    <small><%= link_to('Back', '#mailbox') %></small>
+    <small><%= link_to('Back', '/ui/mailbox') %></small>
   </h3>
 
   <article class="message" ng-repeat="message in thread.messages">

@@ -1,4 +1,5 @@
 var PublicInbox = angular.module('PublicInbox', [
+  'ngRoute',
   'ngSanitize',
   'ui.codemirror',
   'ui.bootstrap'
@@ -6,11 +7,16 @@ var PublicInbox = angular.module('PublicInbox', [
 
 PublicInbox.filter('count', CountFilter);
 
+PublicInbox.service('profile', ProfileService);
+PublicInbox.service('messages', MessagesService);
+
 PublicInbox.controller('MainController', MainController);
-PublicInbox.controller('MessagesController', MessagesController);
+PublicInbox.controller('MailboxController', MailboxController);
+PublicInbox.controller('ThreadController', ThreadController);
 PublicInbox.controller('ProfileController', ProfileController);
 
 PublicInbox.directive('piEditor', PIEditor);
 PublicInbox.directive('piHandleMailtos', PIHandleMailtos);
 PublicInbox.directive('piMessageContainer', PIMessageContainer);
-PublicInbox.directive('piNavigableSections', PINavigableSections);
+
+PublicInbox.config(RoutingConfig);

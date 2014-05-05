@@ -7,7 +7,6 @@ class MessagesController < ApplicationController
     messages = current_user.messages.order(:id => :desc).limit(50)
 
     render(:json => {
-      :user => render_user(current_user),
       :contacts => current_user.contacts,
       :messages => messages.map { |message|
         render_message(message)
@@ -85,19 +84,6 @@ class MessagesController < ApplicationController
       :subject,
       :body
     )
-  end
-
-  def render_user(user)
-    {
-      :id => user.id,
-      :user_name => user.user_name,
-      :real_name => user.real_name,
-      :email => user.email,
-      :external_email => user.external_email,
-      :profile_image => profile_image(user.external_email || user.email, :size => 100),
-      :bio => markdown(user.bio),
-      :created_at => time_ago_in_words(user.created_at)
-    }
   end
 
   def render_message(message, user=nil)

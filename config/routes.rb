@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
   root 'home#index'
 
+  get '/ui'        => 'home#app'
+  get '/ui/*route' => 'home#app'
+
+  get  '/login'    => 'home#login'
   post '/login'    => 'home#login'
   post '/register' => 'home#register'
   get  '/logout'   => 'home#logout'
 
   match '/auth/:provider/callback' => 'identities#create', :via => [:get, :post]
+
+  get  '/profile' => 'profile#show'
 
   get  '/messages/test'     => 'messages#test' if Rails.env.development?
   post '/messages/incoming' => 'messages#incoming', :as => :incoming_message

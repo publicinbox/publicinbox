@@ -1,4 +1,4 @@
-<section id="mailbox" ng-show="isActiveSection('mailbox')">
+<section id="mailbox">
   <header>
     <h1>Mailbox</h1>
   </header>
@@ -16,11 +16,10 @@
     <li ng-repeat="thread in threads | orderBy:'timestamp':true"
       ng-init="message = thread.lastMessage">
 
-      <a href="/messages/{{message.unique_token}}"
+      <a href="/ui/messages/{{thread.threadId}}"
         class="{{message.type}}-message"
         data-opened="{{message.opened}}"
-        data-selected="{{ctrl.messageIsSelected(message)}}"
-        ng-click="ctrl.showThread(thread, $event)">
+        data-selected="{{ctrl.messageIsSelected(message)}}">
 
         <div class="selection"
           ng-click="ctrl.toggleSelection(message); $event.preventDefault(); $event.stopPropagation()">
