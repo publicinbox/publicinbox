@@ -1,16 +1,21 @@
 <section id="mailbox">
   <header>
-    <h1>Mailbox</h1>
+    <h1>
+      Mailbox
+      <div class="batch-select">
+        <button class="batch-select" ng-click="ctrl.batchSelect()">Select all</button>
+        <button class="batch-deselect" ng-click="ctrl.batchDeselect()">Deselect all</button>
+      </div>
+      <div class="batch-actions" ng-show="selection.length">
+        <button class="batch-open" ng-click="ctrl.batchRead()">Mark {{selection.length}} as read</button>
+        <button class="batch-delete" ng-click="ctrl.batchDelete()">Delete</button>
+      </div>
+    </h1>
   </header>
 
   <p ng-hide="threads.length || app.state === 'loading'">
     You don't have any messages!
   </p>
-
-  <div class="batch-actions" ng-show="selection.length">
-    <button class="batch-open" ng-click="ctrl.batchRead()">Mark as read</button>
-    <button class="batch-delete" ng-click="ctrl.batchDelete()">Delete</button>
-  </div>
 
   <ul class="message-list">
     <li ng-repeat="thread in threads | orderBy:'timestamp':true"
@@ -18,11 +23,11 @@
 
       <a href="/ui/messages/{{thread.threadId}}"
         class="{{message.type}}-message"
-        data-opened="{{message.opened}}"
-        data-selected="{{ctrl.messageIsSelected(message)}}">
+        data-opened="{{thread.opened}}"
+        data-selected="{{ctrl.threadIsSelected(thread)}}">
 
         <div class="selection"
-          ng-click="ctrl.toggleSelection(message); $event.preventDefault(); $event.stopPropagation()">
+          ng-click="ctrl.toggleSelection(thread); $event.preventDefault(); $event.stopPropagation()">
         </div>
 
         <div class="picture">

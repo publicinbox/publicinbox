@@ -142,25 +142,6 @@ button {
   }
 }
 
-.batch-actions {
-  margin-bottom: 15px;
-
-  &:before {
-    @extend h3;
-
-    display: block;
-    content: "Bulk actions";
-  }
-
-  .batch-open {
-    @extend .btn, .btn-info;
-  }
-
-  .batch-delete {
-    @extend .btn, .btn-danger;
-  }
-}
-
 #message {
   & > h3 {
     margin-bottom: 40px;

@@ -18,12 +18,15 @@ MessagesService.prototype.getMessages = function getMessages() {
       svc.threads = Lazy(svc.messages)
         .groupBy('thread_id')
         .map(function(messages, threadId) {
-          return {
-            timestamp: Lazy(messages).map('timestamp').max(),
+          var thread = {
             threadId: threadId,
             messages: Lazy(messages).sortBy('timestamp').toArray(),
             lastMessage: Lazy(messages).last()
           };
+
+          thread.timestamp = thread.lastMessage.timestamp;
+
+          return thread;
         })
         .toArray();
 

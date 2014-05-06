@@ -1,6 +1,31 @@
 @import "readable";
 @import "_mixins";
 
+#mailbox {
+  & > header > h1 {
+    .batch-select,
+    .batch-actions {
+      display: inline-block;
+
+      .batch-select {
+        @extend .btn, .btn-sm, .btn-default;
+      }
+
+      .batch-deselect {
+        @extend .btn, .btn-sm, .btn-inverse;
+      }
+
+      .batch-open {
+        @extend .btn, .btn-sm, .btn-info;
+      }
+
+      .batch-delete {
+        @extend .btn, .btn-sm, .btn-danger;
+      }
+    }
+  }
+}
+
 ul.message-list {
   @extend .list-group;
 

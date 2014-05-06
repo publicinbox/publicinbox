@@ -73,36 +73,41 @@ MailboxController.prototype.deleteMessage = function deleteMessage(message) {
   }
 };
 
+MailboxController.prototype.batchSelect = function batchSelect() {
+  this.$scope.selection = this.messages.threads.slice(0);
+};
+
+MailboxController.prototype.batchDeselect = function batchDeselect() {
+  this.$scope.selection = [];
+};
+
 MailboxController.prototype.batchRead = function batchRead() {
   var $scope = this.$scope;
 
-  var tokens = this.$scope.selection.map(function(message) {
-    return message.unique_token;
-  });
+  var threadIds = Lazy(this.$scope.selection).map('threadId');
 
-  this.sendRequest('put', '/batches', { batch: { messages: tokens } }, function() {
-    angular.forEach($scope.selection, function(message) {
-      message.opened = true;
+  this.sendRequest('put', '/batches', { batch: { messages: threadIds } }, function() {
+    Lazy($scope.selection).each(function(thread) {
+      thread.opened = true;
     });
 
-    $scope.displayNotice('Marked ' + tokens.length + ' messages as read.');
+    $scope.displayNotice('Marked ' + threadIds.length + ' messages as read.');
   });
 };
 
 MailboxController.prototype.batchDelete = function batchDelete() {
   var $scope = this.$scope;
 
-  var tokens = $scope.selection.map(function(message) {
-    return message.unique_token;
-  });
+  var threadIds = Lazy($scope.selection).map('threadId');
 
-  this.sendRequest('delete', '/batches?messages=' + tokens.join(','), function() {
-    angular.forEach($scope.selection, function(message) {
+  this.sendRequest('delete', '/batches?messages=' + threadIds.join(','), function() {
+    Lazy($scope.selection).each(function(message) {
       $scope.removeMessage(message);
     });
+
     $scope.selection = [];
 
-    $scope.displayNotice('Successfully deleted ' + tokens.length + ' messages.');
+    $scope.displayNotice('Successfully deleted ' + threadIds.length + ' messages.');
   });
 };
 
@@ -119,16 +124,16 @@ MailboxController.prototype.addContact = function addContact(contact) {
   addToArray(this.$scope.contacts, contact);
 };
 
-MailboxController.prototype.toggleSelection = function toggleSelection(message) {
-  if (arrayContains(this.$scope.selection, message)) {
-    removeFromArray(this.$scope.selection, message);
+MailboxController.prototype.toggleSelection = function toggleSelection(thread) {
+  if (arrayContains(this.$scope.selection, thread)) {
+    removeFromArray(this.$scope.selection, thread);
   } else {
-    this.$scope.selection.push(message);
+    this.$scope.selection.push(thread);
   }
 };
 
-MailboxController.prototype.messageIsSelected = function messageIsSelected(message) {
-  return arrayContains(this.$scope.selection, message);
+MailboxController.prototype.threadIsSelected = function threadIsSelected(thread) {
+  return arrayContains(this.$scope.selection, thread);
 };
 
 /**
