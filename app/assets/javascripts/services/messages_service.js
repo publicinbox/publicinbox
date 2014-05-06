@@ -1,24 +1,25 @@
-function MessagesService($q, $http) {
-  this.$q = $q;
+function MessagesService($http) {
   this.$http = $http;
 }
+
+MessagesService.$inject = ['$http'];
 
 MessagesService.prototype.getMessages = function getMessages() {
   var svc = this;
 
   if (!this.messagesRequest) {
     this.messagesRequest = this.$http.get('/messages').then(function(result) {
-      var messages = result.data.messages;
+      svc.messages = result.data.messages;
 
-      svc.messages = Lazy(messages)
+      svc.messageMap = Lazy(svc.messages)
         .indexBy('unique_token')
         .toObject();
 
-      svc.threads = Lazy(messages)
+      svc.threads = Lazy(svc.messages)
         .groupBy('thread_id')
         .map(function(messages, threadId) {
           return {
-            timestamp: Lazy(messages).map('timestamp').min(),
+            timestamp: Lazy(messages).map('timestamp').max(),
             threadId: threadId,
             messages: Lazy(messages).sortBy('timestamp').toArray(),
             lastMessage: Lazy(messages).last()
@@ -26,7 +27,11 @@ MessagesService.prototype.getMessages = function getMessages() {
         })
         .toArray();
 
-      return messages;
+      svc.threadMap = Lazy(svc.threads)
+        .indexBy('threadId')
+        .toObject();
+
+      return svc.messages;
     });
   }
 
@@ -34,55 +39,24 @@ MessagesService.prototype.getMessages = function getMessages() {
 };
 
 MessagesService.prototype.getThreads = function getThreads() {
-  var svc = this,
-      deferred = this.$q.defer();
-
-  if (this.threads) {
-    deferred.resolve(this.threads);
-
-  } else {
-    this.getMessage().then(function() {
-      deferred.resolve(svc.threads);
-    });
-  }
-
-  return deferred.promise;
+  var svc = this;
+  return this.getMessages().then(function() {
+    return svc.threads;
+  });
 };
 
 MessagesService.prototype.getMessage = function getMessage(messageId) {
-  var svc = this,
-      deferred = this.$q.defer();
-
-  if (this.messages) {
-    deferred.resolve(this.messages[messageId]);
-
-  } else {
-    this.getMessages().then(function() {
-      deferred.resolve(svc.messages[messageId]);
-    });
-  }
-
-  return deferred.promise;
+  var svc = this;
+  return this.getMessages().then(function() {
+    return svc.messageMap[messageId];
+  });
 };
 
 MessagesService.prototype.getThread = function getThread(threadId) {
-  var svc = this,
-      deferred = this.$q.defer();
-
-  if (this.threads) {
-    deferred.resolve(this.findThread(this.threads, threadId));
-
-  } else {
-    this.getMessages().then(function() {
-      deferred.resolve(svc.findThread(svc.threads, threadId));
-    });
-  }
-
-  return deferred.promise;
-};
-
-MessagesService.prototype.findThread = function findThread(threads, threadId) {
-  return Lazy(threads).findWhere({ threadId: threadId });
+  var svc = this;
+  return this.getMessages().then(function() {
+    return svc.threadMap[threadId];
+  });
 };
 
 MessagesService.prototype.sendMessage = function sendMessage(message) {
@@ -93,4 +67,19 @@ MessagesService.prototype.sendMessage = function sendMessage(message) {
   });
 };
 
-MessagesService.$inject = ['$q', '$http'];
+MessagesService.prototype.addMessage = function addMessage(message) {
+  this.messages.push(message);
+  this.messageMap[message.unique_token] = message;
+
+  var thread = this.threadMap[message.thread_id];
+  if (!thread) {
+    thread = this.threadMap[message.thread_id] = {
+      timestamp: message.timestamp,
+      threadId: threadId,
+      messages: []
+    };
+  }
+
+  thread.messages.push(message);
+  thread.lastMessage = message;
+};

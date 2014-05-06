@@ -24,12 +24,13 @@ DraftController.prototype.sendMessage = function sendMessage(message) {
   }
 
   var $scope = this.$scope,
-      $location = this.$location;
+      $location = this.$location,
+      messages = this.messages;
 
   var request = this.messages.sendMessage(message)
     .then(function(response) {
       $scope.displayNotice('Message successfully sent.');
-      $scope.addMessage(response);
+      messages.addMessage(response);
       $location.path('/ui/mailbox');
 
       // And now we should clear the draft so it isn't still there when the

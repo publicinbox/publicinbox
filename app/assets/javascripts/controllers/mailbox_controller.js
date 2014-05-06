@@ -107,7 +107,7 @@ MailboxController.prototype.batchDelete = function batchDelete() {
 };
 
 MailboxController.prototype.addMessage = function addMessage(message) {
-  this.$scope.messages.push(message);
+  this.messages.addMessage(message);
   this.addContact(message.recipient_email);
 };
 
