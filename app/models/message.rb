@@ -27,6 +27,9 @@
 class Message < ActiveRecord::Base
   include HasUniqueToken
 
+  # Allow messages to be associated w/ source by token, not just ID
+  attr_accessor :source_token
+
   belongs_to :source, :class_name => 'Message'
   belongs_to :sender, :class_name => 'User'
   belongs_to :recipient, :class_name => 'User'
@@ -61,8 +64,8 @@ class Message < ActiveRecord::Base
 
   validates :recipient_email, :format => { :with => /\A[^@]+@\w[\w\.]+\w\Z/ }, :allow_nil => true
 
-  before_create :populate_ids, :populate_emails, :populate_thread_id,
-    :format_cc_and_bcc, :parse_html
+  before_create :populate_ids, :populate_emails, :populate_source_id,
+    :populate_thread_id, :format_cc_and_bcc, :parse_html
 
   def self.create_from_external!(message_data)
     from    = message_data['sender']
@@ -141,6 +144,12 @@ class Message < ActiveRecord::Base
   def populate_emails
     self.sender_email ||= "#{self.sender.user_name}@publicinbox.net" if self.sender_id.present?
     self.recipient_email ||= "#{self.recipient.user_name}@publicinbox.net" if self.recipient_id.present?
+  end
+
+  def populate_source_id
+    if self.source_id.nil? && self.source_token.present?
+      self.source = Message.find_by(:unique_token => self.source_token)
+    end
   end
 
   def populate_thread_id

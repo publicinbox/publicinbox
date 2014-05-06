@@ -119,6 +119,12 @@ describe Message do
       Message.create_from_external!(message_data.merge(attributes))
     end
 
+    it 'can associate a message w/ its source via source_token' do
+      message = create_message(@user)
+      response = create_message(@user, :source_token => message.unique_token)
+      response.source.should == message
+    end
+
     describe 'a message originating from within the application' do
       it 'automatically sets thread_id to unique_token, if not present' do
         message = create_message(@user)
