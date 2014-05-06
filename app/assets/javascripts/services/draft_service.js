@@ -14,6 +14,7 @@ DraftService.prototype.compose = function compose(email) {
 
 DraftService.prototype.replyTo = function replyTo(message) {
   this.$scope.draft = {
+    source_token: message.unique_token,
     external_source_id: message.external_id,
     recipient_email: message.display_email,
     subject: prepend('Re: ', message.subject)

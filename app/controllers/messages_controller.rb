@@ -77,6 +77,7 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(
+      :source_token,
       :external_source_id,
       :recipient_email,
       :cc_list,
