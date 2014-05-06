@@ -85,4 +85,12 @@ MessagesService.prototype.findThread = function findThread(threads, threadId) {
   return Lazy(threads).findWhere({ threadId: threadId });
 };
 
+MessagesService.prototype.sendMessage = function sendMessage(message) {
+  var request = this.$http.post('/messages', { message: message });
+
+  return request.then(function(response) {
+    return response.data;
+  });
+};
+
 MessagesService.$inject = ['$q', '$http'];

@@ -1,4 +1,4 @@
-function PIHandleMailtos() {
+function PIHandleMailtos($location) {
 
   return {
     link: function(scope, element) {
@@ -6,9 +6,11 @@ function PIHandleMailtos() {
         e.preventDefault();
 
         var email = $(this).attr('href').substring(7);
-        scope.$broadcast('mailto', email);
+        $location.url('/ui/compose?to=' + encodeURIComponent(email));
       });
     }
   };
 
 }
+
+PIHandleMailtos.$inject = ['$location'];

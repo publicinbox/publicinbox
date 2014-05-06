@@ -23,8 +23,10 @@
 //= require filters/count
 //= require services/messages_service
 //= require services/profile_service
+//= require services/draft_service
 //= require controllers/main_controller
 //= require controllers/mailbox_controller
+//= require controllers/draft_controller
 //= require controllers/thread_controller
 //= require controllers/profile_controller
 //= require directives/pi_message_container

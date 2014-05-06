@@ -12,7 +12,7 @@ function RoutingConfig($routeProvider, $locationProvider) {
     })
     .when('/ui/compose', {
       template: getSectionHtml('compose'),
-      controller: 'MailboxController',
+      controller: 'DraftController',
       controllerAs: 'ctrl'
     })
     .when('/ui/profile', {

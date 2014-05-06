@@ -1,20 +1,15 @@
-function MailboxController($scope, $http, messages) {
+function MailboxController($scope, $http, $location, messages) {
   this.$scope = $scope;
   this.$http = $http;
+  this.$location = $location;
   this.messages = messages;
 
-  $scope.draft = {};
   $scope.selection = [];
-
-  var ctrl = this;
-  $scope.$on('mailto', function(e, email) {
-    ctrl.compose(email);
-  });
 
   this.loadMessages();
 }
 
-MailboxController.$inject = ['$scope', '$http', 'messages'];
+MailboxController.$inject = ['$scope', '$http', '$location', 'messages'];
 
 MailboxController.prototype.sendRequest = function sendRequest(method) {
   var $scope = this.$scope,
@@ -39,7 +34,7 @@ MailboxController.prototype.sendRequest = function sendRequest(method) {
 
 MailboxController.prototype.loadContacts = function loadContacts() {
   // TODO: implement this
-  $scope.contacts = data.contacts;
+  // $scope.contacts = data.contacts;
 };
 
 MailboxController.prototype.loadMessages = function loadMessages() {
@@ -59,63 +54,6 @@ MailboxController.prototype.loadMessages = function loadMessages() {
     //   $scope.displayNotice('New message received from ' + message.sender_email + '!');
     //   $scope.$apply();
     // });
-  });
-};
-
-MailboxController.prototype.compose = function compose(recipient_email) {
-  this.$scope.draft = {
-    recipient_email: recipient_email
-  };
-
-  this.$scope.showSection('compose');
-};
-
-MailboxController.prototype.replyToMessage = function replyToMessage(message) {
-  this.$scope.draft = {
-    external_source_id: message.external_id,
-    recipient_email: message.display_email,
-    subject: prepend('Re: ', message.subject)
-  };
-
-  this.$scope.showSection('compose');
-};
-
-MailboxController.prototype.addCc = function addCc() {
-  this.$scope.draft.include_cc = true;
-};
-
-MailboxController.prototype.sendMessage = function sendMessage(message) {
-  if (!message.body) {
-    if (!confirm('Really send a message without a body?')) {
-      return;
-    }
-
-  } else if (!message.subject) {
-    if (!confirm('Really send a message without a subject?')) {
-      return;
-    }
-  }
-
-  var $scope = this.$scope;
-
-  $scope.app.state = 'loading';
-
-  var request = this.$http.post('/messages', { message: message })
-    .success(function(response) {
-      $scope.displayNotice('Message successfully sent.');
-      $scope.addMessage(response);
-      $scope.showSection('mailbox');
-
-      // And now we should clear the draft so it isn't still there when the
-      // user clicks on 'Compose' again.
-      $scope.draft = {};
-    })
-    .error(function(response) {
-      $scope.displayNotice(response, 'error');
-    });
-
-  request['finally'](function() {
-    $scope.app.state = 'ready';
   });
 };
 
@@ -170,7 +108,7 @@ MailboxController.prototype.batchDelete = function batchDelete() {
 
 MailboxController.prototype.addMessage = function addMessage(message) {
   this.$scope.messages.push(message);
-  this.$scope.addContact(message.recipient_email);
+  this.addContact(message.recipient_email);
 };
 
 MailboxController.prototype.removeMessage = function removeMessage(message) {
@@ -192,21 +130,6 @@ MailboxController.prototype.toggleSelection = function toggleSelection(message) 
 MailboxController.prototype.messageIsSelected = function messageIsSelected(message) {
   return arrayContains(this.$scope.selection, message);
 };
-
-/**
- * Prepends `prefix` to `string`, *if* not the string does not already begin
- * with that prefix.
- *
- * @param {string} prefix
- * @param {string} string
- * @returns {string}
- */
-function prepend(prefix, string) {
-  if (string.substring(0, prefix.length) !== prefix) {
-    string = prefix + string;
-  }
-  return string;
-}
 
 /**
  * Removes an element from an array.

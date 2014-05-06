@@ -9,9 +9,11 @@ PublicInbox.filter('count', CountFilter);
 
 PublicInbox.service('profile', ProfileService);
 PublicInbox.service('messages', MessagesService);
+PublicInbox.service('draft', DraftService);
 
 PublicInbox.controller('MainController', MainController);
 PublicInbox.controller('MailboxController', MailboxController);
+PublicInbox.controller('DraftController', DraftController);
 PublicInbox.controller('ThreadController', ThreadController);
 PublicInbox.controller('ProfileController', ProfileController);
 
