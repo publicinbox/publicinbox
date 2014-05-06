@@ -27,6 +27,7 @@
 class Message < ActiveRecord::Base
   include HasUniqueToken
 
+  belongs_to :source, :class_name => 'Message'
   belongs_to :sender, :class_name => 'User'
   belongs_to :recipient, :class_name => 'User'
 
@@ -143,8 +144,13 @@ class Message < ActiveRecord::Base
   end
 
   def populate_thread_id
-    # If external_source_id is present, use that to find the associated message
-    # and assign this one to the same thread.
+    # If source_id is present, use that to find the associated message and
+    # assign this one to the same thread.
+    self.thread_id ||= self.source_id.present? &&
+      Message.find_by(:id => self.source_id).try(:thread_id)
+
+    # Otherwise, if external_source_id is present, try linking that to another
+    # message's external_id.
     self.thread_id ||= self.external_source_id.present? &&
       Message.find_by(:external_id => self.external_source_id).try(:thread_id)
 

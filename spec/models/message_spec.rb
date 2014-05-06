@@ -216,6 +216,35 @@ describe Message do
         ]
       end
     end
+
+    describe 'an internal thread' do
+      before :each do
+        @other_user = create_user('internal2')
+
+        @source_message = create_message(@user, {
+          :unique_token => 'blaaah',
+          :recipient => @other_user
+        })
+
+        @reply_message = create_message(@other_user, {
+          :source_id => @source_message.id,
+          :recipient => @user
+        })
+
+        @following_message = create_message(@user, {
+          :source_id => @reply_message.id,
+          :recipient => @other_user
+        })
+      end
+
+      it 'associates the first response w/ the thread' do
+        @reply_message.thread_id.should == @source_message.thread_id
+      end
+
+      it 'associates the follow-up message w/ the thread' do
+        @following_message.thread_id.should == @source_message.thread_id
+      end
+    end
   end
 
   describe 'archiving messages' do
@@ -295,7 +324,8 @@ describe Message do
         EOM
       end
 
-      it 'is marked to display in an <iframe>' do
+      # TODO: Decide whether or not this should happen. (I'm leaning no.)
+      xit 'is marked to display in an <iframe>' do
         @message.display_in_iframe?.should == true
       end
     end
