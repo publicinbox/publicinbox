@@ -71,7 +71,7 @@ MessagesService.prototype.addMessage = function addMessage(message) {
 
   var thread = this.threadMap[message.thread_id];
   if (!thread) {
-    thread = new Thread({ threadId: threadId });
+    thread = new Thread({ threadId: message.thread_id });
     this.threads.push(thread);
     this.threadMap[message.thread_id] = thread;
   }

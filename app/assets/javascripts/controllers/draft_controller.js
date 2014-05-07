@@ -35,19 +35,21 @@ DraftController.prototype.sendMessage = function sendMessage(message) {
 
   var $scope = this.$scope,
       $location = this.$location,
-      messages = this.messages;
+      messages = this.messages,
+      draft = this.draft;
 
-  var request = this.messages.sendMessage(message)
-    .then(function(response) {
+  this.messages.sendMessage(message).then(
+    function(response) {
       $scope.displayNotice('Message successfully sent.');
       messages.addMessage(response);
       $location.path('/ui/mailbox');
 
       // And now we should clear the draft so it isn't still there when the
       // user clicks on 'Compose' again.
-      $scope.draft = {};
+      draft.clear();
     },
     function(response) {
       $scope.displayNotice(response, 'error');
-    });
+    }
+  );
 };

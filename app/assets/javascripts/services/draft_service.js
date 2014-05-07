@@ -4,6 +4,10 @@ function DraftService($rootScope, $location) {
   this.$scope.draft = {};
 }
 
+DraftService.prototype.clear = function clear() {
+  this.$scope.draft = {};
+};
+
 DraftService.prototype.compose = function compose(email) {
   this.$scope.draft = {
     recipient_email: email
