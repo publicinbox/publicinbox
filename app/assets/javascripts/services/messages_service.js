@@ -71,10 +71,24 @@ MessagesService.prototype.addMessage = function addMessage(message) {
 
   var thread = this.threadMap[message.thread_id];
   if (!thread) {
-    thread = this.threadMap[message.thread_id] = new Thread({
-      threadId: threadId
-    });
+    thread = new Thread({ threadId: threadId });
+    this.threads.push(thread);
+    this.threadMap[message.thread_id] = thread;
   }
 
   thread.messages.push(message);
+};
+
+MessagesService.prototype.removeMessage = function removeMessage(message) {
+  // TODO: Move this method into an appropriate place.
+  removeFromArray(this.messages, message);
+  delete this.messageMap[message.unique_token];
+
+  var thread = this.threadMap[message.thread_id];
+  if (thread) {
+    removeFromArray(thread.messages, message);
+    if (thread.isEmpty()) {
+      delete this.threadMap[message.thread_id];
+    }
+  }
 };

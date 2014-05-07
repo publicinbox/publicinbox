@@ -1,5 +1,7 @@
-function ThreadController($scope, $routeParams, $http, messages, draft) {
+function ThreadController($scope, $location, $routeParams, $http, messages, draft) {
   this.$scope = $scope;
+  this.$location = $location;
+  this.$routeParams = $routeParams;
   this.$http = $http;
   this.messages = messages;
   this.draft = draft;
@@ -10,7 +12,7 @@ function ThreadController($scope, $routeParams, $http, messages, draft) {
   });
 }
 
-ThreadController.$inject = ['$scope', '$routeParams', '$http', 'messages', 'draft'];
+ThreadController.$inject = ['$scope', '$location', '$routeParams', '$http', 'messages', 'draft'];
 
 ThreadController.prototype.showThread = function showThread(thread) {
   var $scope      = this.$scope,
@@ -36,4 +38,22 @@ ThreadController.prototype.compose = function compose(recipient_email) {
 
 ThreadController.prototype.replyToMessage = function replyToMessage(message) {
   this.draft.replyTo(message);
+};
+
+ThreadController.prototype.deleteMessage = function deleteMessage(message) {
+  var $scope = this.$scope,
+      $location = this.$location,
+      messages = this.messages;
+
+  this.$http['delete']('/messages/' + message.unique_token)
+    .success(function() {
+      messages.removeMessage(message);
+      if ($scope.thread.isEmpty()) {
+        $location.path('/ui/mailbox');
+      }
+      $scope.displayNotice('Successfully deleted message.');
+    })
+    .error(function() {
+      $scope.displayNotice('Failed to delete message for some reason...');
+    });
 };

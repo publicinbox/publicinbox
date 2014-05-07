@@ -20,3 +20,7 @@ Object.defineProperty(Thread.prototype, 'opened', {
     return this.lastMessage.opened;
   }
 });
+
+Thread.prototype.isEmpty = function isEmpty() {
+  return this.messages.length === 0;
+};

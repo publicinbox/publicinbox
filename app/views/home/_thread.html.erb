@@ -8,7 +8,7 @@
     <small><%= link_to('Back', '/ui/mailbox') %></small>
   </h3>
 
-  <article class="message" ng-repeat="message in thread.messages">
+  <article class="message" ng-repeat="message in thread.messages | orderBy:'timestamp'">
     <h4>
       {{message.preposition}}
       <a href="mailto:{{message.display_email}}">{{message.display_email}}</a>
@@ -18,7 +18,7 @@
   </article>
 
   <p>
-    <button class="reply" ng-click="ctrl.replyToMessage(message)">Reply</button>
-    <button class="delete" ng-click="ctrl.deleteMessage(message)">Delete</button>
+    <button class="reply" ng-click="ctrl.replyToMessage(thread.lastMessage)">Reply</button>
+    <button class="delete" ng-click="ctrl.deleteMessage(thread.lastMessage)">Delete</button>
   </p>
 </section>
