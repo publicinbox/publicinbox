@@ -9,7 +9,10 @@ MessagesService.prototype.load = function load() {
 
   if (!this.promise) {
     this.promise = this.$http.get('/messages').then(function(result) {
-      svc.messages = result.data.messages;
+      var response = result.data;
+
+      svc.messages = response.messages;
+      svc.contacts = response.contacts;
 
       svc.messageMap = Lazy(svc.messages)
         .indexBy('unique_token')

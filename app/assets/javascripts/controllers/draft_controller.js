@@ -3,9 +3,19 @@ function DraftController($scope, $location, messages, draft) {
   this.$location = $location;
   this.messages = messages;
   this.draft = draft;
+
+  this.loadContacts();
 }
 
 DraftController.$inject = ['$scope', '$location', 'messages', 'draft'];
+
+DraftController.prototype.loadContacts = function loadContacts() {
+  var $scope = this.$scope;
+
+  this.messages.load().then(function(messages) {
+    $scope.contacts = messages.contacts;
+  });
+};
 
 DraftController.prototype.addCc = function addCc() {
   this.draft.addCc();
