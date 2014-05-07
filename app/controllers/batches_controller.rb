@@ -7,19 +7,9 @@ class BatchesController < ApplicationController
     render(:text => 'OK')
   end
 
-  def delete
-    messages = current_user.messages.where(:thread_id => delete_params[:threads].split(','))
-    messages.update_all(:archived_at => Time.now)
-    render(:text => 'OK')
-  end
-
   private
 
   def batch_params
     params.require(:batch).permit(:threads => [])
-  end
-
-  def delete_params
-    params.permit(:threads)
   end
 end

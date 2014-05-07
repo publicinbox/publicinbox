@@ -58,7 +58,8 @@ MailboxController.prototype.loadMessages = function loadMessages() {
 };
 
 MailboxController.prototype.deleteMessage = function deleteMessage(message) {
-  var $scope = tihs.$scope;
+  var $scope = this.$scope,
+      messages = this.messages;
 
   var confirmationPrompt = message.type === 'incoming' ?
     'Are you sure you want to delete this message?' :
@@ -67,7 +68,7 @@ MailboxController.prototype.deleteMessage = function deleteMessage(message) {
   if (confirm(confirmationPrompt)) {
     this.sendRequest('delete', '/messages/' + message.unique_token, function(response) {
       $scope.displayNotice(response);
-      $scope.removeMessage(message);
+      messages.removeMessage(message);
       $scope.showSection('mailbox');
     });
   }
@@ -97,32 +98,9 @@ MailboxController.prototype.batchRead = function batchRead() {
   });
 };
 
-MailboxController.prototype.batchDelete = function batchDelete() {
-  var ctrl = this,
-      $scope = this.$scope;
-
-  var threadIds = Lazy($scope.selection)
-    .map('threadId')
-    .toArray();
-
-  this.sendRequest('delete', '/batches?threads=' + threadIds.join(','), function() {
-    Lazy($scope.selection).each(function(message) {
-      ctrl.removeMessage(message);
-    });
-
-    $scope.selection = [];
-
-    $scope.displayNotice('Successfully deleted ' + threadIds.length + ' messages.');
-  });
-};
-
 MailboxController.prototype.addMessage = function addMessage(message) {
   this.messages.addMessage(message);
   this.addContact(message.recipient_email);
-};
-
-MailboxController.prototype.removeMessage = function removeMessage(message) {
-  removeFromArray(this.messages.messages, message);
 };
 
 MailboxController.prototype.addContact = function addContact(contact) {
