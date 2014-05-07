@@ -4,11 +4,11 @@ function MessagesService($http) {
 
 MessagesService.$inject = ['$http'];
 
-MessagesService.prototype.getMessages = function getMessages() {
+MessagesService.prototype.load = function load() {
   var svc = this;
 
-  if (!this.messagesRequest) {
-    this.messagesRequest = this.$http.get('/messages').then(function(result) {
+  if (!this.promise) {
+    this.promise = this.$http.get('/messages').then(function(result) {
       svc.messages = result.data.messages;
 
       svc.messageMap = Lazy(svc.messages)
@@ -29,30 +29,27 @@ MessagesService.prototype.getMessages = function getMessages() {
         .indexBy('threadId')
         .toObject();
 
-      return svc.messages;
+      return svc;
     });
   }
 
-  return this.messagesRequest;
+  return this.promise;
 };
 
 MessagesService.prototype.getThreads = function getThreads() {
-  var svc = this;
-  return this.getMessages().then(function() {
+  return this.load().then(function(svc) {
     return svc.threads;
   });
 };
 
 MessagesService.prototype.getMessage = function getMessage(messageId) {
-  var svc = this;
-  return this.getMessages().then(function() {
+  return this.load().then(function(svc) {
     return svc.messageMap[messageId];
   });
 };
 
 MessagesService.prototype.getThread = function getThread(threadId) {
-  var svc = this;
-  return this.getMessages().then(function() {
+  return this.load().then(function(svc) {
     return svc.threadMap[threadId];
   });
 };

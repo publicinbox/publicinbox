@@ -36,10 +36,9 @@ MailboxController.prototype.loadContacts = function loadContacts() {
 };
 
 MailboxController.prototype.loadMessages = function loadMessages() {
-  var $scope = this.$scope,
-      messages = this.messages;
+  var $scope = this.$scope;
 
-  return messages.getMessages().then(function() {
+  return this.messages.load().then(function(messages) {
     $scope.threads = messages.threads;
 
     // TODO: Figure out where to put this Pusher code (probably in its own
