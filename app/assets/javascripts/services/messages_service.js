@@ -25,6 +25,7 @@ MessagesService.prototype.getMessages = function getMessages() {
           };
 
           thread.timestamp = thread.lastMessage.timestamp;
+          thread.opened = thread.lastMessage.opened;
 
           return thread;
         })
