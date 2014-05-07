@@ -7,20 +7,26 @@
     .batch-actions {
       display: inline-block;
 
+      button {
+        @extend .btn, .btn-xs;
+        position: relative;
+        top: -3px;
+      }
+
       .batch-select {
-        @extend .btn, .btn-sm, .btn-default;
+        @extend .btn-default;
       }
 
       .batch-deselect {
-        @extend .btn, .btn-sm, .btn-inverse;
+        @extend .btn-default;
       }
 
       .batch-open {
-        @extend .btn, .btn-sm, .btn-info;
+        @extend .btn-info;
       }
 
       .batch-delete {
-        @extend .btn, .btn-sm, .btn-danger;
+        @extend .btn-danger;
       }
     }
   }
