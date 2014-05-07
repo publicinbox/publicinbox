@@ -20,6 +20,7 @@
 //= require ui-codemirror
 //= require ui-bootstrap
 //= require pusher
+//= require model/thread
 //= require filters/count
 //= require services/messages_service
 //= require services/profile_service

@@ -18,16 +18,10 @@ MessagesService.prototype.getMessages = function getMessages() {
       svc.threads = Lazy(svc.messages)
         .groupBy('thread_id')
         .map(function(messages, threadId) {
-          var thread = {
+          return new Thread({
             threadId: threadId,
-            messages: Lazy(messages).sortBy('timestamp').toArray(),
-            lastMessage: Lazy(messages).last()
-          };
-
-          thread.timestamp = thread.lastMessage.timestamp;
-          thread.opened = thread.lastMessage.opened;
-
-          return thread;
+            messages: messages
+          });
         })
         .toArray();
 
@@ -77,13 +71,10 @@ MessagesService.prototype.addMessage = function addMessage(message) {
 
   var thread = this.threadMap[message.thread_id];
   if (!thread) {
-    thread = this.threadMap[message.thread_id] = {
-      timestamp: message.timestamp,
-      threadId: threadId,
-      messages: []
-    };
+    thread = this.threadMap[message.thread_id] = new Thread({
+      threadId: threadId
+    });
   }
 
   thread.messages.push(message);
-  thread.lastMessage = message;
 };

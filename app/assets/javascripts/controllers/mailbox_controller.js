@@ -91,7 +91,7 @@ MailboxController.prototype.batchRead = function batchRead() {
 
   this.sendRequest('put', '/batches', { batch: { threads: threadIds } }, function() {
     Lazy($scope.selection).each(function(thread) {
-      thread.opened = true;
+      thread.lastMessage.opened = true;
     });
 
     $scope.displayNotice('Marked ' + threadIds.length + ' messages as read.');
