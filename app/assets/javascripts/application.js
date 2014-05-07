@@ -33,5 +33,7 @@
 //= require directives/pi_message_container
 //= require directives/pi_handle_mailtos
 //= require directives/pi_editor
+//= require config/app_config
 //= require config/routing_config
+//= require config/http_config
 //= require public_inbox

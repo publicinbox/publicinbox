@@ -22,3 +22,5 @@ PublicInbox.directive('piHandleMailtos', PIHandleMailtos);
 PublicInbox.directive('piMessageContainer', PIMessageContainer);
 
 PublicInbox.config(RoutingConfig);
+PublicInbox.config(HttpConfig);
+PublicInbox.run(AppConfig);

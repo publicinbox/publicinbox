@@ -48,7 +48,6 @@ function MainController($scope, $timeout) {
   $scope.hideNoticeAfter(3000);
 
   $scope.nav = { state: 'ready' };
-  $scope.app = { state: 'ready', section: 'inbox' };
 
 }
 

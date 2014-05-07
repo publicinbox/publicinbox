@@ -27,8 +27,6 @@ MailboxController.prototype.sendRequest = function sendRequest(method) {
     $scope.app.state = 'ready';
   });
 
-  $scope.app.state = 'loading';
-
   return request;
 };
 
