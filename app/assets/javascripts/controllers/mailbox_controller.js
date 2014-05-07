@@ -88,7 +88,7 @@ MailboxController.prototype.batchRead = function batchRead() {
     .map('threadId')
     .toArray();
 
-  this.sendRequest('put', '/batches', { batch: { messages: threadIds } }, function() {
+  this.sendRequest('put', '/batches', { batch: { threads: threadIds } }, function() {
     Lazy($scope.selection).each(function(thread) {
       thread.opened = true;
     });
@@ -98,15 +98,16 @@ MailboxController.prototype.batchRead = function batchRead() {
 };
 
 MailboxController.prototype.batchDelete = function batchDelete() {
-  var $scope = this.$scope;
+  var ctrl = this,
+      $scope = this.$scope;
 
   var threadIds = Lazy($scope.selection)
     .map('threadId')
     .toArray();
 
-  this.sendRequest('delete', '/batches?messages=' + threadIds.join(','), function() {
+  this.sendRequest('delete', '/batches?threads=' + threadIds.join(','), function() {
     Lazy($scope.selection).each(function(message) {
-      $scope.removeMessage(message);
+      ctrl.removeMessage(message);
     });
 
     $scope.selection = [];
@@ -121,7 +122,7 @@ MailboxController.prototype.addMessage = function addMessage(message) {
 };
 
 MailboxController.prototype.removeMessage = function removeMessage(message) {
-  removeFromArray(this.$scope.messages, message);
+  removeFromArray(this.messages.messages, message);
 };
 
 MailboxController.prototype.addContact = function addContact(contact) {
