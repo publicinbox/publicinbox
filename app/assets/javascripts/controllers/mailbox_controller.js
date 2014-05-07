@@ -84,7 +84,9 @@ MailboxController.prototype.batchDeselect = function batchDeselect() {
 MailboxController.prototype.batchRead = function batchRead() {
   var $scope = this.$scope;
 
-  var threadIds = Lazy(this.$scope.selection).map('threadId');
+  var threadIds = Lazy(this.$scope.selection)
+    .map('threadId')
+    .toArray();
 
   this.sendRequest('put', '/batches', { batch: { messages: threadIds } }, function() {
     Lazy($scope.selection).each(function(thread) {
@@ -98,7 +100,9 @@ MailboxController.prototype.batchRead = function batchRead() {
 MailboxController.prototype.batchDelete = function batchDelete() {
   var $scope = this.$scope;
 
-  var threadIds = Lazy($scope.selection).map('threadId');
+  var threadIds = Lazy($scope.selection)
+    .map('threadId')
+    .toArray();
 
   this.sendRequest('delete', '/batches?messages=' + threadIds.join(','), function() {
     Lazy($scope.selection).each(function(message) {
