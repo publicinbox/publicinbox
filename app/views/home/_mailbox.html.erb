@@ -3,8 +3,16 @@
     <h1>
       Mailbox
       <div class="batch-select">
-        <button class="batch-select" ng-click="ctrl.batchSelect()">Select all</button>
-        <button class="batch-deselect" ng-click="ctrl.batchDeselect()">Deselect all</button>
+        <button class="batch-select"
+          ng-show="selection.length < threads.length"
+          ng-click="ctrl.batchSelect()">
+          Select all
+        </button>
+        <button class="batch-deselect"
+          ng-show="selection.length > 0"
+          ng-click="ctrl.batchDeselect()">
+          Deselect all
+        </button>
       </div>
       <div class="batch-actions" ng-show="selection.length">
         <button class="batch-open" ng-click="ctrl.batchRead()">Mark {{selection.length}} as read</button>
