@@ -4,6 +4,8 @@ function DraftService($rootScope, $location) {
   this.$scope.draft = {};
 }
 
+DraftService.$inject = ['$rootScope', '$location'];
+
 DraftService.prototype.clear = function clear() {
   this.$scope.draft = {};
 };
