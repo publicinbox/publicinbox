@@ -19,6 +19,9 @@ function RoutingConfig($routeProvider, $locationProvider) {
       template: getSectionHtml('profile'),
       controller: 'ProfileController',
       controllerAs: 'ctrl'
+    })
+    .otherwise({
+      redirectTo: '/ui/mailbox'
     });
 
   function getSectionHtml(sectionName) {
