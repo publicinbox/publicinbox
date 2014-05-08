@@ -36,16 +36,20 @@ class HomeController < ApplicationController
   end
 
   def register
-    @user = User.new(user_params)
+    if request.post?
+      @user = User.new(user_params)
 
-    if @user.save
-      login_user(@user)
-      alert('Thank you for registering!')
-      return redirect_to(root_path)
+      if @user.save
+        login_user(@user)
+        alert('Thank you for registering!')
+        return redirect_to(root_path)
+      end
+
+      alert('There was a problem creating your account.')
+
+    else
+      @user = User.new
     end
-
-    alert('There was a problem creating your account.')
-    render(:action => 'guest')
   end
 
   def logout

@@ -50,6 +50,14 @@ body > main {
 
   & > header {
     @include page-header;
+
+    & > h1 > a {
+      color: #000;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
 }
 

@@ -4,10 +4,9 @@ Rails.application.routes.draw do
   get '/ui'        => 'home#app'
   get '/ui/*route' => 'home#app'
 
-  get  '/login'    => 'home#login'
-  post '/login'    => 'home#login'
-  post '/register' => 'home#register'
-  get  '/logout'   => 'home#logout'
+  match '/login'    => 'home#login', :via => [:get, :post]
+  match '/register' => 'home#register', :via => [:get, :post]
+  get   '/logout'   => 'home#logout'
 
   match '/auth/:provider/callback' => 'identities#create', :via => [:get, :post]
 

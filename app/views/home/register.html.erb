@@ -1,9 +1,11 @@
-<section id="register">
-  <header>
-    <h1>Register</h1>
-  </header>
+<header>
+  <h1><a href="/">Public<em>Inbox</em></a></h1>
+</header>
 
-  <%= form_for(@user, :url => register_path) do |f| -%>
+<%= form_for(@user, :url => register_path) do |f| -%>
+  <fieldset>
+    <legend>Register a new account</legend>
+
     <div class="field">
       <%= f.label(:user_name) %>
       <%= f.text_field(:user_name) %>
@@ -29,7 +31,7 @@
     </div>
 
     <div class="field">
-      <p>Already have an account? <%= link_to('Log in', '#login') %>!</p>
+      <p>Already have an account? <%= link_to('Log in', login_path) %>!</p>
     </div>
-  <% end -%>
-</section>
+  </fieldset>
+<% end -%>
