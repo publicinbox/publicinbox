@@ -22,6 +22,7 @@
 #  updated_at         :datetime
 #  mailgun_data       :text
 #  display_in_iframe  :boolean          default(FALSE)
+#  source_id          :integer
 #
 
 require 'spec_helper'
