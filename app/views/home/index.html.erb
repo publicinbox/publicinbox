@@ -1,9 +1,12 @@
-<header>
+<header class="site-header">
   <h1>
     Public<em>Inbox</em>
+  </h1>
+
+  <p>
     <%= link_to('Log in', login_path) %>
     <%= link_to('Register', register_path) %>
-  </h1>
+  </p>
 
   <p>
     This is a place where you can send and receive e-mails (at your own @publicinbox.net address),
@@ -11,84 +14,94 @@
   </p>
 </header>
 
-<article>
-  <h3>Having public conversations that don't fit into 140-character nuggets</h3>
+<article class="site-intro">
+  <section>
+    <h3>Having public conversations that don't fit into 140-character nuggets</h3>
 
-  <p>
-    We've all seen our share of "debates" on Twitter. I put "debates" in quotes because even the
-    most level-headed and rational people are awfully constrained to fit the nuances of their
-    arguments into 140-character tweets, or even streams of many tweets. Jeff Atwood wrote a while
-    back about <a href="http://blog.codinghorror.com/on-escalating-communication/">recognizing when
-    it's time to switch from Twitter to e-mail</a> for serious conversations, and when it's time to
-    have a 1-on-1 conversation. But "escalating" the debate in this manner unfortunately also makes
-    it private.
-  </p>
+    <p>
+      We've all seen our share of "debates" on Twitter. I put "debates" in quotes because even the
+      most level-headed and rational people are awfully constrained to fit the nuances of their
+      arguments into 140-character tweets, or even streams of many tweets. Jeff Atwood wrote a while
+      back about <a href="http://blog.codinghorror.com/on-escalating-communication/">recognizing when
+      it's time to switch from Twitter to e-mail</a> for serious conversations, and when it's time to
+      have a 1-on-1 conversation. But "escalating" the debate in this manner unfortunately also makes
+      it private.
+    </p>
 
-  <p>
-    Sometimes we <em>want</em>&mdash;or anyway, I do!&mdash;to see these conversations
-    unfold. Especially when they're between people we respect, and we want to understand both points
-    of view.
-  </p>
+    <p>
+      Sometimes we <em>want</em>&mdash;or anyway, I do!&mdash;to see these conversations
+      unfold. Especially when they're between people we respect, and we want to understand both points
+      of view.
+    </p>
+  </section>
 
-  <h3>Turn-based debates</h3>
+  <section>
+    <h3>Turn-based debates</h3>
 
-  <p>
-    This is kind of the same thing, but coming from the opposite direction. Just like sometimes
-    people get into debates on Twitter when a longer format would really be more appropriate,
-    sometimes people have actual debates&mdash;like, organized, competitive events&mdash;to discuss
-    issues that really deserve a lot more thought and consideration. The real-time nature of these
-    events, along with the fact that there are game-like elements thrown in (rules like time limits,
-    the declaration of a "winner"), can often distract from the core ideas being considered.
-  </p>
+    <p>
+      This is kind of the same thing, but coming from the opposite direction. Just like sometimes
+      people get into debates on Twitter when a longer format would really be more appropriate,
+      sometimes people have actual debates&mdash;like, organized, competitive events&mdash;to discuss
+      issues that really deserve a lot more thought and consideration. The real-time nature of these
+      events, along with the fact that there are game-like elements thrown in (rules like time limits,
+      the declaration of a "winner"), can often distract from the core ideas being considered.
+    </p>
 
-  <p>
-    I also think you'll just get better, more thought-out arguments in this format. Even skilled
-    debaters likely can't articulate their argument perfectly on the spot all the time. And if/when
-    they want to provide references to studies, statistics, or other material, doing so in an e-mail
-    is as easy as providing a link. In a real-time debate, these references generally don't provide
-    much value, if any.
-  </p>
+    <p>
+      I also think you'll just get better, more thought-out arguments in this format. Even skilled
+      debaters likely can't articulate their argument perfectly on the spot all the time. And if/when
+      they want to provide references to studies, statistics, or other material, doing so in an e-mail
+      is as easy as providing a link. In a real-time debate, these references generally don't provide
+      much value, if any.
+    </p>
+  </section>
 
-  <h3>Interacting publicly with fans, readers, users, etc.</h3>
+  <section>
+    <h3>Interacting publicly with fans, readers, users, etc.</h3>
 
-  <p>
-    Say you're an artist, musician, whatever, and you want to engage with your fans. There's really
-    nothing quite like the personal touch of an e-mail. With public e-mail you could provide that
-    personal touch but still be able to share it with your fanbase at large. The same goes for
-    bloggers, cartoonists, or others who would be interested in having one-to-one communication with
-    their audience that can be shared.
-  </p>
+    <p>
+      Say you're an artist, musician, whatever, and you want to engage with your fans. There's really
+      nothing quite like the personal touch of an e-mail. With public e-mail you could provide that
+      personal touch but still be able to share it with your fanbase at large. The same goes for
+      bloggers, cartoonists, or others who would be interested in having one-to-one communication with
+      their audience that can be shared.
+    </p>
 
-  <p>
-    Personally, I could even see a use for this as a developer active in the open source community.
-    If a user writes to me with a question, I want to respond directly to help him or her. But I
-    *also* want to
-    <a href="http://blog.codinghorror.com/maximizing-the-value-of-your-keystrokes/">maximize the
-    value of my keystrokes</a>. Responding directly and then sharing my e-mail seems like a great
-    way to do that.
-  </p>
+    <p>
+      Personally, I could even see a use for this as a developer active in the open source community.
+      If a user writes to me with a question, I want to respond directly to help him or her. But I
+      *also* want to
+      <a href="http://blog.codinghorror.com/maximizing-the-value-of-your-keystrokes/">maximize the
+      value of my keystrokes</a>. Responding directly and then sharing my e-mail seems like a great
+      way to do that.
+    </p>
+  </section>
 
-  <h3>Open letters</h3>
+  <section>
+    <h3>Open letters</h3>
 
-  <p>
-    You know how sometimes people write <em>open letters</em>? Maybe it's a government official,
-    maybe a corporate executive, maybe a celebrity. Whoever it is, though, it's really quite an
-    indirect way to reach them. Often these are published in magazines or online publications. The
-    recipient is presumably expected to just <em>hear</em> about the open letter. There's very
-    little pressure to respond.
-  </p>
+    <p>
+      You know how sometimes people write <em>open letters</em>? Maybe it's a government official,
+      maybe a corporate executive, maybe a celebrity. Whoever it is, though, it's really quite an
+      indirect way to reach them. Often these are published in magazines or online publications. The
+      recipient is presumably expected to just <em>hear</em> about the open letter. There's very
+      little pressure to respond.
+    </p>
 
-  <p>
-    Instead of all that, how about <em>actually e-mailing the person</em>, and then publishing your
-    e-mail? This is more direct, and it also has the added benefit that if the recipient ever
-    responds, that will also be public! So in this way an open letter could even turn into a
-    meaningful dialogue.
-  </p>
+    <p>
+      Instead of all that, how about <em>actually e-mailing the person</em>, and then publishing your
+      e-mail? This is more direct, and it also has the added benefit that if the recipient ever
+      responds, that will also be public! So in this way an open letter could even turn into a
+      meaningful dialogue.
+    </p>
+  </section>
 
-  <h3>Uses I haven't even thought of</h3>
+  <section>
+    <h3>Uses I haven't even thought of</h3>
 
-  <p>
-    These are just a few ideas. I bet there are other ways people could find a public e-mail account
-    useful. So go on: <a href="/register">create an account</a> and see for yourself!
-  </p>
+    <p>
+      These are just a few ideas. I bet there are other ways people could find a public e-mail account
+      useful. So go on: <a href="/register">create an account</a> and see for yourself!
+    </p>
+  </section>
 </article>

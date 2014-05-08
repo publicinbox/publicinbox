@@ -51,11 +51,52 @@ body > main {
   & > header {
     @include page-header;
 
+    &.site-header {
+      text-align: center;
+
+      h1 {
+        font-size: 64px;
+      }
+    }
+
     & > h1 > a {
       color: #000;
 
       &:hover {
         text-decoration: none;
+      }
+    }
+
+    a[href="/login"],
+    a[href="/register"] {
+      @extend .btn, .btn-xs;
+    }
+
+    a[href="/login"] {
+      @extend .btn-primary;
+    }
+
+    a[href="/register"] {
+      @extend .btn-info;
+    }
+
+    & > p {
+      @extend .lead;
+    }
+  }
+
+  & > article.site-intro {
+    @extend .row;
+
+    & > section {
+      @extend .col-lg-6;
+
+      &:last-child {
+        @extend .col-lg-12;
+      }
+
+      h3 {
+        text-align: center;
       }
     }
   }
