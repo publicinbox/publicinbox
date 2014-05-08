@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   get '/blog/*permalink' => 'blog#show'
 
+  get '/:id/:readable_title' => 'messages#show'
+
   # Temporarily disabling this because it doesn't work anyway, and I think
   # deleting the Rack::Lock middleware (to prevent deadlocks) may have broken
   # some other stuff.

@@ -1,0 +1,10 @@
+article.message {
+  h4 {
+    .sender:after {
+      display: inline-block;
+      content: "\2192";
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+    }
+  }
+}

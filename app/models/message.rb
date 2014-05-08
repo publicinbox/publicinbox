@@ -133,6 +133,10 @@ class Message < ActiveRecord::Base
     self.recipient_email.try(:ends_with?, '@publicinbox.net')
   end
 
+  def permalink
+    "/#{self.unique_token}/#{self.subject.parameterize}"
+  end
+
   private
 
   def populate_ids

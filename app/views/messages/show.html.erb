@@ -1,0 +1,15 @@
+<header>
+  <h1><%= link_to(@first_message.subject, @first_message.permalink) %></h1>
+</header>
+
+<% @thread.each do |message| -%>
+  <article class="message">
+    <h4>
+      <span class="sender"><%= message.sender_email %></span>
+      <span class="recipient"><%= message.recipient_email %></span>
+      <small><%= time_ago_in_words(message.created_at) %> ago</small>
+    </h4>
+
+    <%= markdown(message.body).html_safe %>
+  </article>
+<% end -%>

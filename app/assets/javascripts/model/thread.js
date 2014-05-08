@@ -9,6 +9,18 @@ Object.defineProperty(Thread.prototype, 'lastMessage', {
   }
 });
 
+Object.defineProperty(Thread.prototype, 'heading', {
+  get: function() {
+    return this.messages[0].subject;
+  }
+});
+
+Object.defineProperty(Thread.prototype, 'permalink', {
+  get: function() {
+    return this.messages[0].permalink;
+  }
+});
+
 Object.defineProperty(Thread.prototype, 'timestamp', {
   get: function() {
     return this.lastMessage.timestamp;

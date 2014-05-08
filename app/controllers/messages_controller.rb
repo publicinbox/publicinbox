@@ -17,6 +17,12 @@ class MessagesController < ApplicationController
     })
   end
 
+  def show
+    message = Message.find_by(:unique_token => params[:id])
+    @thread = message.thread
+    @first_message = @thread.first
+  end
+
   def create
     Message.transaction do
       @message = current_user.create_message!(message_params.merge({
@@ -107,7 +113,8 @@ class MessagesController < ApplicationController
       :profile_image => profile_image(display_email),
       :created_at => time_ago_in_words(message.created_at),
       :opened => !!message.opened_at,
-      :display_in_iframe => message.display_in_iframe?
+      :display_in_iframe => message.display_in_iframe?,
+      :permalink => message.permalink
     }
   end
 end
