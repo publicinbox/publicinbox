@@ -88,6 +88,7 @@ MessagesService.prototype.removeMessage = function removeMessage(message) {
   if (thread) {
     removeFromArray(thread.messages, message);
     if (thread.isEmpty()) {
+      removeFromArray(this.threads, thread);
       delete this.threadMap[message.thread_id];
     }
   }
