@@ -88,6 +88,12 @@ body > main {
   & > article.site-intro {
     @extend .row;
 
+    & > h2 {
+      @extend .col-lg-12;
+
+      text-align: center;
+    }
+
     & > section {
       @extend .col-lg-6;
 
