@@ -1,0 +1,8 @@
+@import "readable";
+@import "_mixins";
+
+#thread {
+  header {
+    a.share-link { @include button-with-icon(share); }
+  }
+}
