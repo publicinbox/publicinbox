@@ -65,6 +65,10 @@ body > main {
       &:hover {
         text-decoration: none;
       }
+
+      span.back-to-site {
+        @include icon(arrow-left);
+      }
     }
 
     a[href="/login"],
