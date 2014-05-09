@@ -69,7 +69,7 @@ body > main {
 
     a[href="/login"],
     a[href="/register"] {
-      @extend .btn, .btn-xs;
+      @extend .btn;
     }
 
     a[href="/login"] {
