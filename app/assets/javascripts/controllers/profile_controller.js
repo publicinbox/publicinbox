@@ -8,7 +8,7 @@ function ProfileController($scope, profile) {
 ProfileController.prototype.loadProfile = function loadProfile() {
   var $scope = this.$scope;
 
-  this.profile.getProfile().then(function(profile) {
+  this.profile.load().then(function(profile) {
     $scope.user = profile;
   });
 };
