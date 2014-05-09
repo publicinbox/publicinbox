@@ -1,26 +1,34 @@
 function HttpConfig($httpProvider) {
   function HttpInterceptor($rootScope, $q) {
-    return {
+    var outstandingRequests = 0;
+
+    var interceptor = {
       request: function(config) {
-        $rootScope.app.state = 'loading';
+        interceptor.updateState(++outstandingRequests);
         return config;
       },
 
       requestError: function(error) {
-        $rootScope.app.state = 'ready';
+        interceptor.updateState(--outstandingRequests);
         return $q.reject(error);
       },
 
       response: function(response) {
-        $rootScope.app.state = 'ready';
+        interceptor.updateState(--outstandingRequests);
         return response;
       },
 
       responseError: function(error) {
-        $rootScope.app.state = 'ready';
+        interceptor.updateState(--outstandingRequests);
         return $q.reject(error);
+      },
+
+      updateState: function(requestCount) {
+        $rootScope.app.state = requestCount > 0 ? 'loading' : 'ready';
       }
     };
+
+    return interceptor;
   }
 
   HttpInterceptor.$inject = ['$rootScope', '$q'];
