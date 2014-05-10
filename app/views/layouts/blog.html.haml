@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title PublicInbox Blog
+    %title= [*@title, 'PublicInbox Blog'].join(' - ')
     %meta(name="viewport" content="width=device-width, user-scalable=no")
     = stylesheet_link_tag("application")
 
