@@ -3,11 +3,9 @@
   <head>
     <title>PublicInbox</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <%= stylesheet_link_tag("application") %>
-    <%= yield(:extra_stylesheets) if content_for?(:extra_stylesheets) %>
     <%= favicon_link_tag %>
+    <%= stylesheet_link_tag("application") %>
     <%= javascript_include_tag("application") %>
-    <%= yield(:extra_javascripts) if content_for?(:extra_javascripts) %>
   </head>
 
   <body
