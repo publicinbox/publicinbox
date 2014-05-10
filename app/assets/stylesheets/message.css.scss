@@ -1,3 +1,4 @@
+@import "readable";
 @import "_mixins";
 
 main > header {
@@ -8,11 +9,19 @@ main > header {
 
 article.message {
   h4 {
-    .sender:after {
-      display: inline-block;
-      content: "\2192";
-      margin-left: 0.5em;
-      margin-right: 0.5em;
+    position: relative;
+    height: 60px;
+    padding-left: 60px;
+
+    img {
+      position: absolute;
+      left: 0;
     }
+
+    small { display: block; }
+  }
+
+  &:nth-of-type(n+2) {
+    border-top: 1px solid #eeeeee;
   }
 }
