@@ -13,5 +13,12 @@
     }
   }
 
+  article.message {
+    h4 {
+      @extend .clearfix;
+
+      img { float: left; margin-right: 0.5em; }
+      small { display: block; }
+    }
   }
 }

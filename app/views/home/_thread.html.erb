@@ -1,6 +1,7 @@
 <section id="thread">
   <header>
     <h1>
+      <small><a class="back-link" href="/ui/mailbox"></a></small>
       {{thread.heading}}
       <small><a href="{{thread.permalink}}" class="share-link" target="_top">share</a></small>
     </h1>
@@ -8,13 +9,12 @@
 
   <h3>
     {{thread.messages.length | count:'Message'}}
-    <small><%= link_to('Back', '/ui/mailbox') %></small>
   </h3>
 
   <article class="message" ng-repeat="message in thread.messages | orderBy:'timestamp'">
     <h4>
-      {{message.preposition}}
-      <a href="mailto:{{message.display_email}}">{{message.display_email}}</a>
+      <img ng-src="{{message.sender_image}}" />
+      <a href="mailto:{{message.sender_email}}">{{message.sender_email}}</a>
       <small>{{message.created_at}} ago</small>
     </h4>
     <div pi-message-container ng-model="message"></div>

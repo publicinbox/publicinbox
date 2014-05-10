@@ -104,6 +104,7 @@ class MessagesController < ApplicationController
       :thread_id => message.thread_id,
       :type => message_type,
       :sender_email => message.sender_email,
+      :sender_image => profile_image(message.sender_email),
       :recipient_email => message.recipient_email,
       :subject => message.subject,
       :body => message.display_in_iframe? && message.body_html || markdown(message.body),
