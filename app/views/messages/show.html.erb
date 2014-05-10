@@ -10,8 +10,8 @@
 <% @thread.each do |message| -%>
   <article class="message">
     <h4>
-      <span class="sender"><%= message.sender_email %></span>
-      <span class="recipient"><%= message.recipient_email %></span>
+      <span class="sender"><%= message.sender_display_name %></span>
+      <span class="recipient"><%= message.recipient_display_name %></span>
       <small><%= time_ago_in_words(message.created_at) %> ago</small>
     </h4>
 

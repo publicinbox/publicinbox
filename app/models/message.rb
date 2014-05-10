@@ -139,6 +139,14 @@ class Message < ActiveRecord::Base
     self.recipient_email.try(:ends_with?, '@publicinbox.net')
   end
 
+  def sender_display_name
+    self.sender_name || self.sender.try(:name) || self.sender_email
+  end
+
+  def recipient_display_name
+    self.recipient_name || self.recipient.try(:name) || self.recipient_email
+  end
+
   def permalink
     "/#{self.unique_token}/#{self.subject.parameterize}"
   end
