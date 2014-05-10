@@ -6,6 +6,7 @@
 
 # Keep these out of the repo (TODO: where to put them).
 /db/seed/*
+!/db/seed/example.json
 
 # Ignore sensitive credentials.
 /config/database.yml
