@@ -5,14 +5,22 @@
 @mixin page-header {
   @extend .page-header;
 
-  h1 em {
-    @extend .text-muted;
-    font-style: normal;
-  }
+  h1 {
+    em {
+      @extend .text-muted;
+      font-style: normal;
+    }
 
-  h1 small {
-    text-transform: none;
-    white-space: nowrap;
+    small,
+    button {
+      position: relative;
+      top: -3px;
+    }
+
+    small {
+      text-transform: none;
+      white-space: nowrap;
+    }
   }
 
   p {

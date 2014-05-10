@@ -1,3 +1,11 @@
+@import "_mixins";
+
+main > header {
+  h1 a.back-to-site {
+    @include icon(arrow-left);
+  }
+}
+
 article.message {
   h4 {
     .sender:after {

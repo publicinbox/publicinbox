@@ -9,8 +9,6 @@
 
       button {
         @extend .btn, .btn-xs;
-        position: relative;
-        top: -3px;
       }
 
       .batch-select {

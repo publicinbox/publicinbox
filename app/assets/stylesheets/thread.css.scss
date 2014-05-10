@@ -1,8 +1,17 @@
-@import "readable";
 @import "_mixins";
 
 #thread {
   header {
-    a.share-link { @include button-with-icon(share); }
+    h1 {
+      a:hover {
+        @extend a:hover;
+        text-decoration: none;
+      }
+
+      a.back-link { @include icon(arrow-left); }
+      a.share-link { @include button-with-icon(share); }
+    }
+  }
+
   }
 }

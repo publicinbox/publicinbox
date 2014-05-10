@@ -49,7 +49,8 @@ body > main {
     margin-right: $total-nav-width;
   }
 
-  & > header {
+  & > header,
+  .view > section > header {
     @include page-header;
 
     &.site-header {
@@ -60,15 +61,11 @@ body > main {
       }
     }
 
-    & > h1 > a {
+    & > h1 a {
       color: #000;
 
       &:hover {
         text-decoration: none;
-      }
-
-      span.back-to-site {
-        @include icon(arrow-left);
       }
     }
 
