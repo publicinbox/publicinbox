@@ -23,6 +23,8 @@
 #  mailgun_data       :text
 #  display_in_iframe  :boolean          default(FALSE)
 #  source_id          :integer
+#  sender_name        :string(255)
+#  recipient_name     :string(255)
 #
 
 class Message < ActiveRecord::Base
@@ -69,14 +71,16 @@ class Message < ActiveRecord::Base
     :populate_thread_id, :format_cc_and_bcc, :parse_html
 
   def self.create_from_external!(message_data)
-    from    = message_data['sender']
-    to      = message_data['recipient']
-    subject = message_data['subject']
-    body    = message_data['stripped-text']
-    html    = message_data['stripped-html']
+    sender_email    = message_data['sender']
+    recipient_email = message_data['recipient']
+    from            = message_data['From']
+    to              = message_data['To']
+    subject         = message_data['subject']
+    body            = message_data['stripped-text']
+    html            = message_data['stripped-html']
 
-    sender = User.find_by(:email => from)
-    recipient = User.find_by(:email => to)
+    sender = User.find_by(:email => sender_email)
+    recipient = User.find_by(:email => recipient_email)
 
     raise "No such user: #{to}" if recipient.nil?
 
@@ -87,9 +91,11 @@ class Message < ActiveRecord::Base
       :external_id => external_id,
       :external_source_id => external_source_id,
       :sender => sender,
-      :sender_email => from,
+      :sender_email => sender_email,
+      :sender_name => Extract.name_from_email_field(from),
       :recipient => recipient,
-      :recipient_email => to,
+      :recipient_email => recipient_email,
+      :recipient_name => Extract.name_from_email_field(to),
       :subject => subject,
       :body => body,
       :body_html => html,

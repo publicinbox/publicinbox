@@ -23,6 +23,8 @@
 #  mailgun_data       :text
 #  display_in_iframe  :boolean          default(FALSE)
 #  source_id          :integer
+#  sender_name        :string(255)
+#  recipient_name     :string(255)
 #
 
 require 'spec_helper'
@@ -141,19 +143,23 @@ describe Message do
         end
       end
 
-      it 'populates external_id using the "Message-Id" header' do
-        message = Message.create_from_external!(message_data.merge({
-          'Message-Id' => 'foo'
-        }))
+      it 'populates sender_name using the "From" header' do
+        message = create_from_external('From' => 'Joe Schmoe <joe.schmoe@example.com>')
+        message.sender_name.should == 'Joe Schmoe'
+      end
 
+      it 'populates recipient_name using the "To" header' do
+        message = create_from_external('To' => 'Joe Schmoe <joe.schmoe@example.com>')
+        message.recipient_name.should == 'Joe Schmoe'
+      end
+
+      it 'populates external_id using the "Message-Id" header' do
+        message = create_from_external('Message-Id' => 'foo')
         message.external_id.should == 'foo'
       end
 
       it 'populates external_source_id using the "In-Reply-To" header' do
-        message = Message.create_from_external!(message_data.merge({
-          'In-Reply-To' => 'bar'
-        }))
-
+        message = create_from_external('In-Reply-To' => 'bar')
         message.external_source_id.should == 'bar'
       end
     end
