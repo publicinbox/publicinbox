@@ -1,5 +1,5 @@
 <section id="thread">
-  <header>
+  <header ng-hide="app.state === 'loading'">
     <h1>
       <small><a class="back-link" href="/ui/mailbox"></a></small>
       {{thread.heading}}
@@ -7,9 +7,7 @@
     </h1>
   </header>
 
-  <h3>
-    {{thread.messages.length | count:'Message'}}
-  </h3>
+  <h3 ng-hide="app.state === 'loading'">{{thread.messages.length | count:'Message'}}</h3>
 
   <article class="message" ng-repeat="message in thread.messages | orderBy:'timestamp'">
     <h4>
