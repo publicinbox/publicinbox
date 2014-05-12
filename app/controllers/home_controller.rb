@@ -16,12 +16,12 @@ class HomeController < ApplicationController
       existing_user = User.find_by(:user_name => @user.user_name)
 
       if existing_user.nil?
-        alert('No user by that name exists. Did you make a typo?')
+        alert('No user by that name exists. Did you make a typo?', 'error')
         return render(:action => 'login')
       end
 
       if !existing_user.authenticate(@user.password)
-        alert("That isn't the right password! Are you sure you're #{@user.user_name}?")
+        alert("That isn't the right password! Are you sure you're #{@user.user_name}?", 'error')
         return render(:action => 'login')
       end
 
