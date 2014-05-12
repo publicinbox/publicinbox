@@ -6,6 +6,7 @@ class HomeController < ApplicationController
   end
 
   def app
+    return redirect_to(root_path) if !logged_in?
     render(:layout => false)
   end
 
