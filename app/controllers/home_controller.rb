@@ -18,12 +18,17 @@ class HomeController < ApplicationController
 
       if existing_user.nil?
         alert('No user by that name exists. Did you make a typo?', 'error')
-        return render(:action => 'login')
+        return render
+      end
+
+      if existing_user.automated?
+        alert('You cannot log with as an automated user account!', 'error')
+        return render
       end
 
       if !existing_user.authenticate(@user.password)
         alert("That isn't the right password! Are you sure you're #{@user.user_name}?", 'error')
-        return render(:action => 'login')
+        return render
       end
 
       login_user(existing_user)
