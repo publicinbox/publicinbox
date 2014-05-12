@@ -11,6 +11,7 @@
 #  password_digest :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  automated       :boolean
 #
 
 class User < ActiveRecord::Base
