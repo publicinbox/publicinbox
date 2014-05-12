@@ -74,7 +74,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates :user_name, :format => { :with => /\A[0-9a-z_\.\-\+]+\Z/ }
+  validates :user_name, {
+    :format => {
+      :with => /\A[0-9a-z_\.\-\+]+\Z/,
+      :message => 'User names must comprise lower-case letters, numbers, and the characters "_", ".", "-", and "+"'
+    }
+  }
+
+  validates_uniqueness_of :user_name,
+    :message => 'Somebody else already has that user name :('
 
   before_create :populate_email
 

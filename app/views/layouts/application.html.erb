@@ -12,6 +12,8 @@
     <main class="container">
         <%= yield %>
     </main>
+
+    <div id="notice" class="<%= flash[:style] || 'info' %>"><%= flash[:notice] %></div>
 </body>
 
 <% unless Rails.env.development? -%>

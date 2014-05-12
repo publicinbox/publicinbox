@@ -23,8 +23,14 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(:id => session[:user_id])
   end
 
-  def alert(message)
+  def alert(message, style='info')
     flash[:notice] = message
+    flash[:style] = style
+  end
+
+  def validation_error_message(record)
+    messages = record.errors.messages.map { |attribute, messages| messages.first }
+    messages.first
   end
 
   def inject_delay

@@ -39,13 +39,28 @@ class HomeController < ApplicationController
     if request.post?
       @user = User.new(user_params)
 
-      if @user.save
+      # I know this ugly validation shouldn't really be *here*; but for now this
+      # is the simplest solution to the problem that a user account should
+      # require a password *sometimes* but not *always* (i.e., when creating an
+      # account through PublicInbox it should be required, but when logging in
+      # through an external provider like Google it shouldn't).
+      #
+      # Really it would probably be better to have a PublicInboxIdentity model
+      # and put the password there. But you know how it is with tech debt.
+      error_message = nil
+      if @user.password.blank?
+        error_message = 'You forgot to specify a password!'
+      elsif user_params[:password_confirmation] != @user.password
+        error_message = "Your password confirmation didn't match."
+      end
+
+      if error_message.nil? && @user.save
         login_user(@user)
         alert('Thank you for registering!')
         return redirect_to(root_path)
       end
 
-      alert('There was a problem creating your account.')
+      alert(error_message || validation_error_message(@user) || 'There was a problem creating your account.', 'error')
 
     else
       @user = User.new
