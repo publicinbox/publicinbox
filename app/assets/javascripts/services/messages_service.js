@@ -97,7 +97,12 @@ MessagesService.prototype.removeMessage = function removeMessage(message) {
 MessagesService.prototype.removeThread = function removeThread(thread) {
   var self = this;
 
-  Lazy(thread.messages).each(function(message) {
+  // #removeMessage removes a message from its thread; thus we need to first
+  // make a copy of messages we want to remove (or else we'll be modifying the
+  // array while we're iterating over it).
+  var messages = thread.messages.slice(0);
+
+  Lazy(messages).each(function(message) {
     self.removeMessage(message);
   });
 };

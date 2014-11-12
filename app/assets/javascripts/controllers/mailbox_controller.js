@@ -103,6 +103,7 @@ MailboxController.prototype.batchDelete = function batchDelete() {
       messages.removeThread(thread);
     });
 
+    $scope.selection = [];
     $scope.displayNotice('Deleted ' + threadIds.length + ' message(s).');
   });
 };
