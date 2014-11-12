@@ -33,7 +33,7 @@ You should probably create a password if you haven't already:
 
 Now, create the public_inbox user along with dev and test databases:
 
-    sudo -u postgres createuser -D -A -P publicinbox
+    sudo -u postgres createuser -D -A -P public_inbox
     sudo -u postgres createdb -O public_inbox public_inbox_development
     sudo -u postgres createdb -O public_inbox public_inbox_test
 
