@@ -31,11 +31,12 @@
 
       <a href="/ui/messages/{{thread.threadId}}"
         class="{{message.type}}-message"
+        ng-class="{current: thread == currentThread}"
         data-opened="{{thread.opened}}"
         data-selected="{{ctrl.threadIsSelected(thread)}}">
 
         <div class="selection"
-          ng-click="ctrl.toggleSelection(thread); $event.preventDefault(); $event.stopPropagation()">
+          ng-click="ctrl.toggleSelection(thread, $event);">
         </div>
 
         <div class="picture">

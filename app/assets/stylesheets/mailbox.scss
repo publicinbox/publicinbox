@@ -131,6 +131,10 @@ ul.message-list {
       }
     }
 
+    &.current {
+      background-color: #def;
+    }
+
     &[data-opened="true"] {
       .info {
         @extend .text-muted;

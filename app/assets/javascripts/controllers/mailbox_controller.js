@@ -5,6 +5,7 @@ function MailboxController($scope, $http, $location, messages) {
   this.messages = messages;
 
   $scope.selection = [];
+  $scope.currentThread = null;
 
   this.loadMessages();
 }
@@ -117,12 +118,44 @@ MailboxController.prototype.addContact = function addContact(contact) {
   addToArray(this.$scope.contacts, contact);
 };
 
-MailboxController.prototype.toggleSelection = function toggleSelection(thread) {
+MailboxController.prototype.toggleSelection = function toggleSelection(thread, event) {
+  event.preventDefault();
+  event.stopPropagation();
+
   if (arrayContains(this.$scope.selection, thread)) {
     removeFromArray(this.$scope.selection, thread);
+    this.$scope.currentThread = null;
   } else {
-    this.$scope.selection.push(thread);
+    if (event.shiftKey) {
+      this.addRange(thread);
+    } else {
+      this.$scope.selection.push(thread);
+    }
+    this.$scope.currentThread = thread;
   }
+};
+
+MailboxController.prototype.addRange = function addRange(thread) {
+  var $scope = this.$scope,
+      threads = [thread],
+      range;
+
+  if ($scope.currentThread) {
+    if ($scope.currentThread.timestamp < thread.timestamp) {
+      range = [$scope.currentThread.timestamp, thread.timestamp];
+    } else {
+      range = [thread.timestamp, $scope.currentThread.timestamp];
+    }
+
+    threads = Lazy(this.messages.threads)
+      .filter(function(thread) {
+        return thread.timestamp >= range[0] && thread.timestamp <= range[1];
+      });
+  }
+
+  Lazy(threads).each(function(thread) {
+    addToArray($scope.selection, thread);
+  });
 };
 
 MailboxController.prototype.threadIsSelected = function threadIsSelected(thread) {
