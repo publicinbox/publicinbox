@@ -104,6 +104,26 @@ describe Message do
     end
   end
 
+  describe 'permalinks' do
+    it 'includes the URL-friendly subject in the permalink' do
+      message = create_message(create_user('urs'), {
+        :unique_token => 'abcdef',
+        :subject => 'what am I, an a-hole?'
+      })
+
+      message.permalink.should == '/abcdef/what-am-i-an-a-hole'
+    end
+
+    it 'for messages with no subject, just uses the unique token as the permalink' do
+      message = create_message(create_user('poe'), {
+        :unique_token => 'ghijkl',
+        :subject => nil
+      })
+
+      message.permalink.should == '/ghijkl/'
+    end
+  end
+
   describe 'grouping messages into threads' do
     before :each do
       @user = create_user('internal')

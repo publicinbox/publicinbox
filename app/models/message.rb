@@ -148,7 +148,7 @@ class Message < ActiveRecord::Base
   end
 
   def permalink
-    "/#{self.unique_token}/#{self.subject.parameterize}"
+    "/#{self.unique_token}/#{self.subject.try(:parameterize)}"
   end
 
   private
