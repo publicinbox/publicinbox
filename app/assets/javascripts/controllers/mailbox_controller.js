@@ -86,7 +86,24 @@ MailboxController.prototype.batchRead = function batchRead() {
       thread.lastMessage.opened = true;
     });
 
-    $scope.displayNotice('Marked ' + threadIds.length + ' messages as read.');
+    $scope.displayNotice('Marked ' + threadIds.length + ' message(s) as read.');
+  });
+};
+
+MailboxController.prototype.batchDelete = function batchDelete() {
+  var $scope = this.$scope,
+      messages = this.messages;
+
+  var threadIds = Lazy(this.$scope.selection)
+    .map('threadId')
+    .toArray();
+
+  this.sendRequest('post', '/batches/delete', { batch: { threads: threadIds } }, function() {
+    Lazy($scope.selection).each(function(thread) {
+      messages.removeThread(thread);
+    });
+
+    $scope.displayNotice('Deleted ' + threadIds.length + ' message(s).');
   });
 };
 

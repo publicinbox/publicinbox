@@ -22,6 +22,10 @@
       .batch-open {
         @extend .btn-info;
       }
+
+      .batch-delete {
+        @extend .btn-danger;
+      }
     }
   }
 }

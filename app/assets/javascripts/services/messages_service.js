@@ -93,3 +93,11 @@ MessagesService.prototype.removeMessage = function removeMessage(message) {
     }
   }
 };
+
+MessagesService.prototype.removeThread = function removeThread(thread) {
+  var self = this;
+
+  Lazy(thread.messages).each(function(message) {
+    self.removeMessage(message);
+  });
+};

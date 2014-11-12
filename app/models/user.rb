@@ -74,6 +74,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def archive_messages!(messages)
+    self.transaction do
+      messages.each do |message|
+        self.archive_message!(message)
+      end
+    end
+  end
+
   validates :user_name, {
     :format => {
       :with => /\A[0-9a-z_\.\-\+]+\Z/,

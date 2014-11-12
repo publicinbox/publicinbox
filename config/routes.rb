@@ -19,8 +19,11 @@ Rails.application.routes.draw do
   resources :messages
   resources :blog
 
-  put    '/batches' => 'batches#update'
-  delete '/batches' => 'batches#delete'
+  put  '/batches'        => 'batches#update'
+
+  # Somebody (Angular? Rails? HTTP itself?) doesn't seem to like passing data
+  # along in DELETE requests.
+  post '/batches/delete' => 'batches#destroy'
 
   get '/blog/*permalink' => 'blog#show'
 
