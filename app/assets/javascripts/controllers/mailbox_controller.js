@@ -109,7 +109,7 @@ MailboxController.prototype.batchDelete = function batchDelete() {
     $scope.displayNotice('Deleted ' + threadIds.length + ' message(s).');
 
     // After deleting N threads, load older messages to fill up the mailbox.
-    ctrl.loadMoreMessages(50 - messages.messages.length);
+    ctrl.loadMoreMessages(50 - messages.threads.length);
   });
 };
 
@@ -169,6 +169,10 @@ MailboxController.prototype.threadIsSelected = function threadIsSelected(thread)
 MailboxController.prototype.loadMoreMessages = function(limit) {
   var $scope = this.$scope,
       messages = this.messages;
+
+  if (limit < 1) {
+    return;
+  }
 
   messages.loadMore(limit).then(function() {
     $scope.threads = messages.threads;
