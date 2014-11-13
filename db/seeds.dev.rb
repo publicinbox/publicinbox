@@ -12,45 +12,63 @@ end
 
 # Create back-and-forth thread between me and myself
 
-def create_thread(subject_lines)
-  time = Time.now - (subject_lines.size * 10).minutes
+def create_thread(subject, messages)
+  time = Time.now - (messages.size * 10).minutes
+  last_message = nil
 
-  subject_lines.each_with_index do |subject, i|
+  messages.each_with_index do |message, i|
+    attrs = { :created_at => time }
+
+    if last_message
+      attrs[:thread_id] = last_message.thread_id
+    end
+
     case i % 2
     when 0
-      incoming(subject, :created_at => time)
+      last_message = incoming(subject, message, attrs)
     when 1
-      outgoing(subject, :created_at => time)
+      last_message = outgoing(subject, message, attrs)
     end
 
     time += 10.minutes
   end
+
+  puts "Created thread '#{subject}'"
 end
 
-def incoming(message, attrs={})
+def incoming(subject, message, attrs={})
   Message.create!({
-    :thread_id => 'foo',
     :sender_email => 'daniel.tao@gmail.com',
     :recipient => @dan,
-    :subject => 'Hey Dan!',
-    :body => message,
-  }.merge(attrs))
-end
-
-def outgoing(message, attrs={})
-  Message.create!({
-    :thread_id => 'foo',
-    :sender => @dan,
-    :recipient_email => 'daniel.tao@gmail.com',
-    :subject => 'Hey Dan!',
+    :subject => subject,
     :body => message
   }.merge(attrs))
 end
 
-create_thread([
+def outgoing(subject, message, attrs={})
+  Message.create!({
+    :sender => @dan,
+    :recipient_email => 'daniel.tao@gmail.com',
+    :subject => subject,
+    :body => message
+  }.merge(attrs))
+end
+
+create_thread("Hey Dan!", [
   "How's it going?",
   "It's going well, how about you?",
   "Oh, pretty good, pretty good. Want to get coffee soon?",
   "You know it! How about tomorrow at Philz?",
   "Sounds good, see you then."
+])
+
+create_thread("Hey...", [
+  "What's up?"
+])
+
+create_thread("Busy?", [
+  "You doing anything right now?",
+  "No, why?",
+  "Let's grab lunch!",
+  "OK :)"
 ])
