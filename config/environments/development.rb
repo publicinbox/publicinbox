@@ -34,3 +34,6 @@ if ENV.include?('PUSHER_APP_ID')
   Pusher.secret = ENV['PUSHER_SECRET']
   Pusher.url    = ENV['PUSHER_URL']
 end
+
+# I think Foreman buffers output? I don't know. It's really annoying.
+STDOUT.sync = true
