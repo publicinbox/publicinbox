@@ -4,7 +4,15 @@ class MessagesController < ApplicationController
   include ApiHelper
 
   def index
-    messages = current_user.messages.order(:id => :desc).limit(50)
+    messages = current_user.messages
+
+    if params[:from]
+      last_message = Message.find_by(:unique_token => params[:from])
+      messages = messages.where('id < ?', last_message.id) unless last_message.nil?
+    end
+
+    limit = params[:limit] || 50
+    messages = messages.order(:id => :desc).limit(limit)
 
     render(:json => {
       :contacts => current_user.contacts,

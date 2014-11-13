@@ -39,6 +39,43 @@ MessagesService.prototype.load = function load() {
   return this.promise;
 };
 
+MessagesService.prototype.loadMore = function loadMore(limit) {
+  var svc = this;
+
+  var lastMessageToken = Lazy(this.messages)
+    .maxBy('timestamp')
+    .unique_token;
+
+  var requestPath = '/messages?from=' + lastMessageToken;
+
+  if (limit) {
+    requestPath += '&limit=' + limit;
+  }
+
+  return this.$http.get(requestPath).then(function(result) {
+    var data = result.data;
+
+    svc.messages = Lazy(svc.messages).concat(data.messages).toArray();
+    svc.contacts = Lazy(svc.contacts).concat(data.contacts).unique().toArray();
+
+    Lazy(data.messages).each(function(message) {
+      svc.messageMap[message.unique_token] = message;
+
+      var thread = svc.threadMap[message.thread_id];
+      if (!thread) {
+        thread = svc.threadMap[message.thread_id] = new Thread({
+          threadId: message.thread_id,
+          messages: []
+        });
+
+        svc.threads.push(thread);
+      }
+
+      thread.messages.push(message);
+    });
+  });
+};
+
 MessagesService.prototype.getThreads = function getThreads() {
   return this.load().then(function(svc) {
     return svc.threads;

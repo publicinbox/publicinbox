@@ -92,7 +92,8 @@ MailboxController.prototype.batchRead = function batchRead() {
 };
 
 MailboxController.prototype.batchDelete = function batchDelete() {
-  var $scope = this.$scope,
+  var ctrl = this,
+      $scope = this.$scope,
       messages = this.messages;
 
   var threadIds = Lazy(this.$scope.selection)
@@ -106,6 +107,9 @@ MailboxController.prototype.batchDelete = function batchDelete() {
 
     $scope.selection = [];
     $scope.displayNotice('Deleted ' + threadIds.length + ' message(s).');
+
+    // After deleting N threads, load older messages to fill up the mailbox.
+    ctrl.loadMoreMessages(50 - messages.messages.length);
   });
 };
 
@@ -160,6 +164,15 @@ MailboxController.prototype.addRange = function addRange(thread) {
 
 MailboxController.prototype.threadIsSelected = function threadIsSelected(thread) {
   return arrayContains(this.$scope.selection, thread);
+};
+
+MailboxController.prototype.loadMoreMessages = function(limit) {
+  var $scope = this.$scope,
+      messages = this.messages;
+
+  messages.loadMore(limit).then(function() {
+    $scope.threads = messages.threads;
+  });
 };
 
 /**
