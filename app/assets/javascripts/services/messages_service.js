@@ -43,7 +43,7 @@ MessagesService.prototype.loadMore = function loadMore(limit) {
   var svc = this;
 
   var lastMessageToken = Lazy(this.messages)
-    .maxBy('timestamp')
+    .minBy('timestamp')
     .unique_token;
 
   var requestPath = '/messages?from=' + lastMessageToken;
