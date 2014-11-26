@@ -77,9 +77,12 @@
       .info {
         @extend .media-body;
 
-        h3.subject {
+        line-height: 1;
+
+        .subject {
           @extend .list-group-item-heading;
           @include empty-placeholder("[No subject]");
+          @include one-liner;
         }
 
         .display_email:before {
@@ -138,7 +141,7 @@
         .info {
           @extend .text-muted;
 
-          h3.subject {
+          .subject {
             @extend .text-muted;
 
             font-weight: normal;

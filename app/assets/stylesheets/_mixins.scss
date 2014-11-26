@@ -65,6 +65,12 @@
   }
 }
 
+@mixin one-liner {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @mixin mobile {
   @media all and (max-width: $desktop-width - 1) {
     @content;
