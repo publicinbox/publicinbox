@@ -26,6 +26,12 @@ Install the database and the development libraries:
 
     sudo apt-get install postgresql postgresql-contrib libpq-dev
 
+#### OS X
+
+Probably the easiest way to set up PostgreSQL on Mac is [Postgres.app](http://postgresapp.com/).
+
+#### All systems
+
 You should probably create a password if you haven't already:
 
     sudo -u postgres psql postgres
