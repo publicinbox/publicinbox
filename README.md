@@ -3,6 +3,12 @@ PublicInbox
 
 The NSA can already read your e-mail. Why not let everybody else?
 
+**Note: I have mostly abandoned this concept because after using it for a little
+bit, I realized that I hadn't put any thought into dealing with spam. Once the
+spam started rolling in, I lost interest in working on it. Maybe there are spam-
+fighting services I could use (Akismet?), so I may look into that at some point.
+But for now I consider this project basically frozen.**
+
 Getting Started
 ---------------
 
